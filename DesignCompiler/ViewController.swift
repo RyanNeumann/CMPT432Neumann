@@ -20,11 +20,17 @@ class ViewController: UIViewController {
     
     var textEntered: String = ""
     
-    let unacceptedList = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "!", "@", "%", "&", "*", "_", "-"]
+    let unacceptedList = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "@", "%", "&", "*", "_", "-"]
     
     let acceptedChars = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
     
     let acceptedNums = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    
+    let boolOp = ["==", "!="]
+    
+    let boolVal = ["true", "false"]
+    
+    let intOp = "+"
     
     @IBAction func compile(_ sender: Any) {
         
@@ -73,7 +79,7 @@ class ViewController: UIViewController {
     
     func checkNext() {
         
-        var y = inputText.first
+        let y = inputText.first
         
         if y == nil {
             
@@ -94,6 +100,11 @@ class ViewController: UIViewController {
                     
                     printFinal()
                 
+                } else if y == " " {
+                    
+                    inputText.removeFirst()
+                    checkNext()
+                    
                 } else if unacceptedList.contains(String(describing: y!)){
                     
                     //CHECK FOR ERRORS
@@ -119,13 +130,28 @@ class ViewController: UIViewController {
                     inputText.removeFirst()
                     lineNumber += 1
                     checkNext()
+                    
                 } else if y == "}" {
                     
                     finalList.append("\(lineNumber).  }  --> [RBRACE]")
                     inputText.removeFirst()
-                    
                     lineNumber += 1
                     checkNext()
+                    
+                } else if y == "(" {
+                    
+                    finalList.append("\(lineNumber).  }  --> [LPAREN]")
+                    inputText.removeFirst()
+                    lineNumber += 1
+                    checkNext()
+                    
+                } else if y == ")" {
+                    
+                    finalList.append("\(lineNumber).  }  --> [RPAREN]")
+                    inputText.removeFirst()
+                    lineNumber += 1
+                    checkNext()
+                    
                 } else if y == "$" {
                     
                     finalList.append("\(lineNumber).  $  --> [EOP]")
@@ -138,19 +164,25 @@ class ViewController: UIViewController {
                     inputText.removeFirst()
                     checkNext()
                     
-                } else if y == " " {
-                    
-                    inputText.removeFirst()
-                    checkNext()
-                    
                 } else if y == "=" {
+                    if inputText[1] == "=" {
+                        //boolOp
+                        finalList.append("\(lineNumber).  == --> [BoolOp]")
+                        lineNumber += 1
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        checkNext()
                     
-                    finalList.append("\(lineNumber).  = --> [OP]")
-                    lineNumber += 1
-                    inputText.removeFirst()
-                    checkNext()
+                    } else {
                     
-                } else if y == "+" {
+                        finalList.append("\(lineNumber).  = --> [OP]")
+                        lineNumber += 1
+                        inputText.removeFirst()
+                        checkNext()
+                
+                    }
+                    
+                } else if intOp.contains(String(describing: y!)) {
                     
                     finalList.append("\(lineNumber).  + --> [OP]")
                     lineNumber += 1
@@ -171,8 +203,13 @@ class ViewController: UIViewController {
                     lineNumber += 1
                     checkNext()
                     
-                } else {
+                } else if y == "\t" {
                 
+                    inputText.removeFirst()
+                    checkNext()
+                
+                } else {
+                    print(inputText)
                     printFinal()
                 
                 }
@@ -180,6 +217,11 @@ class ViewController: UIViewController {
             }
 
         }
+    }
+    
+    func checkBoolOp() {
+    //Checking if token is != or ==
+    
     }
     
     func startCharList() {
@@ -260,21 +302,23 @@ class ViewController: UIViewController {
                     if inputText.first == " " {
                         inputText.removeFirst()
                         
-                        if acceptedNums.contains(String(describing: inputText.first!)) || acceptedChars.contains(String(describing: inputText.first!)) {
+                        if acceptedChars.contains(String(describing: inputText.first!)) {
                             let z = inputText.first!
-                            finalList.append("\(lineNumber).  \(z)  --> [Identifier]")
+                            finalList.append("\(lineNumber).  \(z)  --> [Id]")
                             inputText.removeFirst()
                             lineNumber += 1
-                            
-                            
                             checkNext()
                             
-                        } else {
+                        } else if unacceptedList.contains(String(describing: inputText.first!)) {
                             
                             finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
                             inputText.removeFirst()
                             errorCount += 1
                             lineNumber += 1
+                            checkNext()
+                            
+                        } else {
+                         
                             checkNext()
                             
                         }
@@ -316,7 +360,7 @@ class ViewController: UIViewController {
                 if inputText.first == " " {
                     inputText.removeFirst()
                     
-                    if acceptedNums.contains(String(describing: inputText.first!)) || acceptedChars.contains(String(describing: inputText.first!)) {
+                    if acceptedChars.contains(String(describing: inputText.first!)) {
                         let y = inputText.first!
                         finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
                         inputText.removeFirst()
@@ -325,7 +369,7 @@ class ViewController: UIViewController {
                         
                         checkNext()
                         
-                    } else {
+                    } else if unacceptedList.contains(String(describing: inputText.first!)) {
                         
                         finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
                         inputText.removeFirst()
@@ -333,18 +377,24 @@ class ViewController: UIViewController {
                         lineNumber += 1
                         checkNext()
                         
+                    } else {
+                    
+                        checkNext()
+                    
                     }
                 } else {
                     //print(inputText)
                     
-                    if acceptedNums.contains(String(describing: inputText.first!)) || acceptedChars.contains(String(describing: inputText.first!)) {
+                    if acceptedChars.contains(String(describing: inputText.first!)) {
                         let y = inputText.first!
                         finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
                         inputText.removeFirst()
                         lineNumber += 1
+                        
+                        
                         checkNext()
                         
-                    } else {
+                    } else if unacceptedList.contains(String(describing: inputText.first!)) {
                         
                         finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
                         inputText.removeFirst()
@@ -352,10 +402,12 @@ class ViewController: UIViewController {
                         lineNumber += 1
                         checkNext()
                         
+                    } else {
+                        
+                        checkNext()
+                        
                     }
-                    
                 }
-                
             } else {
             
                 finalList.append("\(lineNumber).  i  --> [Char]")
@@ -364,10 +416,6 @@ class ViewController: UIViewController {
                 
             }
         
-        
-        } else {
-        
-            print("Fuck")
         
         }
         
@@ -391,37 +439,49 @@ class ViewController: UIViewController {
                             if inputText.first == " " {
                                 inputText.removeFirst()
                                 
-                                if acceptedNums.contains(String(describing: inputText.first!)) || acceptedChars.contains(String(describing: inputText.first!)) {
+                                if acceptedChars.contains(String(describing: inputText.first!)) {
                                     let y = inputText.first!
                                     finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
                                     inputText.removeFirst()
                                     lineNumber += 1
+                                    
+                                    
                                     checkNext()
                                     
-                                } else {
+                                } else if unacceptedList.contains(String(describing: inputText.first!)) {
                                     
                                     finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
                                     inputText.removeFirst()
                                     errorCount += 1
                                     lineNumber += 1
+                                    checkNext()
+                                    
+                                } else {
+                                    
                                     checkNext()
                                     
                                 }
                             } else {
                                 
-                                if acceptedNums.contains(String(describing: inputText.first!)) || acceptedChars.contains(String(describing: inputText.first!)) {
+                                if acceptedChars.contains(String(describing: inputText.first!)) {
                                     let y = inputText.first!
                                     finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
                                     inputText.removeFirst()
                                     lineNumber += 1
+                                    
+                                    
                                     checkNext()
                                     
-                                } else {
+                                } else if unacceptedList.contains(String(describing: inputText.first!)) {
                                     
                                     finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
                                     inputText.removeFirst()
                                     errorCount += 1
                                     lineNumber += 1
+                                    checkNext()
+                                    
+                                } else {
+                                    
                                     checkNext()
                                     
                                 }
