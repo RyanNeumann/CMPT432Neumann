@@ -20,6 +20,12 @@ class ViewController: UIViewController {
     
     var textEntered: String = ""
     
+    let unacceptedList = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "!", "@", "%", "&", "*", "_", "-"]
+    
+    let acceptedChars = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    
+    let acceptedNums = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    
     @IBAction func compile(_ sender: Any) {
         
         //Compile button pressed and function activated.
@@ -88,24 +94,7 @@ class ViewController: UIViewController {
                     
                     printFinal()
                 
-                }
-                
-                if y == "\"" {
-                    finalList.append("\(lineNumber).  \"  --> [CharList]")
-                    inputText.removeFirst()
-                    lineNumber += 1
-                    startCharList()
-                    
-                }
-                
-                if y == "i" || y == "w" || y == "s" {
-                    
-                    checkKeyword()
-                    
-                }
-                
-                if y == "A" || y == "B" || y == "C" || y == "D" || y == "E" || y == "F" || y == "G" || y == "H" || y == "I" || y == "J" || y == "K" || y == "L" || y == "M" || y == "N" || y == "O" || y == "P" || y == "Q" || y == "R" || y == "S" || y == "T" || y == "U" || y == "V" || y == "W" || y == "X" || y == "Y" || y == "Z" || y == "@" || y == "^" || y == "_" || y == "#" || y == "!" || y == "&" || y == "*"{
-                    
+                } else if unacceptedList.contains(String(describing: y!)){
                     
                     //CHECK FOR ERRORS
                     finalList.append("\(lineNumber). ERROR: Unrecognized Token: \(y!) on line \(lineNumber)")
@@ -114,77 +103,68 @@ class ViewController: UIViewController {
                     lineNumber += 1
                     checkNext()
                     
-                }
-                
-                if y == "{" {
+                } else if y == "\"" {
+                    finalList.append("\(lineNumber).  \"  --> [CharList]")
+                    inputText.removeFirst()
+                    lineNumber += 1
+                    startCharList()
+                    
+                } else if y == "i" || y == "w" || y == "s" {
+                    
+                    checkKeyword()
+                    
+                } else if y == "{" {
                     
                     finalList.append("\(lineNumber).  {  --> [LBRACE]")
                     inputText.removeFirst()
                     lineNumber += 1
                     checkNext()
-                }
-                
-                if y == "}" {
+                } else if y == "}" {
                     
                     finalList.append("\(lineNumber).  }  --> [RBRACE]")
                     inputText.removeFirst()
                     
                     lineNumber += 1
                     checkNext()
-                }
-                
-                if y == "$" {
+                } else if y == "$" {
                     
                     finalList.append("\(lineNumber).  $  --> [EOP]")
                     inputText.removeFirst()
                     lineNumber += 1
                     newProgram()
                     
-                }
-                
-                if y == "\n" {
+                } else if y == "\n" {
                     
                     inputText.removeFirst()
                     checkNext()
                     
-                }
-                
-                if y == " " {
+                } else if y == " " {
                     
                     inputText.removeFirst()
                     checkNext()
                     
-                }
-                
-                if y == "=" {
+                } else if y == "=" {
                     
                     finalList.append("\(lineNumber).  = --> [OP]")
                     lineNumber += 1
                     inputText.removeFirst()
                     checkNext()
                     
-                }
-                
-                if y == "+" {
+                } else if y == "+" {
                     
                     finalList.append("\(lineNumber).  + --> [OP]")
                     lineNumber += 1
                     inputText.removeFirst()
                     checkNext()
                     
-                }
-                if y == "0" || y == "1" || y == "2" || y == "3" || y == "4" || y == "5" || y == "6" || y == "7" || y == "8" || y == "9" {
+                } else if acceptedNums.contains(String(describing: y!)) {
                     
                     finalList.append("\(lineNumber).  \(y!)  --> [Digit]")
                     inputText.removeFirst()
                     lineNumber += 1
                     checkNext()
                     
-                }
-                
-                
-            
-                if y == "a" || y == "b" || y == "c" || y == "d" || y == "e" || y == "f" || y == "g" || y == "h" || y == "j" || y == "k" || y == "l" || y == "m" || y == "n" || y == "o" || y == "p" || y == "q" || y == "r" ||  y == "t" || y == "u" || y == "v" || y == "x" || y == "y" || y == "z" {
+                } else if acceptedChars.contains(String(describing: y!)) {
                     
                     finalList.append("\(lineNumber).  \(y!)  --> [Char]")
                     inputText.removeFirst()
@@ -192,20 +172,15 @@ class ViewController: UIViewController {
                     checkNext()
                     
                 } else {
-                    
-                    checkNext()
+                
+                    printFinal()
                 
                 }
-                
-             //   print(lineNumber)
                 
             }
 
         }
     }
-    
-    var acceptedList = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-    
     
     func startCharList() {
     
@@ -213,14 +188,14 @@ class ViewController: UIViewController {
         
             if inputText.first == " " {
                 inputText.removeFirst()
-                if inputText.first == "0" || inputText.first == "1" || inputText.first == "2" || inputText.first == "3" || inputText.first == "4" || inputText.first == "5" || inputText.first == "6" || inputText.first == "7" || inputText.first == "8" || inputText.first == "9" {
+                if acceptedNums.contains(String(describing: inputText.first!)) {
                 
                     finalList.append("\(lineNumber).  \(inputText.first)  --> [Digit]")
                     inputText.removeFirst()
                     lineNumber += 1
                     startCharList()
                     
-                } else {
+                } else if acceptedChars.contains(String(describing: inputText.first!)) {
                 
                     finalList.append("\(lineNumber).  \(inputText.first)  --> [Char]")
                     inputText.removeFirst()
@@ -231,14 +206,14 @@ class ViewController: UIViewController {
             
             } else {
             
-                if inputText.first == "0" || inputText.first == "1" || inputText.first == "2" || inputText.first == "3" || inputText.first == "4" || inputText.first == "5" || inputText.first == "6" || inputText.first == "7" || inputText.first == "8" || inputText.first == "9" {
+                if acceptedNums.contains(String(describing: inputText.first!)) {
                     
                     finalList.append("\(lineNumber).  \(inputText.first)  --> [Digit]")
                     inputText.removeFirst()
                     lineNumber += 1
                     startCharList()
                     
-                } else if acceptedList.contains(String(describing: inputText.first)) {
+                } else if acceptedChars.contains(String(describing: inputText.first!)) {
                     
                     finalList.append("\(lineNumber).  \(inputText.first)  --> [Char]")
                     inputText.removeFirst()
@@ -285,7 +260,7 @@ class ViewController: UIViewController {
                     if inputText.first == " " {
                         inputText.removeFirst()
                         
-                        if acceptedList.contains(String(describing: inputText.first!)) {
+                        if acceptedNums.contains(String(describing: inputText.first!)) || acceptedChars.contains(String(describing: inputText.first!)) {
                             let z = inputText.first!
                             finalList.append("\(lineNumber).  \(z)  --> [Identifier]")
                             inputText.removeFirst()
@@ -306,7 +281,7 @@ class ViewController: UIViewController {
                     } else {
                         //print(inputText)
                     
-                        if acceptedList.contains(String(describing: inputText.first!)) {
+                        if acceptedNums.contains(String(describing: inputText.first!)) || acceptedChars.contains(String(describing: inputText.first!)) {
                             let y = inputText.first!
                             finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
                             inputText.removeFirst()
@@ -329,8 +304,7 @@ class ViewController: UIViewController {
                     finalList.append("\(lineNumber).  i  --> [Char]")
                     lineNumber += 1
                     finalList.append("\(lineNumber).  n  --> [Char]")
-                    inputText.removeFirst()
-                    inputText.removeFirst()
+                    lineNumber += 1
                     checkNext()
                 
                 }
@@ -342,7 +316,7 @@ class ViewController: UIViewController {
                 if inputText.first == " " {
                     inputText.removeFirst()
                     
-                    if acceptedList.contains(String(describing: inputText.first!)) {
+                    if acceptedNums.contains(String(describing: inputText.first!)) || acceptedChars.contains(String(describing: inputText.first!)) {
                         let y = inputText.first!
                         finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
                         inputText.removeFirst()
@@ -363,7 +337,7 @@ class ViewController: UIViewController {
                 } else {
                     //print(inputText)
                     
-                    if acceptedList.contains(String(describing: inputText.first!)) {
+                    if acceptedNums.contains(String(describing: inputText.first!)) || acceptedChars.contains(String(describing: inputText.first!)) {
                         let y = inputText.first!
                         finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
                         inputText.removeFirst()
@@ -384,8 +358,8 @@ class ViewController: UIViewController {
                 
             } else {
             
-                finalList.append("\(lineNumber).  i  --> [char]")
-                inputText.removeFirst()
+                finalList.append("\(lineNumber).  i  --> [Char]")
+                lineNumber += 1
                 checkNext()
                 
             }
@@ -417,7 +391,7 @@ class ViewController: UIViewController {
                             if inputText.first == " " {
                                 inputText.removeFirst()
                                 
-                                if acceptedList.contains(String(describing: inputText.first!)) {
+                                if acceptedNums.contains(String(describing: inputText.first!)) || acceptedChars.contains(String(describing: inputText.first!)) {
                                     let y = inputText.first!
                                     finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
                                     inputText.removeFirst()
@@ -435,7 +409,7 @@ class ViewController: UIViewController {
                                 }
                             } else {
                                 
-                                if acceptedList.contains(String(describing: inputText.first!)) {
+                                if acceptedNums.contains(String(describing: inputText.first!)) || acceptedChars.contains(String(describing: inputText.first!)) {
                                     let y = inputText.first!
                                     finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
                                     inputText.removeFirst()
@@ -531,7 +505,7 @@ class ViewController: UIViewController {
                                 if inputText.first == " " {
                                     inputText.removeFirst()
                                     
-                                    if acceptedList.contains(String(describing: inputText.first!)) {
+                                    if acceptedNums.contains(String(describing: inputText.first!)) || acceptedChars.contains(String(describing: inputText.first!)) {
                                         let y = inputText.first!
                                         finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
                                         inputText.removeFirst()
@@ -549,7 +523,7 @@ class ViewController: UIViewController {
                                     }
                                 } else {
                                     
-                                    if acceptedList.contains(String(describing: inputText.first!)) {
+                                    if acceptedNums.contains(String(describing: inputText.first!)) || acceptedChars.contains(String(describing: inputText.first!)) {
                                         let y = inputText.first!
                                         finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
                                         inputText.removeFirst()
