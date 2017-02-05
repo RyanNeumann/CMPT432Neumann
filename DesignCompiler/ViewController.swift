@@ -40,12 +40,20 @@ class ViewController: UIViewController {
             if textEntered == "" {
             
                 textEntered = enteredCode.text
-            
+                
             }
             
             //Used to clear the entered code and create an array that will be cycled through
-            inputText.append(enteredCode.text.characters.first!)
-            enteredCode.text.characters.removeFirst()
+            if enteredCode.text.characters.first == " " {
+                
+                enteredCode.text.characters.removeFirst()
+            
+            } else {
+                
+                inputText.append(enteredCode.text.characters.first!)
+                enteredCode.text.characters.removeFirst()
+                
+            }
             finalList.removeAll(keepingCapacity: false)
             tokenList.text = ""
             compile(self)
@@ -83,11 +91,9 @@ class ViewController: UIViewController {
         
         if y == nil {
             
-                printFinal()
-    
-        
+            printFinal()
         } else {
-            
+        
             if finalList.isEmpty {
                 //Processing Program 1
                 finalList.append("Lexing program 1...")
@@ -96,16 +102,7 @@ class ViewController: UIViewController {
                 
             } else {
                 
-                if inputText.isEmpty {
-                    
-                    printFinal()
-                
-                } else if y == " " {
-                    
-                    inputText.removeFirst()
-                    checkNext()
-                    
-                } else if unacceptedList.contains(String(describing: y!)){
+                if unacceptedList.contains(String(describing: y!)){
                     
                     //CHECK FOR ERRORS
                     finalList.append("\(lineNumber). ERROR: Unrecognized Token: \(y!) on line \(lineNumber)")
@@ -114,16 +111,118 @@ class ViewController: UIViewController {
                     lineNumber += 1
                     checkNext()
                     
-                } else if y == "\"" {
-                    finalList.append("\(lineNumber).  \"  --> [CharList]")
-                    inputText.removeFirst()
-                    lineNumber += 1
-                    startCharList()
+                } else if y == "i" {
                     
-                } else if y == "i" || y == "w" || y == "s" {
+                    if inputText[1] == "n" && inputText[2] == "t" {
+                        finalList.append("\(lineNumber).  int  --> [TYPE]")
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        lineNumber += 1
+                        checkId()
+                        
+                    } else if inputText[1] == "f" {
+                        
+                        finalList.append("\(lineNumber).  int  --> [TYPE]")
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        lineNumber += 1
+                        checkId()
                     
-                    checkKeyword()
+                    } else {
+                        
+                        finalList.append("\(lineNumber).  i --> [Char]")
+                        inputText.removeFirst()
+                        lineNumber += 1
+                        checkNext()
                     
+                    }
+            
+                } else if y == "t" {
+                    if inputText[1] == "r" && inputText[2] == "u" && inputText[3] == "e" {
+                    
+                        finalList.append("\(lineNumber).  true --> [TRUE]")
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        lineNumber += 1
+                        checkNext()
+                    
+                    } else {
+                        
+                        finalList.append("\(lineNumber).  t  --> [Char]")
+                        finalList.removeFirst()
+                        lineNumber += 1
+                        checkNext()
+                    }
+                    
+                } else if y == "f" {
+                
+                    if inputText[1] == "a" && inputText[2] == "l" && inputText[3] == "s" && inputText[4] == "e" {
+                    
+                        finalList.append("\(lineNumber).  false  --> [FALSE]")
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        lineNumber += 1
+                        checkNext()
+                    
+                    } else {
+                    
+                        finalList.append("\(lineNumber).  f  --> [Char]")
+                        finalList.removeFirst()
+                        lineNumber += 1
+                        checkNext()
+                    
+                    }
+                    
+                } else if y == "p" {
+                    
+                    if inputText[1] == "r" && inputText[2] == "i" && inputText[3] == "n" && inputText[4] == "t" {
+                     
+                        finalList.append("\(lineNumber).  print  --> [PRINT]")
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        lineNumber += 1
+                        checkNext()
+                        
+                    } else {
+                    
+                        finalList.append("\(lineNumber).  p  --> [Char]")
+                    
+                    }
+                    
+                } else if y == "b" {
+                    
+                    if inputText[1] == "o" && inputText[2] == "o" && inputText[3] == "l" && inputText[4] == "e" && inputText[5] == "a" && inputText[6] == "n" {
+                        
+                        finalList.append("\(lineNumber).  boolean  --> [TYPE]")
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        lineNumber += 1
+                        checkId()
+                        
+                    } else {
+                    
+                        finalList.append("\(lineNumber).  b  --> [Char]")
+                        inputText.removeFirst()
+                        lineNumber += 1
+                        checkNext()
+                    
+                    }
+                
+                
                 } else if y == "{" {
                     
                     finalList.append("\(lineNumber).  {  --> [LBRACE]")
@@ -140,14 +239,14 @@ class ViewController: UIViewController {
                     
                 } else if y == "(" {
                     
-                    finalList.append("\(lineNumber).  }  --> [LPAREN]")
+                    finalList.append("\(lineNumber).  (  --> [LPAREN]")
                     inputText.removeFirst()
                     lineNumber += 1
                     checkNext()
                     
                 } else if y == ")" {
                     
-                    finalList.append("\(lineNumber).  }  --> [RPAREN]")
+                    finalList.append("\(lineNumber).  )  --> [RPAREN]")
                     inputText.removeFirst()
                     lineNumber += 1
                     checkNext()
@@ -159,6 +258,23 @@ class ViewController: UIViewController {
                     lineNumber += 1
                     newProgram()
                     
+                } else if y == "!" {
+                    if inputText[1] == "=" {
+                    
+                        finalList.append("\(lineNumber).  !=  --> [BoolOp]")
+                        inputText.removeFirst()
+                        inputText.removeFirst()
+                        lineNumber += 1
+                        checkNext()
+                    
+                    } else {
+                    
+                        finalList.append("\(lineNumber).  !  --> [RBRACE]")
+                        inputText.removeFirst()
+                        lineNumber += 1
+                        checkNext()
+                        
+                    }
                 } else if y == "\n" {
                     
                     inputText.removeFirst()
@@ -208,7 +324,14 @@ class ViewController: UIViewController {
                     inputText.removeFirst()
                     checkNext()
                 
-                } else {
+               } else if y == "\"" {
+                
+                finalList.append("\(lineNumber).  \"  --> [CharList]")
+                inputText.removeFirst()
+                lineNumber += 1
+                startCharList()
+                
+               } else {
                     print(inputText)
                     printFinal()
                 
@@ -227,26 +350,6 @@ class ViewController: UIViewController {
     func startCharList() {
     
         if inputText.first != "\"" {
-        
-            if inputText.first == " " {
-                inputText.removeFirst()
-                if acceptedNums.contains(String(describing: inputText.first!)) {
-                
-                    finalList.append("\(lineNumber).  \(inputText.first)  --> [Digit]")
-                    inputText.removeFirst()
-                    lineNumber += 1
-                    startCharList()
-                    
-                } else if acceptedChars.contains(String(describing: inputText.first!)) {
-                
-                    finalList.append("\(lineNumber).  \(inputText.first)  --> [Char]")
-                    inputText.removeFirst()
-                    lineNumber += 1
-                    startCharList()
-                
-                }
-            
-            } else {
             
                 if acceptedNums.contains(String(describing: inputText.first!)) {
                     
@@ -267,8 +370,6 @@ class ViewController: UIViewController {
                     checkNext()
                 
                 }
-            
-            }
         
         } else {
         
@@ -282,413 +383,25 @@ class ViewController: UIViewController {
     
     }
     
-    func checkKeyword() {
+    func checkId() {
     //Checks to see if character is part of keyword
-        var testArray = inputText
-        
-        if inputText.first == "i" {
+        if acceptedNums.contains(String(describing: inputText.first!)) || acceptedChars.contains(String(describing: inputText.first!)) {
+            let y = inputText.first!
+            finalList.append("\(lineNumber).  \(y)  --> [ID]")
             inputText.removeFirst()
-            testArray.removeFirst()
-            if testArray.first == "n" {
-                testArray.removeFirst()
-                inputText.removeFirst()
-                if testArray.first == "t" {
-                //Confirmed "int"
-                    finalList.append("\(lineNumber).  int  --> [Keyword]")
-                    inputText.removeFirst()
-                    print(inputText)
-                    lineNumber += 1
-                    
-                    if inputText.first == " " {
-                        inputText.removeFirst()
-                        
-                        if acceptedChars.contains(String(describing: inputText.first!)) {
-                            let z = inputText.first!
-                            finalList.append("\(lineNumber).  \(z)  --> [Id]")
-                            inputText.removeFirst()
-                            lineNumber += 1
-                            checkNext()
-                            
-                        } else if unacceptedList.contains(String(describing: inputText.first!)) {
-                            
-                            finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
-                            inputText.removeFirst()
-                            errorCount += 1
-                            lineNumber += 1
-                            checkNext()
-                            
-                        } else {
-                         
-                            checkNext()
-                            
-                        }
-                    } else {
-                        //print(inputText)
-                    
-                        if acceptedNums.contains(String(describing: inputText.first!)) || acceptedChars.contains(String(describing: inputText.first!)) {
-                            let y = inputText.first!
-                            finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
-                            inputText.removeFirst()
-                            lineNumber += 1
-                            checkNext()
-                            
-                        } else {
-                            
-                            finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
-                            inputText.removeFirst()
-                            errorCount += 1
-                            lineNumber += 1
-                            checkNext()
-                            
-                        }
-                        
-                    }
-                } else {
-                
-                    finalList.append("\(lineNumber).  i  --> [Char]")
-                    lineNumber += 1
-                    finalList.append("\(lineNumber).  n  --> [Char]")
-                    lineNumber += 1
-                    checkNext()
-                
-                }
+            lineNumber += 1
+            checkNext()
             
-            } else if testArray.first == "f" {
+        } else {
             
-                finalList.append("\(lineNumber).  if  --> [Keyword]")
-                inputText.removeFirst()
-                if inputText.first == " " {
-                    inputText.removeFirst()
-                    
-                    if acceptedChars.contains(String(describing: inputText.first!)) {
-                        let y = inputText.first!
-                        finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
-                        inputText.removeFirst()
-                        lineNumber += 1
-                        
-                        
-                        checkNext()
-                        
-                    } else if unacceptedList.contains(String(describing: inputText.first!)) {
-                        
-                        finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
-                        inputText.removeFirst()
-                        errorCount += 1
-                        lineNumber += 1
-                        checkNext()
-                        
-                    } else {
-                    
-                        checkNext()
-                    
-                    }
-                } else {
-                    //print(inputText)
-                    
-                    if acceptedChars.contains(String(describing: inputText.first!)) {
-                        let y = inputText.first!
-                        finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
-                        inputText.removeFirst()
-                        lineNumber += 1
-                        
-                        
-                        checkNext()
-                        
-                    } else if unacceptedList.contains(String(describing: inputText.first!)) {
-                        
-                        finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
-                        inputText.removeFirst()
-                        errorCount += 1
-                        lineNumber += 1
-                        checkNext()
-                        
-                    } else {
-                        
-                        checkNext()
-                        
-                    }
-                }
-            } else {
-            
-                finalList.append("\(lineNumber).  i  --> [Char]")
-                lineNumber += 1
-                checkNext()
-                
-            }
-        
-        
-        }
-        
-        if inputText.first == "w" {
-            testArray.removeFirst()
-            if testArray.first == "h" {
-                testArray.removeFirst()
-                if testArray.first == "i" {
-                    testArray.removeFirst()
-                    if testArray.first == "l" {
-                        testArray.removeFirst()
-                        if testArray.first == "e" {
-                            finalList.append("\(lineNumber). while  --> [Keyword]")
-                            inputText.removeFirst()
-                            inputText.removeFirst()
-                            inputText.removeFirst()
-                            inputText.removeFirst()
-                            inputText.removeFirst()
-                            lineNumber += 1
-                            //checkNext()
-                            if inputText.first == " " {
-                                inputText.removeFirst()
-                                
-                                if acceptedChars.contains(String(describing: inputText.first!)) {
-                                    let y = inputText.first!
-                                    finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
-                                    inputText.removeFirst()
-                                    lineNumber += 1
-                                    
-                                    
-                                    checkNext()
-                                    
-                                } else if unacceptedList.contains(String(describing: inputText.first!)) {
-                                    
-                                    finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
-                                    inputText.removeFirst()
-                                    errorCount += 1
-                                    lineNumber += 1
-                                    checkNext()
-                                    
-                                } else {
-                                    
-                                    checkNext()
-                                    
-                                }
-                            } else {
-                                
-                                if acceptedChars.contains(String(describing: inputText.first!)) {
-                                    let y = inputText.first!
-                                    finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
-                                    inputText.removeFirst()
-                                    lineNumber += 1
-                                    
-                                    
-                                    checkNext()
-                                    
-                                } else if unacceptedList.contains(String(describing: inputText.first!)) {
-                                    
-                                    finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
-                                    inputText.removeFirst()
-                                    errorCount += 1
-                                    lineNumber += 1
-                                    checkNext()
-                                    
-                                } else {
-                                    
-                                    checkNext()
-                                    
-                                }
-                                
-                            }
-                        
-                            
-                        } else {
-                    
-                            finalList.append("\(lineNumber).  w  --> [Char]")
-                            lineNumber += 1
-                            finalList.append("\(lineNumber).  h  --> [Char]")
-                            lineNumber += 1
-                            finalList.append("\(lineNumber).  i  --> [Char]")
-                            lineNumber += 1
-                            finalList.append("\(lineNumber).  l --> [Char]")
-                            inputText.removeFirst()
-                            inputText.removeFirst()
-                            inputText.removeFirst()
-                            inputText.removeFirst()
-                            checkNext()
-                        
-                        
-                        }
-                    } else {
-                        finalList.append("\(lineNumber).  w  --> [Char]")
-                        lineNumber += 1
-                        finalList.append("\(lineNumber).  h  --> [Char]")
-                        lineNumber += 1
-                        finalList.append("\(lineNumber).  i  --> [Char]")
-                        inputText.removeFirst()
-                        inputText.removeFirst()
-                        inputText.removeFirst()
-                        checkNext()
-                        
-                    }
-                } else {
-                    finalList.append("\(lineNumber).  w  --> [Char]")
-                    lineNumber += 1
-                    finalList.append("\(lineNumber).  h  --> [Char]")
-                    inputText.removeFirst()
-                    inputText.removeFirst()
-                    checkNext()
-                
-                }
-                
-            } else {
-            
-                finalList.append("\(lineNumber).  w  --> [Char]")
-                inputText.removeFirst()
-                checkNext()
-
-            }
-            
-        
-        }
-        
-    
-        if inputText.first == "s" {
-            testArray.removeFirst()
+            finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
             inputText.removeFirst()
-            if testArray.first == "t" {
-                testArray.removeFirst()
-                if testArray.first == "r" {
-                    testArray.removeFirst()
-                    if testArray.first == "i" {
-                        testArray.removeFirst()
-                        if testArray.first == "n" {
-                            testArray.removeFirst()
-                            if testArray.first == "g" {
-                                
-                                finalList.append("\(lineNumber). string  --> [Keyword]")
-                                inputText.removeFirst()
-                                inputText.removeFirst()
-                                inputText.removeFirst()
-                                inputText.removeFirst()
-                                inputText.removeFirst()
-                                lineNumber += 1
-
-                            
-                                if inputText.first == " " {
-                                    inputText.removeFirst()
-                                    
-                                    if acceptedNums.contains(String(describing: inputText.first!)) || acceptedChars.contains(String(describing: inputText.first!)) {
-                                        let y = inputText.first!
-                                        finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
-                                        inputText.removeFirst()
-                                        lineNumber += 1
-                                        checkNext()
-                                        
-                                    } else {
-                                        
-                                        finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
-                                        inputText.removeFirst()
-                                        errorCount += 1
-                                        lineNumber += 1
-                                        checkNext()
-                                        
-                                    }
-                                } else {
-                                    
-                                    if acceptedNums.contains(String(describing: inputText.first!)) || acceptedChars.contains(String(describing: inputText.first!)) {
-                                        let y = inputText.first!
-                                        finalList.append("\(lineNumber).  \(y)  --> [Identifier]")
-                                        inputText.removeFirst()
-                                        lineNumber += 1
-                                        checkNext()
-                                        
-                                    } else {
-                                        
-                                        finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
-                                        inputText.removeFirst()
-                                        errorCount += 1
-                                        lineNumber += 1
-                                        checkNext()
-                                        
-                                    }
-                                    
-                                }
-
-                            
-                                
-                            } else {
-                            
-                                finalList.append("\(lineNumber).  s  --> [Char]")
-                                lineNumber += 1
-                                finalList.append("\(lineNumber).  t  --> [Char]")
-                                lineNumber += 1
-                                finalList.append("\(lineNumber).  r  --> [Char]")
-                                lineNumber += 1
-                                finalList.append("\(lineNumber).  i  --> [Char]")
-                                lineNumber += 1
-                                finalList.append("\(lineNumber).  n  --> [Char]")
-                                lineNumber += 1
-                                inputText.removeFirst()
-                                inputText.removeFirst()
-                                inputText.removeFirst()
-                                inputText.removeFirst()
-                                checkNext()
-                                
-                            
-                            
-                            }
-                            
-                            
-                            
-                        } else {
-                        
-                            finalList.append("\(lineNumber).  s  --> [Char]")
-                            lineNumber += 1
-                            finalList.append("\(lineNumber).  t  --> [Char]")
-                            lineNumber += 1
-                            finalList.append("\(lineNumber).  r  --> [Char]")
-                            lineNumber += 1
-                            finalList.append("\(lineNumber).  i  --> [Char]")
-                            lineNumber += 1
-                            inputText.removeFirst()
-                            inputText.removeFirst()
-                            inputText.removeFirst()
-                            checkNext()
-                            
-                            
-                            
-                        }
-                        
-                        
-                    
-                    } else {
-                        
-                        finalList.append("\(lineNumber).  s  --> [Char]")
-                        lineNumber += 1
-                        finalList.append("\(lineNumber).  t  --> [Char]")
-                        lineNumber += 1
-                        finalList.append("\(lineNumber).  r  --> [Char]")
-                        lineNumber += 1
-                        inputText.removeFirst()
-                        inputText.removeFirst()
-                        checkNext()
-                    
-                    
-                    }
-                
-                
-                } else {
-                    
-                    finalList.append("\(lineNumber).  s  --> [Char]")
-                    lineNumber += 1
-                    finalList.append("\(lineNumber).  t  --> [Char]")
-                    lineNumber += 1
-                    inputText.removeFirst()
-                    checkNext()
-
-                
-                }
-                
+            errorCount += 1
+            lineNumber += 1
+            checkNext()
             
-            } else {
-                
-                finalList.append("\(lineNumber).  s  --> [Char]")
-                lineNumber += 1
-                checkNext()
-                
-            }
-        
-        
-        
         }
+        
     }
     
     
