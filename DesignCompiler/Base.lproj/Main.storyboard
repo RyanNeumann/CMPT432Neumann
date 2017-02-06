@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E144f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12100" systemVersion="16E144f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12072"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,12 +19,20 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DbR-ni-Z1W">
+                                <rect key="frame" x="4" y="30" width="406" height="78"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="i5l-iw-Akd"/>
+                                </connections>
+                            </pickerView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="OF3-MO-yVd">
-                                <rect key="frame" x="13" y="28" width="349" height="221"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="17" y="116" width="380" height="221"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="0.0" green="1" blue="0.019632422739999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="221" id="Ggt-zC-1wF"/>
                                 </constraints>
@@ -33,58 +41,70 @@
 	b = (true == true)
 	b = (false != false)
 } $</string>
+                                <color key="textColor" red="0.0" green="1" blue="0.019632422737804855" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="18"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OIh-ty-ode">
-                                <rect key="frame" x="109" y="274" width="157" height="30"/>
-                                <state key="normal" title="Compile"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OIh-ty-ode">
+                                <rect key="frame" x="113" y="345" width="188" height="35"/>
+                                <fontDescription key="fontDescription" name="CourierNewPS-BoldMT" family="Courier New" pointSize="20"/>
+                                <state key="normal" title="Compile">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="compile:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wpa-u5-7fL"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MhW-SE-vEc">
-                                <rect key="frame" x="13" y="323" width="349" height="285"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Tokens will appear here" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MhW-SE-vEc">
+                                <rect key="frame" x="17" y="388" width="380" height="215"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="0.0" green="1" blue="0.019632422739999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.0" green="1" blue="0.019632422739999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="18"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OeC-XG-5rW">
-                                <rect key="frame" x="13" y="626" width="346" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OeC-XG-5rW">
+                                <rect key="frame" x="34" y="611" width="346" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="346" id="4g2-23-cRF"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="15"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="OeC-XG-5rW" firstAttribute="centerX" secondItem="MhW-SE-vEc" secondAttribute="centerX" constant="-1.5" id="7Mz-Va-RFI"/>
+                            <constraint firstItem="OeC-XG-5rW" firstAttribute="centerX" secondItem="MhW-SE-vEc" secondAttribute="centerX" id="7Mz-Va-RFI"/>
                             <constraint firstItem="OIh-ty-ode" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="93" id="8xS-VV-JdL"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="MhW-SE-vEc" secondAttribute="bottom" constant="59" id="9iJ-JT-wj2"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="MhW-SE-vEc" secondAttribute="bottom" constant="133" id="9iJ-JT-wj2"/>
+                            <constraint firstItem="OF3-MO-yVd" firstAttribute="top" secondItem="DbR-ni-Z1W" secondAttribute="bottom" constant="8" symbolic="YES" id="FQj-RO-MFI"/>
                             <constraint firstItem="OF3-MO-yVd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FT7-Oy-X3e"/>
-                            <constraint firstItem="MhW-SE-vEc" firstAttribute="top" secondItem="OIh-ty-ode" secondAttribute="bottom" constant="19" id="ObK-dT-BVW"/>
-                            <constraint firstItem="OF3-MO-yVd" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="XEP-Zj-DPR"/>
-                            <constraint firstItem="OeC-XG-5rW" firstAttribute="top" secondItem="MhW-SE-vEc" secondAttribute="bottom" constant="18" id="fs6-lW-rb8"/>
-                            <constraint firstAttribute="bottom" secondItem="OeC-XG-5rW" secondAttribute="bottom" constant="20" symbolic="YES" id="hEd-kU-jnC"/>
+                            <constraint firstItem="MhW-SE-vEc" firstAttribute="top" secondItem="OIh-ty-ode" secondAttribute="bottom" constant="8" id="ObK-dT-BVW"/>
+                            <constraint firstItem="OF3-MO-yVd" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="96" id="XEP-Zj-DPR"/>
+                            <constraint firstItem="DbR-ni-Z1W" firstAttribute="centerX" secondItem="OeC-XG-5rW" secondAttribute="centerX" id="cWB-Gv-r9o"/>
+                            <constraint firstItem="OeC-XG-5rW" firstAttribute="top" secondItem="MhW-SE-vEc" secondAttribute="bottom" constant="8" id="fs6-lW-rb8"/>
+                            <constraint firstAttribute="bottom" secondItem="OeC-XG-5rW" secondAttribute="bottom" constant="65" id="hEd-kU-jnC"/>
                             <constraint firstItem="MhW-SE-vEc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-3" id="iSw-Ga-64A"/>
+                            <constraint firstItem="DbR-ni-Z1W" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="m3r-7T-Tsq"/>
+                            <constraint firstItem="DbR-ni-Z1W" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="rJx-PK-JC4"/>
                             <constraint firstItem="OF3-MO-yVd" firstAttribute="centerX" secondItem="OIh-ty-ode" secondAttribute="centerX" id="srE-DO-Ety"/>
                             <constraint firstItem="OF3-MO-yVd" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-3" id="wfF-Uh-kxa"/>
-                            <constraint firstItem="OIh-ty-ode" firstAttribute="top" secondItem="OF3-MO-yVd" secondAttribute="bottom" constant="25" id="wzo-bG-EZh"/>
+                            <constraint firstItem="OIh-ty-ode" firstAttribute="top" secondItem="OF3-MO-yVd" secondAttribute="bottom" constant="8" id="wzo-bG-EZh"/>
                             <constraint firstItem="OIh-ty-ode" firstAttribute="centerX" secondItem="MhW-SE-vEc" secondAttribute="centerX" id="xy2-xa-LUU"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="enteredCode" destination="OF3-MO-yVd" id="Ezq-M9-1jP"/>
+                        <outlet property="examplePicker" destination="DbR-ni-Z1W" id="tsC-iR-oZL"/>
                         <outlet property="tokenList" destination="MhW-SE-vEc" id="zgm-gy-VOy"/>
                         <outlet property="warningLabel" destination="OeC-XG-5rW" id="GYp-Wt-4Ct"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
+            <point key="canvasLocation" x="136.23188405797103" y="138.58695652173915"/>
         </scene>
     </scenes>
 </document>
