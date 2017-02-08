@@ -300,6 +300,7 @@
 				BC0AD3C71E464755004352D6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
