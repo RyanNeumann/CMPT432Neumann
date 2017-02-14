@@ -514,7 +514,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     
                 } else if y == "\"" {
                 
-                    finalList.append("\(lineNumber).  \"  --> [CHARLIST]")
+                    finalList.append("\(lineNumber).  \"  --> [OPEN_DOUBLE_QUOTE]")
                     inputText.removeFirst()
                     lineNumber += 1
                     startCharList()
@@ -545,9 +545,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             let y = inputText.first!
         
             if acceptedNums.contains(String(describing:y)) {
-                    
-                finalList.append("\(lineNumber).  \(y)  --> [DIGIT]")
+                
+                finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
                 inputText.removeFirst()
+                errorCount += 1
                 lineNumber += 1
                 startCharList()
                     
@@ -566,6 +567,14 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 startCharList()
             
             
+            } else if y == "$" || y == "\n" || y == "\t" {
+                
+                finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
+                inputText.removeFirst()
+                errorCount += 1
+                lineNumber += 1
+                startCharList()
+            
             } else {
                     
                 checkNext()
@@ -574,7 +583,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         } else {
         
-            finalList.append("\(lineNumber).  \"  --> [CHARLIST]")
+            finalList.append("\(lineNumber).  \"  --> [CLOSE_DOUBLE_QUOTES]")
             inputText.removeFirst()
             lineNumber += 1
             checkNext()
