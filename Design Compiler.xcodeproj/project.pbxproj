@@ -7,20 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC42E5F21E55EE1A00DCF504 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC42E5EF1E55EE1A00DCF504 /* Info.plist */; };
+		BC42E5F31E55EE1A00DCF504 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC42E5F01E55EE1A00DCF504 /* Lexer.swift */; };
+		BC42E5F41E55EE1A00DCF504 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC42E5F11E55EE1A00DCF504 /* ViewController.swift */; };
+		BC42E5F61E55EE2F00DCF504 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC42E5F51E55EE2F00DCF504 /* AppDelegate.swift */; };
+		BC42E5F81E55EE6800DCF504 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC42E5F71E55EE6800DCF504 /* Images.xcassets */; };
 		BC6B02BC1E5101E7004DF86B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC6B02BA1E5101E7004DF86B /* Main.storyboard */; };
-		BCDEB1391E554F68009CB5C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEB1351E554F68009CB5C0 /* AppDelegate.swift */; };
-		BCDEB13A1E554F68009CB5C0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BCDEB1361E554F68009CB5C0 /* Info.plist */; };
-		BCDEB13B1E554F68009CB5C0 /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEB1371E554F68009CB5C0 /* Lexer.swift */; };
-		BCDEB13C1E554F68009CB5C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDEB1381E554F68009CB5C0 /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BC42E5EF1E55EE1A00DCF504 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BC42E5F01E55EE1A00DCF504 /* Lexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
+		BC42E5F11E55EE1A00DCF504 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BC42E5F51E55EE2F00DCF504 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BC42E5F71E55EE6800DCF504 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		BC6B02B11E5101E7004DF86B /* Design Compiler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Design Compiler.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC6B02BB1E5101E7004DF86B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		BCDEB1351E554F68009CB5C0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = MacCompiler/AppDelegate.swift; sourceTree = SOURCE_ROOT; };
-		BCDEB1361E554F68009CB5C0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MacCompiler/Info.plist; sourceTree = SOURCE_ROOT; };
-		BCDEB1371E554F68009CB5C0 /* Lexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Lexer.swift; path = MacCompiler/Lexer.swift; sourceTree = SOURCE_ROOT; };
-		BCDEB1381E554F68009CB5C0 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = MacCompiler/ViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,10 +55,11 @@
 		BC6B02B31E5101E7004DF86B /* MacCompiler */ = {
 			isa = PBXGroup;
 			children = (
-				BCDEB1351E554F68009CB5C0 /* AppDelegate.swift */,
-				BCDEB1361E554F68009CB5C0 /* Info.plist */,
-				BCDEB1371E554F68009CB5C0 /* Lexer.swift */,
-				BCDEB1381E554F68009CB5C0 /* ViewController.swift */,
+				BC42E5F71E55EE6800DCF504 /* Images.xcassets */,
+				BC42E5F51E55EE2F00DCF504 /* AppDelegate.swift */,
+				BC42E5EF1E55EE1A00DCF504 /* Info.plist */,
+				BC42E5F01E55EE1A00DCF504 /* Lexer.swift */,
+				BC42E5F11E55EE1A00DCF504 /* ViewController.swift */,
 				BC6B02BA1E5101E7004DF86B /* Main.storyboard */,
 			);
 			name = MacCompiler;
@@ -90,7 +93,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = RyanNeumann;
 				TargetAttributes = {
 					BC6B02B01E5101E7004DF86B = {
@@ -100,7 +103,7 @@
 					};
 				};
 			};
-			buildConfigurationList = BC6B02AC1E5101E7004DF86B /* Build configuration list for PBXProject "MacCompiler" */;
+			buildConfigurationList = BC6B02AC1E5101E7004DF86B /* Build configuration list for PBXProject "Design Compiler" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -123,8 +126,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC42E5F81E55EE6800DCF504 /* Images.xcassets in Resources */,
+				BC42E5F21E55EE1A00DCF504 /* Info.plist in Resources */,
 				BC6B02BC1E5101E7004DF86B /* Main.storyboard in Resources */,
-				BCDEB13A1E554F68009CB5C0 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,9 +139,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BCDEB13C1E554F68009CB5C0 /* ViewController.swift in Sources */,
-				BCDEB1391E554F68009CB5C0 /* AppDelegate.swift in Sources */,
-				BCDEB13B1E554F68009CB5C0 /* Lexer.swift in Sources */,
+				BC42E5F61E55EE2F00DCF504 /* AppDelegate.swift in Sources */,
+				BC42E5F41E55EE1A00DCF504 /* ViewController.swift in Sources */,
+				BC42E5F31E55EE1A00DCF504 /* Lexer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -248,10 +252,11 @@
 		BC6B02C11E5101E7004DF86B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = FYK6NSERUU;
-				INFOPLIST_FILE = "$(SRCROOT)/MacCompiler/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Design Compiler/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.RyanNeumann.MacCompiler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -262,10 +267,11 @@
 		BC6B02C21E5101E7004DF86B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = FYK6NSERUU;
-				INFOPLIST_FILE = "$(SRCROOT)/MacCompiler/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Design Compiler/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.RyanNeumann.MacCompiler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -276,7 +282,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BC6B02AC1E5101E7004DF86B /* Build configuration list for PBXProject "MacCompiler" */ = {
+		BC6B02AC1E5101E7004DF86B /* Build configuration list for PBXProject "Design Compiler" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BC6B02BE1E5101E7004DF86B /* Debug */,
