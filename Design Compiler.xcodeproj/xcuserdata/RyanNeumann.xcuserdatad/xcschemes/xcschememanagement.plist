@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>DesignCompiler.xcscheme</key>
+		<key>Design Compiler.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,7 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>BC0AD3B21E464755004352D6</key>
+		<key>BC6B02B01E5101E7004DF86B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
