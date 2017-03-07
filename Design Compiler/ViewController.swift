@@ -5,12 +5,13 @@
 //  Created by Ryan Neumann on 2/12/17.
 //  Copyright © 2017 RyanNeumann. All rights reserved.
 //
-
 import Cocoa
 
 class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate, NSComboBoxDataSource, NSTextViewDelegate {
     
     @IBOutlet weak var warningLabel: NSTextField!
+    
+    @IBOutlet var parsedList: NSTextView!
     
     @IBOutlet var enteredCode: NSTextView!
     
@@ -28,8 +29,9 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         
         // Do any additional setup after loading the view.
     }
-
+    
     @IBAction func compileClicked(_ sender: Any) {
+        
         
         //Compile button pressed and function activated.
         if enteredCode.string?.isEmpty == false {
@@ -49,24 +51,33 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
                 
                 
                 while (enteredCode.string?.characters.first != "\"") == true {
-
-                        inputText.append(enteredCode.string!.characters.first!)
-                        enteredCode.string?.characters.removeFirst()
                     
+                    if enteredCode.string?.characters.first == nil {
+                    
+                        break
+                        
                     }
                     
-            }
-                
-            if enteredCode.string?.characters.first == "\""{
-                    
-                    inputText.append((enteredCode.string?.characters.first!)!)
+                    inputText.append(enteredCode.string!.characters.first!)
                     enteredCode.string?.characters.removeFirst()
                     
+                }
+                
+            }
+            
+            if enteredCode.string?.characters.first == "\""{
+                
+                inputText.append((enteredCode.string?.characters.first!)!)
+                enteredCode.string?.characters.removeFirst()
+                
                 
             } else if enteredCode.string?.characters.first == " " {
                 
                 enteredCode.string?.characters.removeFirst()
                 
+            } else if enteredCode.string?.characters.first == nil {
+            
+            
             } else {
                 
                 inputText.append((enteredCode.string?.characters.first!)!)
@@ -76,6 +87,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
             
             finalList.removeAll(keepingCapacity: false)
             tokenList.string = ""
+            cleanList.removeAll(keepingCapacity: false)
             compileClicked(self)
             
         } else {
@@ -99,7 +111,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
             lineNumber = 0
             programNum = 1
             checkNext()
- 
+            
         }
         
     }
@@ -161,35 +173,29 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
             compileClicked(self)
             
         }
+
         
         if examplePicker.indexOfSelectedItem == 8 {
-            
-            enteredCode.string = "{\n\tint a\n\ta = 4\n\n\tint b\n\tb = 2 + a\n}$"
-            compileClicked(self)
-            
-        }
-        
-        if examplePicker.indexOfSelectedItem == 9 {
             
             enteredCode.string = "{\n\tif true {\n\t\tint a\n\t\ta = 1\n\t}\n}$"
             compileClicked(self)
             
         }
         
-        if examplePicker.indexOfSelectedItem == 10 {
+        if examplePicker.indexOfSelectedItem == 9 {
             
             enteredCode.string = "{\n\tboolean b\n\tb = true\n\tb = false\n}$"
             compileClicked(self)
             
         }
         
-        if examplePicker.indexOfSelectedItem == 11 {
+        if examplePicker.indexOfSelectedItem == 10 {
             
             enteredCode.string = "{\n\tint x\n\tx = 0\n\n\twhile(x != 5)\n\t{\n\t\tprint(x)\n\t\tx = 1 + x\n\t}\n}$"
             compileClicked(self)
             
         }
-
+        
     }
     
     var exampleTokens = ["Example 1: Minimal", "Example 2: Declaration", "Example 3: Assignment 1", "Example 4: Assignment 2", "Example 5: Print 1", "Example 6: Print 2", "Example 7: String 1", "Example 8: String 2", "Example 9: If Statement", "Example 10: Boolean", "Example 11: While"]
@@ -209,10 +215,9 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
     
     override var representedObject: Any? {
         didSet {
-        // Update the view, if already loaded.
+            // Update the view, if already loaded.
         }
     }
-
-
+    
+    
 }
-
