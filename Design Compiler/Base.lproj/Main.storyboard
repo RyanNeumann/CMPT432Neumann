@@ -757,7 +757,7 @@
                                             <attributedString key="textStorage">
                                                 <fragment content="Enter code here....">
                                                     <attributes>
-                                                        <font key="NSFont" metaFont="system" size="15"/>
+                                                        <font key="NSFont" metaFont="system" size="18"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
                                                 </fragment>
@@ -794,7 +794,7 @@
                                             <attributedString key="textStorage">
                                                 <fragment content="Verbose output will appear here">
                                                     <attributes>
-                                                        <font key="NSFont" metaFont="system" size="15"/>
+                                                        <font key="NSFont" metaFont="system" size="18"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
                                                 </fragment>
@@ -828,7 +828,7 @@
                                             <attributedString key="textStorage">
                                                 <fragment content="CST will appear here....">
                                                     <attributes>
-                                                        <font key="NSFont" metaFont="system"/>
+                                                        <font key="NSFont" metaFont="system" size="18"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
                                                 </fragment>

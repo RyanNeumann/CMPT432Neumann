@@ -22,6 +22,9 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        parsedList.font = NSFont(name: "Arial", size: 18)
+        enteredCode.font = NSFont(name: "Arial", size: 18)
+        tokenList.font = NSFont(name: "Arial", size: 18)
         
         examplePicker.dataSource = self
         examplePicker.delegate = self
@@ -107,15 +110,16 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
                 enteredCode.string = textEntered
                 
             }
-            
+    
             
             textEntered = ""
             errorCount = 0
             lineNumber = 0
             checkNext()
             finalList = [""]
+            
         }
-        
+    
     }
     
     func comboBoxSelectionDidChange(_ notification: Notification) {

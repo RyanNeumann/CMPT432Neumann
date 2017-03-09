@@ -8,13 +8,15 @@
 
 import Foundation
 
+var currentBrace = 0
 var quoteMatch = 0
+var parenMatch = 0
 var parseFinal = [Any]()
 var parseList = cleanList
 var currentTerm = String()
 var cst = [Any]()
 var cstIndent = 0
-var braceCounter = 0
+var braceCounter = [Int]()
 var parseCount = 0
 var statementEnding = 0
 
@@ -28,7 +30,7 @@ extension ViewController {
         parsedList.string?.removeAll()
         parsedList.string = ""
         parseFinal.removeAll()
-        braceCounter = 0
+        braceCounter = []
         //Initializing Block
         cstIndent = 0
         cst.append("< Program >")
@@ -71,7 +73,7 @@ extension ViewController {
         }
     
     }
-
+    
     func ParseBlock() {
         
         cstIndent += 1
@@ -79,7 +81,6 @@ extension ViewController {
         finalList.append("Expecting a left brace")
         currentTerm = "left brace"
         match(param: "{")
-        braceCounter = cstIndent
         
         cst.append(String(repeatElement("•", count: cstIndent))  + "< Statement List >")
         ParseStatementList()
@@ -306,6 +307,7 @@ extension ViewController {
     
     }
     
+    
     func ParsePrint() {
     
         finalList.append("Expecting Print Statement")
@@ -313,12 +315,14 @@ extension ViewController {
         match(param: "print")
         finalList.append("Expecting Left Paren")
         currentTerm = "left paren"
+        parenMatch = cstIndent
         match(param: "(")
         ParseExpr()
         
         if parseList.isEmpty == false {
             
             currentTerm = "right paren"
+            cstIndent = parenMatch
             finalList.append("Expecting Right Paren")
             match(param: ")")
             
@@ -450,7 +454,8 @@ extension ViewController {
             if String(describing: param) == "}" {
                
                 print(braceCounter)
-                cst.append(String(repeatElement("•", count: braceCounter))  + "[ " + String(describing: param) + " ]")
+                currentBrace -= 1
+                cst.append(String(repeatElement("•", count: braceCounter[currentBrace] as! Int))  + "[ " + String(describing: param) + " ]")
                 
             }
             
@@ -472,8 +477,11 @@ extension ViewController {
                 if String(describing: param) == "{" {
                     
                     cstIndent += 1
-                    cst.append(String(repeatElement("•", count: cstIndent))  + "[ " + String(describing: param) + " ]")
-                    
+                    print(cstIndent)
+                    print(currentBrace)
+                    braceCounter.insert(cstIndent, at: currentBrace)
+                    cst.append(String(repeatElement("•", count: braceCounter[currentBrace] as! Int))  + "[ " + String(describing: param) + " ]")
+                    currentBrace += 1
                 
                 } else {
                     
