@@ -8,18 +8,21 @@
 
 import Foundation
 
+var quoteMatch = 0
 var parseFinal = [Any]()
 var parseList = cleanList
 var currentTerm = String()
 var cst = [Any]()
 var cstIndent = 0
 var braceCounter = 0
+var parseCount = 0
+var statementEnding = 0
 
 extension ViewController {
     
+    
     func ParseProgram() {
         //Clears any settings from previous run
-        
         parseList = cleanList
         cleanList.removeAll()
         parsedList.string?.removeAll()
@@ -28,17 +31,24 @@ extension ViewController {
         braceCounter = 0
         //Initializing Block
         cstIndent = 0
-        cst.append("<Program>")
+        cst.append("< Program >")
+        finalList.append("Parsing program \(parseCount)...")
         ParseBlock()
+        
         
         if parseList.isEmpty == false {
             //Skip check if list is empty
             cstIndent -= 1
-            cst.append("-[$]")
+            cst.append("•[$]\n ")
             currentTerm = "EOP"
-            parseFinal.append("Expecting EOP")
+            finalList.append("Expecting EOP")
             match(param: "$")
-            parseFinal.insert("Parsing completed successfully.\n", at: 0)
+            
+            if finalList.contains("Parsing completed successfully.\n") == false {
+                print("here")
+                finalList.insert("Parsing completed successfully.\n", at: 0)
+            
+            }
         }
         
         parsedList.string = ""
@@ -56,7 +66,6 @@ extension ViewController {
         for element in parseFinal {
             //Print final string in Parser box.
             tokenList.string?.append(String(describing: element) + "\n")
-            
             lineNumber += 1
             
         }
@@ -66,23 +75,25 @@ extension ViewController {
     func ParseBlock() {
         
         cstIndent += 1
-        cst.append(String(repeatElement("-", count: cstIndent))  + "<Block>")
-        parseFinal.append("Expecting a left brace")
+        cst.append(String(repeatElement("•", count: cstIndent))  + "< Block >")
+        finalList.append("Expecting a left brace")
         currentTerm = "left brace"
         match(param: "{")
+        braceCounter = cstIndent
         
-        cst.append(String(repeatElement("-", count: cstIndent))  + "<Statement List>")
+        cst.append(String(repeatElement("•", count: cstIndent))  + "< Statement List >")
         ParseStatementList()
         
         if parseList.isEmpty == false {
             
-            parseFinal.append("Expecting a right brace")
+            finalList.append("Expecting a right brace")
             currentTerm = "right brace"
-            print("Here")
             match(param: "}")
 
         }
     }
+    
+    
     
     func ParseStatementList() {
         
@@ -96,14 +107,15 @@ extension ViewController {
                 
                 
                     cstIndent += 1
-                    cst.append(String(repeatElement("-", count: cstIndent))  + "<Statement>")
+                    statementEnding = cstIndent
+                    cst.append(String(repeatElement("•", count: cstIndent))  + "< Statement >")
                     ParseStatement()
                 
                 print(currentTerm)
-                if currentTerm != "right brace" {
+                if currentTerm != "right brace" && cst.isEmpty == false {
                     
-                    cstIndent += 1
-                    cst.append(String(repeatElement("-", count: cstIndent))  + "<Statement List>")
+                    cst.append(String(repeatElement("•", count: statementEnding))  + "< Statement List >")
+                    cstIndent = statementEnding
                     
                 }
                 
@@ -121,35 +133,35 @@ extension ViewController {
             print(parseList)
             if parseList.first! == "print" {
                 cstIndent += 1
-                cst.append(String(repeatElement("-", count: cstIndent))  + "<PRINT>")
+                cst.append(String(repeatElement("•", count: cstIndent))  + "< Print >")
                 ParsePrint()
                 
             } else if parseList.first! == "int" || parseList.first! == "string" || parseList.first! == "boolean" {
                 
                 cstIndent += 1
-                cst.append(String(repeatElement("-", count: cstIndent))  + "<VARDEC>")
-                parseFinal.append("Expecting type")
+                cst.append(String(repeatElement("•", count: cstIndent))  + "< Var Decl >")
+                finalList.append("Expecting type")
                 ParseVarDec()
                 
             } else if parseList.first! == "while" {
                 
                 cstIndent += 1
-                cst.append(String(repeatElement("-", count: cstIndent))  + "<WHILE>")
-                parseFinal.append("Expecting while statement")
+                cst.append(String(repeatElement("•", count: cstIndent))  + "< While Statement >")
+                finalList.append("Expecting while statement")
                 ParseWhile()
                 
             } else if parseList.first! == "if" {
                 
                 cstIndent += 1
-                cst.append(String(repeatElement("-", count: cstIndent))  + "<IF>")
-                parseFinal.append("Expecting if statement")
+                cst.append(String(repeatElement("•", count: cstIndent))  + "< If Statement >")
+                finalList.append("Expecting if statement")
                 ParseIf()
                 
             } else if acceptedChars.contains(String(describing: parseList.first!)) {
                 
                 cstIndent += 1
-                cst.append(String(repeatElement("-", count: cstIndent))  + "<ASSIGNMENT>")
-                parseFinal.append("Expecting Id")
+                cst.append(String(repeatElement("•", count: cstIndent))  + "< Assignment >")
+                finalList.append("Expecting Id")
                 ParseAssignment()
                 
             } else if parseList.first! == "{" {
@@ -173,7 +185,7 @@ extension ViewController {
         currentTerm = "if"
         match(param: "if")
         cstIndent += 1
-        cst.append(String(repeatElement("-", count: cstIndent))  + "<BOOLEAN>")
+        cst.append(String(repeatElement("•", count: cstIndent))  + "<Boolean Expression>")
         ParseBoolean()
         
         ParseBlock()
@@ -184,37 +196,37 @@ extension ViewController {
         
         if parseList.first! == "(" {
             
-            parseFinal.append("Expecting left paren")
+            finalList.append("Expecting left paren")
             currentTerm = "left paren"
             match(param: "(")
             ParseExpr()
             
             if parseList.first! == "==" {
-                parseFinal.append("Expecting boolop")
+                finalList.append("Expecting boolop")
                 currentTerm = "boolop"
                 match(param: "==")
                 ParseExpr()
                 
             } else if parseList.first! == "!=" {
-                parseFinal.append("Expecting boolop")
+                finalList.append("Expecting boolop")
                 currentTerm = "boolop"
                 match(param: "!=")
                 ParseExpr()
                 
             }
-            parseFinal.append("Expecting right paren")
+            finalList.append("Expecting right paren")
             currentTerm = "right paren"
             match(param: ")")
             
         } else if parseList.first! == "true" {
             
-            parseFinal.append("Expecting boolVal")
+            finalList.append("Expecting boolVal")
             currentTerm = "boolVal"
             match(param: "true")
             
         } else if parseList.first! == "false" {
             
-            parseFinal.append("Expecting boolVal")
+            finalList.append("Expecting boolVal")
             currentTerm = "boolVal"
             match(param: "false")
         
@@ -229,7 +241,7 @@ extension ViewController {
     func ParseWhile() {
     
         
-        parseFinal.append("- Got while statement!")
+        finalList.append("- Got while statement!")
         parseList.removeFirst()
         ParseBoolean()
         ParseBlock()
@@ -238,7 +250,25 @@ extension ViewController {
     
     func ParseVarDec() {
     
-        parseFinal.append("- Got type: \(String(describing: parseList.first!))!")
+        finalList.append("- Got type: \(String(describing: parseList.first!))!")
+        
+        if String(describing: parseList.first!) == "int" {
+        
+            cstIndent += 1
+            cst.append(String(repeatElement("•", count: cstIndent))  + "[ int ]")
+        
+        } else if String(describing: parseList.first!) == "string" {
+            
+            cstIndent += 1
+            cst.append(String(repeatElement("•", count: cstIndent))  + "[ string ]")
+            
+        } else if String(describing: parseList.first!) == "boolean" {
+            
+            cstIndent += 1
+            cst.append(String(repeatElement("•", count: cstIndent))  + "[ boolean ]")
+            
+        }
+        
         parseList.removeFirst()
         ParseId()
     
@@ -247,11 +277,12 @@ extension ViewController {
     
     func ParseId() {
     
-        parseFinal.append("Expecting Id")
+        finalList.append("Expecting Id")
         
         if acceptedChars.contains(String(describing: parseList.first!)) {
             
-            parseFinal.append("- Got Id: \(String(describing: parseList.first!))!")
+            cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
+            finalList.append("- Got Id: \(String(describing: parseList.first!))!")
             parseList.removeFirst()
             
         } else {
@@ -265,9 +296,10 @@ extension ViewController {
     
     func ParseAssignment() {
         
-        parseFinal.append("- Got Id: \(String(describing: parseList.first!))!")
+        finalList.append("- Got Id: \(String(describing: parseList.first!))!")
+        cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
         parseList.removeFirst()
-        parseFinal.append("Expecting Equals")
+        finalList.append("Expecting Equals")
         currentTerm = "Equals"
         match(param: "=")
         ParseExpr()
@@ -276,10 +308,10 @@ extension ViewController {
     
     func ParsePrint() {
     
-        parseFinal.append("Expecting Print Statement")
+        finalList.append("Expecting Print Statement")
         currentTerm = "print"
         match(param: "print")
-        parseFinal.append("Expecting Left Paren")
+        finalList.append("Expecting Left Paren")
         currentTerm = "left paren"
         match(param: "(")
         ParseExpr()
@@ -287,7 +319,7 @@ extension ViewController {
         if parseList.isEmpty == false {
             
             currentTerm = "right paren"
-            parseFinal.append("Expecting Right Paren")
+            finalList.append("Expecting Right Paren")
             match(param: ")")
             
         }
@@ -296,6 +328,9 @@ extension ViewController {
     
     
     func ParseExpr() {
+        
+        cst.append(String(repeatElement("•", count: cstIndent))  + "< Expression >")
+        cstIndent += 1
         
         if parseList.isEmpty == false {
         
@@ -313,7 +348,7 @@ extension ViewController {
                 
             }  else if parseList.first! == "while" {
                 
-                parseFinal.append("Expecting while statement")
+                finalList.append("Expecting while statement")
                 ParseWhile()
                 
             }  else if parseList.first! == "\"" {
@@ -333,20 +368,26 @@ extension ViewController {
     
     func ParseIntExpr() {
         
+        cst.append(String(repeatElement("•", count: cstIndent))  + "< Int Expression >")
+        cstIndent += 1
+        
         if parseList[1] == "+" {
             
-            parseFinal.append("Expecting digit")
-            parseFinal.append("- Got digit: \(String(describing: parseList.first!))!")
+            
+            finalList.append("Expecting digit")
+            finalList.append("- Got digit: \(String(describing: parseList.first!))!")
+            cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
             parseList.removeFirst()
-            parseFinal.append("Expecting IntOp")
+            finalList.append("Expecting IntOp")
             currentTerm = "IntOp"
             match(param: "+")
             ParseExpr()
             
         } else {
         
-            parseFinal.append("Expecting digit")
-            parseFinal.append("- Got digit: \(String(describing: parseList.first!))!")
+            finalList.append("Expecting digit")
+            cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
+            finalList.append("- Got digit: \(String(describing: parseList.first!))!")
             parseList.removeFirst()
         
         }
@@ -356,11 +397,14 @@ extension ViewController {
     
     func ParseStringExpr() {
         
-        parseFinal.append("Expecting open_quote")
+        
+        cst.append(String(repeatElement("•", count: cstIndent))  + "< String Expression >")
+        finalList.append("Expecting open_quote")
+        quoteMatch = cstIndent
         currentTerm = "open_quote"
         match(param: "\"")
         ParseCharList()
-        parseFinal.append("Expecting close_quote")
+        finalList.append("Expecting close_quote")
         currentTerm = "close_quote"
         match(param: "\"")
 
@@ -368,17 +412,22 @@ extension ViewController {
     
     func ParseCharList() {
     
+         cst.append(String(repeatElement("•", count: cstIndent))  + "< Char List >")
+        cstIndent += 1
+        
         if acceptedChars.contains(String(describing: parseList.first!)) {
         
-            parseFinal.append("Expecting char")
-            parseFinal.append("- Got char: \(String(describing: parseList.first!))!")
+            finalList.append("Expecting char")
+            cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
+            finalList.append("- Got char: \(String(describing: parseList.first!))!")
             parseList.removeFirst()
             ParseCharList()
         
         } else if parseList.first! == " " {
         
-            parseFinal.append("Expecting potential white space")
-            parseFinal.append("- Got white space!")
+            cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
+            finalList.append("Expecting potential white space")
+            finalList.append("- Got white space!")
             parseList.removeFirst()
             ParseCharList()
             
@@ -399,42 +448,57 @@ extension ViewController {
         
     
             if String(describing: param) == "}" {
-                if braceCounter < 1 {
+               
+                print(braceCounter)
+                cst.append(String(repeatElement("•", count: braceCounter))  + "[ " + String(describing: param) + " ]")
                 
-                    braceCounter += 1
-                
-                } else {
-                    
-                    cstIndent -= 3
-                    
-                }
             }
             
-            if String(describing: param) != "}"  && String(describing: param) != "$" {
+            if String(describing: param) == "\"" {
             
-                cstIndent += 1
+                    cst.append(String(repeatElement("•", count: quoteMatch))  + "[ " + String(describing: param) + " ]")
             
-            } else if String(describing: param) == "$" {
+            }
+            
+             if String(describing: param) == "$" {
             
                     cstIndent -= 1
             
             }
 
             
-            if String(describing: param) != "$" && String(describing: param) != "Statement List" {
+            if String(describing: param) != "$" && String(describing: param) != "Statement List" && String(describing: param) != "}" && String(describing: param) != "\""{
                 
-                cst.append(String(repeatElement("-", count: cstIndent))  + "[" + String(describing: param) + "]")
+                if String(describing: param) == "{" {
+                    
+                    cstIndent += 1
+                    cst.append(String(repeatElement("•", count: cstIndent))  + "[ " + String(describing: param) + " ]")
+                    
                 
+                } else {
+                    
+                    print("now")
+                    cst.append(String(repeatElement("•", count: cstIndent))  + "[ " + String(describing: param) + " ]")
+                    
+                }
             }
             
-            parseFinal.append("- Got \(currentTerm)!")
+            finalList.append("- Got \(currentTerm)!")
             parseList.removeFirst()
+            
+            if currentTerm == "EOP" {
+                
+                finalList.append("Program \(parseCount) completed successfully.\n")
+                parseCount += 1
+                
+            }
             
         } else {
             
             
-            parseFinal.append("\nError - Expecting \(currentTerm).  Instead got \(String(describing: parseList.first!))")
+            finalList.append("\nError - Expecting \(currentTerm).  Instead got \(String(describing: parseList.first!))")
             parseList.removeAll()
+            cst.removeAll()
             
         }
     }

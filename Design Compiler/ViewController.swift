@@ -32,7 +32,9 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
     
     @IBAction func compileClicked(_ sender: Any) {
         
-        
+        cst = []
+        parseCount = 0
+        programNum = 0
         
         //Compile button pressed and function activated.
         if enteredCode.string?.isEmpty == false {
@@ -86,9 +88,9 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
                 
             }
             
-            finalList.removeAll(keepingCapacity: false)
-            tokenList.string = ""
+            finalList = []
             cleanList.removeAll(keepingCapacity: false)
+            parsedList.string = ""
             compileClicked(self)
             
         } else {
@@ -110,9 +112,8 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
             textEntered = ""
             errorCount = 0
             lineNumber = 0
-            programNum = 1
             checkNext()
-            
+            finalList = [""]
         }
         
     }

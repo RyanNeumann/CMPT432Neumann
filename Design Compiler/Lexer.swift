@@ -11,7 +11,7 @@ var errorCount = 0
 
 var lineNumber = 0
 
-var programNum = 1
+var programNum = 0
 
 var inputText = [Character]()
 
@@ -44,11 +44,11 @@ extension ViewController {
             printFinal()
             
         } else {
-            
+            print(finalList)
             if finalList.isEmpty {
                 //Processing Program 1
-                finalList.append("Lexing program 1...")
-                programNum += 1
+                
+                finalList.append("Lexing program 0...")
                 checkNext()
                 
             } else {
@@ -359,7 +359,7 @@ extension ViewController {
                 } else if y == "$" {
                     //CHECKS FOR END-OF-PROGRAM AND CREATES NEW ONE
                     cleanList.append("$")
-                    finalList.append("\(lineNumber).  $  --> [EOP]")
+                    finalList.append("\(lineNumber).  $  --> [EOP]\n")
                     inputText.removeFirst()
                     lineNumber += 1
                     newProgram()
@@ -603,17 +603,20 @@ extension ViewController {
             
             if inputText.isEmpty == false {
                 
-                finalList.append("Lex completed successfully.")
-                finalList.append("\n")
-                finalList.append("Lexing program \(programNum)...")
+                finalList.append("Lex completed program \(programNum) successfully.\n")
+                ParseProgram()
                 programNum += 1
+                finalList.append("Lexing program \(programNum)...")
                 checkNext()
                 
             } else {
                 
+                finalList.append("Lex completed  program \(programNum) successfully.\n")
+                programNum += 1
                 ParseProgram()
-                finalList.append("Lex completed successfully.")
+                finalList.insert("Lex completed successfully!", at: 0)
                 printFinal()
+                
             }
             
         } else {
@@ -644,8 +647,15 @@ extension ViewController {
         
         for element in finalList {
             
-            tokenList.string?.append(element + "\n")
+            if element.contains("$  --> [EOP]") {
             
+            tokenList.string?.append(element)
+            
+            } else {
+            
+                tokenList.string?.append(element + "\n")
+            
+            }
         }
         
         
