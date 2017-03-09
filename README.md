@@ -19,5 +19,6 @@ This will process the code and open the application.
 If you would like to view the code, either open the ViewController.swift file in xCode, or navigate to the DesignCompiler folder previously mentioned and you will find ViewController.swift.
 
 For Lexer: Check Lexer.swift.
+
 For Parser: Check Parser.swift.
 
