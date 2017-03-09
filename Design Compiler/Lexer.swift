@@ -11,6 +11,8 @@ var errorCount = 0
 
 var lineNumber = 0
 
+var currentLine = 0
+
 var programNum = 0
 
 var inputText = [Character]()
@@ -56,7 +58,7 @@ extension ViewController {
                 if unacceptedList.contains(String(describing: y!)){
                     
                     //CHECK FOR ERRORS
-                    finalList.append("\(lineNumber). ERROR: Unrecognized Token: \(y!) on line \(lineNumber)")
+                    finalList.append("\(lineNumber). ERROR: Unrecognized Token: \(y!) on line \(currentLine)")
                     inputText.removeFirst()
                     errorCount += 1
                     lineNumber += 1
@@ -376,7 +378,7 @@ extension ViewController {
                         
                     } else {
                         
-                        finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
+                        finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
                         inputText.removeFirst()
                         errorCount += 1
                         lineNumber += 1
@@ -386,6 +388,7 @@ extension ViewController {
                     
                 } else if y == "\n" {
                     
+                    currentLine += 1
                     inputText.removeFirst()
                     checkNext()
                     
@@ -503,7 +506,7 @@ extension ViewController {
             
             if acceptedNums.contains(String(describing:y)) {
                 
-                finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
+                finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
                 inputText.removeFirst()
                 errorCount += 1
                 lineNumber += 1
@@ -528,7 +531,7 @@ extension ViewController {
                 
             } else if y == "$" || y == "\n" || y == "\t" {
                 
-                finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
+                finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
                 inputText.removeFirst()
                 errorCount += 1
                 lineNumber += 1
@@ -587,7 +590,7 @@ extension ViewController {
             
         } else {
             
-            finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(lineNumber)")
+            finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
             inputText.removeFirst()
             errorCount += 1
             lineNumber += 1
@@ -605,7 +608,6 @@ extension ViewController {
                 
                 finalList.append("Lex completed program \(programNum) successfully.\n")
                 ParseProgram()
-                programNum += 1
                 finalList.append("Lexing program \(programNum)...")
                 checkNext()
                 

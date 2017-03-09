@@ -5,7 +5,6 @@
 //  Created by Ryan Neumann on 3/6/17.
 //  Copyright © 2017 RyanNeumann. All rights reserved.
 //
-
 import Foundation
 
 var currentBrace = 0
@@ -22,7 +21,6 @@ var statementEnding = 0
 
 extension ViewController {
     
-    
     func ParseProgram() {
         //Clears any settings from previous run
         parseList = cleanList
@@ -37,7 +35,6 @@ extension ViewController {
         finalList.append("Parsing program \(parseCount)...")
         ParseBlock()
         
-        
         if parseList.isEmpty == false {
             //Skip check if list is empty
             cstIndent -= 1
@@ -47,14 +44,14 @@ extension ViewController {
             match(param: "$")
             
             if finalList.contains("Parsing completed successfully.\n") == false {
-                print("here")
+            
                 finalList.insert("Parsing completed successfully.\n", at: 0)
             
             }
+            
         }
         
         parsedList.string = ""
-        var lineNumber = 0
         
         for element in cst {
         
@@ -62,10 +59,10 @@ extension ViewController {
         
         }
         
-        
         tokenList.string?.append("\n")
         
         for element in parseFinal {
+            
             //Print final string in Parser box.
             tokenList.string?.append(String(describing: element) + "\n")
             lineNumber += 1
@@ -81,7 +78,6 @@ extension ViewController {
         finalList.append("Expecting a left brace")
         currentTerm = "left brace"
         match(param: "{")
-        
         cst.append(String(repeatElement("•", count: cstIndent))  + "< Statement List >")
         ParseStatementList()
         
@@ -92,9 +88,8 @@ extension ViewController {
             match(param: "}")
 
         }
+        
     }
-    
-    
     
     func ParseStatementList() {
         
@@ -102,17 +97,15 @@ extension ViewController {
             
             if parseList.first! == "}" || parseList.first! == "" || parseList.first! == "$" || parseList.first! == "\"" || parseList.first! == "'"{
                 
-                
+                //Do nothing
                 
             } else {
                 
-                
-                    cstIndent += 1
-                    statementEnding = cstIndent
-                    cst.append(String(repeatElement("•", count: cstIndent))  + "< Statement >")
-                    ParseStatement()
-                
-                print(currentTerm)
+                cstIndent += 1
+                statementEnding = cstIndent
+                cst.append(String(repeatElement("•", count: cstIndent))  + "< Statement >")
+                ParseStatement()
+        
                 if currentTerm != "right brace" && cst.isEmpty == false {
                     
                     cst.append(String(repeatElement("•", count: statementEnding))  + "< Statement List >")
@@ -121,6 +114,7 @@ extension ViewController {
                 }
                 
                 ParseStatementList()
+                
             }
             
         }
@@ -131,8 +125,8 @@ extension ViewController {
         
         if parseList.isEmpty == false {
         
-            print(parseList)
             if parseList.first! == "print" {
+                
                 cstIndent += 1
                 cst.append(String(repeatElement("•", count: cstIndent))  + "< Print >")
                 ParsePrint()
@@ -182,7 +176,6 @@ extension ViewController {
     
     func ParseIf() {
         
-        
         currentTerm = "if"
         match(param: "if")
         ParseBoolean()
@@ -203,18 +196,21 @@ extension ViewController {
             ParseExpr()
             
             if parseList.first! == "==" {
+                
                 finalList.append("Expecting boolop")
                 currentTerm = "boolop"
                 match(param: "==")
                 ParseExpr()
                 
             } else if parseList.first! == "!=" {
+                
                 finalList.append("Expecting boolop")
                 currentTerm = "boolop"
                 match(param: "!=")
                 ParseExpr()
                 
             }
+            
             finalList.append("Expecting right paren")
             currentTerm = "right paren"
             match(param: ")")
@@ -241,7 +237,6 @@ extension ViewController {
     
     func ParseWhile() {
     
-        
         finalList.append("- Got while statement!")
         parseList.removeFirst()
         ParseBoolean()
@@ -275,7 +270,6 @@ extension ViewController {
     
     }
     
-    
     func ParseId() {
     
         finalList.append("Expecting Id")
@@ -307,7 +301,6 @@ extension ViewController {
     
     }
     
-    
     func ParsePrint() {
     
         finalList.append("Expecting Print Statement")
@@ -329,7 +322,6 @@ extension ViewController {
         }
 
     }
-    
     
     func ParseExpr() {
         
@@ -377,7 +369,6 @@ extension ViewController {
         
         if parseList[1] == "+" {
             
-            
             finalList.append("Expecting digit")
             finalList.append("- Got digit: \(String(describing: parseList.first!))!")
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
@@ -396,11 +387,9 @@ extension ViewController {
         
         }
         
-        
     }
     
     func ParseStringExpr() {
-        
         
         cst.append(String(repeatElement("•", count: cstIndent))  + "< String Expression >")
         finalList.append("Expecting open_quote")
@@ -437,25 +426,21 @@ extension ViewController {
             
         } else {
         
-        
+            //Do nothing
+            
         }
         
     }
     
-    
     func match(param: Any) {
-        
-        print(param)
-        
         
         if String(describing: param) == parseList.first! {
         
-    
             if String(describing: param) == "}" {
                
                 print(braceCounter)
                 currentBrace -= 1
-                cst.append(String(repeatElement("•", count: braceCounter[currentBrace] as! Int))  + "[ " + String(describing: param) + " ]")
+                cst.append(String(repeatElement("•", count: braceCounter[currentBrace] ))  + "[ " + String(describing: param) + " ]")
                 
             }
             
@@ -480,12 +465,11 @@ extension ViewController {
                     print(cstIndent)
                     print(currentBrace)
                     braceCounter.insert(cstIndent, at: currentBrace)
-                    cst.append(String(repeatElement("•", count: braceCounter[currentBrace] as! Int))  + "[ " + String(describing: param) + " ]")
+                    cst.append(String(repeatElement("•", count: braceCounter[currentBrace] ))  + "[ " + String(describing: param) + " ]")
                     currentBrace += 1
                 
                 } else {
                     
-                    print("now")
                     cst.append(String(repeatElement("•", count: cstIndent))  + "[ " + String(describing: param) + " ]")
                     
                 }

@@ -38,6 +38,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         cst = []
         parseCount = 0
         programNum = 0
+        currentLine = 0
         
         //Compile button pressed and function activated.
         if enteredCode.string?.isEmpty == false {
@@ -83,6 +84,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
                 
             } else if enteredCode.string?.characters.first == nil {
             
+                //Do nothing
             
             } else {
                 
