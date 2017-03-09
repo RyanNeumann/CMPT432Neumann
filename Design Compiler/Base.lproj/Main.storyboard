@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12100" systemVersion="16E175b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16E183b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12100"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -685,19 +685,19 @@
             <objects>
                 <viewController showSeguePresentationStyle="single" id="XfG-lQ-9wD" customClass="ViewController" customModule="Design_Compiler" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="700" height="700"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="thJ-oQ-VYf">
-                                <rect key="frame" x="-10" y="-189" width="743" height="985"/>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="thJ-oQ-VYf">
+                                <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="985" id="Aht-pW-Wp3"/>
-                                    <constraint firstAttribute="width" constant="743" id="CnM-XE-Q3V"/>
+                                    <constraint firstAttribute="height" constant="889" id="Aht-pW-Wp3"/>
+                                    <constraint firstAttribute="width" constant="700" id="CnM-XE-Q3V"/>
                                 </constraints>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="bottomRight" imageScaling="axesIndependently" image="background" id="jEo-cO-4Lx"/>
                             </imageView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Gy-j3-t9h">
-                                <rect key="frame" x="337" y="653" width="48" height="22"/>
+                                <rect key="frame" x="338" y="953" width="48" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Code" drawsBackground="YES" id="C5G-tU-LOs">
                                     <font key="font" metaFont="system" size="18"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -705,7 +705,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DeS-Lc-yvm">
-                                <rect key="frame" x="141" y="329" width="91" height="22"/>
+                                <rect key="frame" x="141" y="629" width="91" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Token List" drawsBackground="YES" id="2j6-9v-tjA">
                                     <font key="font" metaFont="system" size="18"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -713,7 +713,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OqG-3E-4qe">
-                                <rect key="frame" x="271" y="346" width="159" height="32"/>
+                                <rect key="frame" x="421" y="646" width="159" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="147" id="aAS-WR-IqH"/>
                                 </constraints>
@@ -726,7 +726,7 @@
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQh-G4-z1u">
-                                <rect key="frame" x="213" y="6" width="274" height="37"/>
+                                <rect key="frame" x="363" y="6" width="274" height="37"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="274" id="3jx-5e-e6l"/>
                                     <constraint firstAttribute="height" constant="37" id="tFp-oy-hCj"/>
@@ -738,7 +738,7 @@
                                 </textFieldCell>
                             </textField>
                             <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TWm-Vu-ODw">
-                                <rect key="frame" x="235" y="673" width="233" height="26"/>
+                                <rect key="frame" x="385" y="973" width="233" height="26"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="230" id="Ff2-3J-0lp"/>
                                 </constraints>
@@ -752,21 +752,21 @@
                                 </connections>
                             </comboBox>
                             <scrollView wantsLayer="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7WV-77-sIa">
-                                <rect key="frame" x="21" y="384" width="659" height="261"/>
+                                <rect key="frame" x="21" y="684" width="959" height="261"/>
                                 <clipView key="contentView" id="kad-ln-jEc">
-                                    <rect key="frame" x="1" y="1" width="657" height="259"/>
+                                    <rect key="frame" x="1" y="1" width="957" height="259"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView importsGraphics="NO" richText="NO" allowsCharacterPickerTouchBarItem="NO" allowsDocumentBackgroundColorChange="YES" allowsUndo="YES" textCompletion="NO" id="4Dj-3l-3fR">
-                                            <rect key="frame" x="0.0" y="-1" width="657" height="259"/>
+                                        <textView importsGraphics="NO" richText="NO" fieldEditor="YES" allowsCharacterPickerTouchBarItem="NO" allowsDocumentBackgroundColorChange="YES" allowsUndo="YES" textCompletion="NO" id="4Dj-3l-3fR">
+                                            <rect key="frame" x="0.0" y="-1" width="957" height="259"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="657" height="259"/>
-                                            <size key="maxSize" width="664" height="10000000"/>
+                                            <size key="minSize" width="957" height="259"/>
+                                            <size key="maxSize" width="1037" height="10000000"/>
                                             <attributedString key="textStorage">
                                                 <fragment content="Enter code here....">
                                                     <attributes>
-                                                        <font key="NSFont" metaFont="smallSystem"/>
+                                                        <font key="NSFont" size="14" name="AvenirNext-Regular"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
                                                 </fragment>
@@ -784,26 +784,26 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Go5-UQ-zyg">
-                                    <rect key="frame" x="642" y="1" width="16" height="259"/>
+                                    <rect key="frame" x="942" y="1" width="16" height="259"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
                             <scrollView wantsLayer="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H7s-Be-1O6">
-                                <rect key="frame" x="20" y="56" width="330" height="265"/>
+                                <rect key="frame" x="20" y="56" width="330" height="565"/>
                                 <clipView key="contentView" id="SdQ-bz-bw3">
-                                    <rect key="frame" x="1" y="1" width="328" height="263"/>
+                                    <rect key="frame" x="1" y="1" width="328" height="563"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView editable="NO" importsGraphics="NO" richText="NO" usesFontPanel="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" textCompletion="NO" id="e4U-kE-prD">
-                                            <rect key="frame" x="0.0" y="-1" width="328" height="263"/>
+                                        <textView editable="NO" importsGraphics="NO" richText="NO" fieldEditor="YES" usesFontPanel="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" textCompletion="NO" id="e4U-kE-prD">
+                                            <rect key="frame" x="0.0" y="-1" width="328" height="563"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="328" height="263"/>
+                                            <size key="minSize" width="328" height="563"/>
                                             <size key="maxSize" width="776" height="10000000"/>
                                             <attributedString key="textStorage">
                                                 <fragment content="Tokens will appear here....">
                                                     <attributes>
-                                                        <font key="NSFont" metaFont="smallSystem"/>
+                                                        <font key="NSFont" size="14" name="AvenirNext-Regular"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
                                                 </fragment>
@@ -818,26 +818,26 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="ujT-vG-Z1T">
-                                    <rect key="frame" x="313" y="1" width="16" height="263"/>
+                                    <rect key="frame" x="313" y="1" width="16" height="563"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <scrollView wantsLayer="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s3d-od-SkU">
-                                <rect key="frame" x="350" y="56" width="330" height="265"/>
+                            <scrollView wantsLayer="YES" misplaced="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s3d-od-SkU">
+                                <rect key="frame" x="350" y="326" width="207" height="295"/>
                                 <clipView key="contentView" id="MVE-i7-rlp">
-                                    <rect key="frame" x="1" y="1" width="328" height="263"/>
+                                    <rect key="frame" x="1" y="1" width="205" height="293"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView editable="NO" importsGraphics="NO" richText="NO" findStyle="panel" incrementalSearchingEnabled="YES" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" textCompletion="NO" id="UJt-UU-DSs">
-                                            <rect key="frame" x="0.0" y="-1" width="328" height="263"/>
+                                        <textView editable="NO" importsGraphics="NO" richText="NO" fieldEditor="YES" usesFontPanel="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" textCompletion="NO" id="UJt-UU-DSs">
+                                            <rect key="frame" x="0.0" y="-1" width="205" height="293"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="328" height="263"/>
-                                            <size key="maxSize" width="776" height="10000000"/>
+                                            <size key="minSize" width="205" height="293"/>
+                                            <size key="maxSize" width="998" height="10000000"/>
                                             <attributedString key="textStorage">
                                                 <fragment content="Parsing will appear here....">
                                                     <attributes>
-                                                        <font key="NSFont" metaFont="smallSystem"/>
+                                                        <font key="NSFont" metaFont="system"/>
                                                         <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
                                                 </fragment>
@@ -852,12 +852,12 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="LUq-He-P4r">
-                                    <rect key="frame" x="313" y="1" width="16" height="263"/>
+                                    <rect key="frame" x="190" y="1" width="16" height="293"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rus-VD-edI">
-                                <rect key="frame" x="420" y="329" width="191" height="22"/>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rus-VD-edI">
+                                <rect key="frame" x="358" y="629" width="191" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="191" id="eBe-zK-7JM"/>
                                 </constraints>
@@ -874,13 +874,13 @@
                             <constraint firstItem="DeS-Lc-yvm" firstAttribute="baseline" secondItem="Rus-VD-edI" secondAttribute="baseline" id="9bA-OJ-8gA"/>
                             <constraint firstItem="s3d-od-SkU" firstAttribute="leading" secondItem="H7s-Be-1O6" secondAttribute="trailing" id="B0q-gg-PBX"/>
                             <constraint firstItem="TWm-Vu-ODw" firstAttribute="centerX" secondItem="7WV-77-sIa" secondAttribute="centerX" id="Do1-nX-ki2"/>
-                            <constraint firstItem="thJ-oQ-VYf" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="-10" id="IDC-Pc-CZD"/>
+                            <constraint firstItem="thJ-oQ-VYf" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="IDC-Pc-CZD"/>
                             <constraint firstAttribute="trailing" secondItem="7WV-77-sIa" secondAttribute="trailing" constant="20" symbolic="YES" id="KZd-vm-7BE"/>
                             <constraint firstItem="OqG-3E-4qe" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="326" id="KmX-ea-7Pe"/>
                             <constraint firstItem="OqG-3E-4qe" firstAttribute="centerX" secondItem="bQh-G4-z1u" secondAttribute="centerX" id="Mgp-02-vh0"/>
                             <constraint firstItem="7WV-77-sIa" firstAttribute="centerX" secondItem="OqG-3E-4qe" secondAttribute="centerX" id="PXI-Lj-TVi"/>
                             <constraint firstItem="7WV-77-sIa" firstAttribute="top" secondItem="6Gy-j3-t9h" secondAttribute="bottom" constant="8" symbolic="YES" id="Rsd-1H-gpu"/>
-                            <constraint firstItem="thJ-oQ-VYf" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="-96" id="TYI-JK-kdf"/>
+                            <constraint firstItem="thJ-oQ-VYf" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="TYI-JK-kdf"/>
                             <constraint firstItem="H7s-Be-1O6" firstAttribute="top" secondItem="s3d-od-SkU" secondAttribute="top" id="VY1-bU-Eo9"/>
                             <constraint firstItem="DeS-Lc-yvm" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="141" id="WBi-mG-RTO"/>
                             <constraint firstItem="s3d-od-SkU" firstAttribute="top" secondItem="OqG-3E-4qe" secondAttribute="bottom" constant="32" id="Wnq-Ky-t8e"/>
@@ -894,7 +894,7 @@
                             <constraint firstItem="7WV-77-sIa" firstAttribute="trailing" secondItem="s3d-od-SkU" secondAttribute="trailing" id="qu3-Gy-6vi"/>
                             <constraint firstItem="H7s-Be-1O6" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" symbolic="YES" id="r31-23-lGv"/>
                             <constraint firstAttribute="bottom" secondItem="bQh-G4-z1u" secondAttribute="bottom" constant="6" id="sAL-h7-H2R"/>
-                            <constraint firstItem="6Gy-j3-t9h" firstAttribute="centerX" secondItem="thJ-oQ-VYf" secondAttribute="centerX" id="yhb-pa-epL"/>
+                            <constraint firstItem="6Gy-j3-t9h" firstAttribute="centerX" secondItem="thJ-oQ-VYf" secondAttribute="centerX" constant="12" id="yhb-pa-epL"/>
                         </constraints>
                     </view>
                     <connections>

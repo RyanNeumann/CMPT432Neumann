@@ -33,6 +33,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
     @IBAction func compileClicked(_ sender: Any) {
         
         
+        
         //Compile button pressed and function activated.
         if enteredCode.string?.isEmpty == false {
             

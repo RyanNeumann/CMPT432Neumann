@@ -611,6 +611,7 @@ extension ViewController {
                 
             } else {
                 
+                ParseProgram()
                 finalList.append("Lex completed successfully.")
                 printFinal()
             }
@@ -619,12 +620,14 @@ extension ViewController {
             
             if inputText.isEmpty == false {
                 
+                parsedList.string = ""
                 finalList.append("Lex completed with \(errorCount) error(s).")
                 errorCount = 0
                 checkNext()
                 
             } else {
                 
+                parsedList.string = ""
                 finalList.append("Lex completed with \(errorCount) error(s).")
                 printFinal()
                 
@@ -645,7 +648,7 @@ extension ViewController {
             
         }
         
-        ParseProgram()
+        
         
     }
     
