@@ -184,15 +184,15 @@ extension ViewController {
         
         currentTerm = "if"
         match(param: "if")
-        cstIndent += 1
-        cst.append(String(repeatElement("•", count: cstIndent))  + "<Boolean Expression>")
         ParseBoolean()
-        
         ParseBlock()
         
     }
     
     func ParseBoolean() {
+        
+        cstIndent += 1
+        cst.append(String(repeatElement("•", count: cstIndent))  + "< Boolean Expression >")
         
         if parseList.first! == "(" {
             
