@@ -28,100 +28,98 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         
         examplePicker.dataSource = self
         examplePicker.delegate = self
-        enteredCode.toggleAutomaticQuoteSubstitution(self)
+        
         
         // Do any additional setup after loading the view.
     }
     
     @IBAction func compileClicked(_ sender: Any) {
-        
+
         cst = []
         parseCount = 0
         programNum = 0
         currentLine = 0
+        currentBrace = 0
         
         //Compile button pressed and function activated.
-        if enteredCode.string?.isEmpty == false {
+        if self.enteredCode.string?.isEmpty == false {
             
             if textEntered == "" {
                 
-                textEntered = enteredCode.string!
+                textEntered = self.enteredCode.string!
                 
             }
             
             //Used to clear the entered code and create an array that will be cycled through
             
-            if enteredCode.string?.characters.first == "\""{
+            if self.enteredCode.string?.characters.first == "\""{
                 
-                inputText.append((enteredCode.string?.characters.first!)!)
-                enteredCode.string?.characters.removeFirst()
+                inputText.append((self.enteredCode.string?.characters.first!)!)
+                self.enteredCode.string?.characters.removeFirst()
                 
                 
-                while (enteredCode.string?.characters.first != "\"") == true {
+                while (self.enteredCode.string?.characters.first != "\"") == true {
                     
-                    if enteredCode.string?.characters.first == nil {
+                    if self.enteredCode.string?.characters.first == nil {
                     
                         break
                         
                     }
                     
-                    inputText.append(enteredCode.string!.characters.first!)
-                    enteredCode.string?.characters.removeFirst()
+                    inputText.append(self.enteredCode.string!.characters.first!)
+                    self.enteredCode.string?.characters.removeFirst()
                     
                 }
                 
             }
             
-            if enteredCode.string?.characters.first == "\""{
+            if self.enteredCode.string?.characters.first == "\""{
                 
-                inputText.append((enteredCode.string?.characters.first!)!)
-                enteredCode.string?.characters.removeFirst()
+                inputText.append((self.enteredCode.string?.characters.first!)!)
+                self.enteredCode.string?.characters.removeFirst()
                 
                 
-            } else if enteredCode.string?.characters.first == " " {
+            } else if self.enteredCode.string?.characters.first == " " {
                 
-                enteredCode.string?.characters.removeFirst()
+                self.enteredCode.string?.characters.removeFirst()
                 
-            } else if enteredCode.string?.characters.first == nil {
+            } else if self.enteredCode.string?.characters.first == nil {
             
                 //Do nothing
             
             } else {
                 
-                inputText.append((enteredCode.string?.characters.first!)!)
-                enteredCode.string?.characters.removeFirst()
+                inputText.append((self.enteredCode.string?.characters.first!)!)
+                self.enteredCode.string?.characters.removeFirst()
                 
             }
             
             finalList = []
             cleanList.removeAll(keepingCapacity: false)
-            parsedList.string = ""
-            compileClicked(self)
+            self.parsedList.string = ""
+            self.compileClicked(self)
             
         } else {
             //CHECK IF EOP($) IS MISSING
             if inputText.last != "$" {
                 
-                inputText.append("$")
-                warningLabel.stringValue = "Please use '$' to end the program! \n One has been added for you."
-                enteredCode.string = textEntered.appending("$")
+                self.warningLabel.stringValue = "Please use '$' to end the program!"
+                self.enteredCode.string = textEntered
                 
             } else {
                 
-                warningLabel.stringValue = ""
-                enteredCode.string = textEntered
+                self.warningLabel.stringValue = ""
+                self.enteredCode.string = textEntered
                 
             }
-    
             
             textEntered = ""
             errorCount = 0
             lineNumber = 0
-            checkNext()
+            self.checkNext()
             finalList = [""]
             
         }
-    
     }
     
     func comboBoxSelectionDidChange(_ notification: Notification) {

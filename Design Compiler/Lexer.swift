@@ -21,7 +21,7 @@ var finalList = [String]()
 
 var textEntered: String = ""
 
-let unacceptedList = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "@", "%", "&", "*", "_", "-", "#", "~", "`", "^", "|"]
+let unacceptedList = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "@", "%", "&", "*", "_", "-", "#", "~", "`", "^", "|", "."]
 
 let acceptedChars = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 
@@ -46,7 +46,7 @@ extension ViewController {
             printFinal()
             
         } else {
-            print(finalList)
+            //print(finalList)
             if finalList.isEmpty {
                 //Processing Program 1
                 
@@ -515,7 +515,7 @@ extension ViewController {
             } else if acceptedChars.contains(String(describing:y)) {
                 
                 cleanList.append(String(describing: y))
-                finalList.append("\(lineNumber).  \(y)  --> [CHAR]")
+                finalList.append("\(lineNumber).  \(y)  --> [Char]")
                 inputText.removeFirst()
                 lineNumber += 1
                 startCharList()
@@ -540,8 +540,6 @@ extension ViewController {
             } else if y == "}" {
                 
                 cleanList.append("}")
-                finalList.append("\(lineNumber).  \"  --> [CLOSE_DOUBLE_QUOTES]")
-                lineNumber += 1
                 finalList.append("\(lineNumber).  }  --> [RBRACE]")
                 lineNumber += 1
                 inputText.removeFirst()
@@ -608,6 +606,8 @@ extension ViewController {
                 
                 finalList.append("Lex completed program \(programNum) successfully.\n")
                 ParseProgram()
+                programNum += 1
+                lineNumber = 0
                 finalList.append("Lexing program \(programNum)...")
                 checkNext()
                 
@@ -615,6 +615,7 @@ extension ViewController {
                 
                 finalList.append("Lex completed  program \(programNum) successfully.\n")
                 programNum += 1
+                lineNumber = 0
                 ParseProgram()
                 finalList.insert("Lex completed successfully!", at: 0)
                 printFinal()
@@ -627,12 +628,14 @@ extension ViewController {
                 
                 parsedList.string = ""
                 finalList.append("Lex completed with \(errorCount) error(s).")
+                lineNumber = 0
                 errorCount = 0
                 checkNext()
                 
             } else {
                 
                 parsedList.string = ""
+                lineNumber = 0
                 finalList.append("Lex completed with \(errorCount) error(s).")
                 printFinal()
                 
