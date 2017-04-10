@@ -15,6 +15,8 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
     
     @IBOutlet var enteredCode: NSTextView!
     
+    @IBOutlet var astFinal: NSTextView!
+    
     @IBOutlet var tokenList: NSTextView!
     
     @IBOutlet var examplePicker: NSComboBox!
@@ -25,6 +27,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         parsedList.font = NSFont(name: "Arial", size: 18)
         enteredCode.font = NSFont(name: "Arial", size: 18)
         tokenList.font = NSFont(name: "Arial", size: 18)
+        astFinal.font = NSFont(name: "Arial", size: 18)
         
         examplePicker.dataSource = self
         examplePicker.delegate = self
@@ -36,6 +39,9 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
     @IBAction func compileClicked(_ sender: Any) {
 
         cst = []
+        astList = []
+        astFinal.string = ""
+        astIndent = 0
         parseCount = 0
         programNum = 0
         currentLine = 0

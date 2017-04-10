@@ -69,6 +69,12 @@ extension ViewController {
             tokenList.string?.append(String(describing: element) + "\n")
             
         }
+        
+        for element in astList {
+        
+            astFinal.string?.append(String(describing: element) + "\n")
+        
+        }
     
     }
     
@@ -89,14 +95,14 @@ extension ViewController {
         
         ParseStatementList()
         
-        if parseList.isEmpty == false {
+        if parseList.isEmpty == false && parseList.first! != "$" {
             
-            astIndent -= 1
+            
             finalList.append("Expecting a right brace")
             currentTerm = "right brace"
             match(param: "}")
             cstIndent -= 2
-
+            astIndent -= 1
         }
         
     }
@@ -112,7 +118,7 @@ extension ViewController {
                 //Do nothing
                 if parseList.first! == "}" {
                 
-                    cstIndent -= 2
+                    cstIndent = statementEnding
                 
                 }
             } else if (parseList.first! == "\"") {
@@ -122,7 +128,7 @@ extension ViewController {
             } else {
             
                 cstIndent += 1
-                statementEnding = cstIndent
+                
                 //print(statementEnding)
                 cst.append(String(repeatElement("•", count: cstIndent))  + "< Statement >")
                 ParseStatement()
@@ -144,6 +150,7 @@ extension ViewController {
     }
 
     func ParseStatement() {
+        statementEnding = cstIndent
         
         if parseList.isEmpty == false {
         
@@ -185,6 +192,12 @@ extension ViewController {
                 
                 ParseBlock()
                 
+            } else if parseList.first! == ")" {
+            
+                currentTerm = "right paren"
+                finalList.append("Expecting Right Paren")
+                match(param: ")")
+            
             } else {
             
                 currentTerm = "Statement"
@@ -505,7 +518,6 @@ extension ViewController {
         
             if String(describing: param) == "}" {
                
-              
                 currentBrace -= 1
                 cstIndent = braceCounter[currentBrace]
                 cst.append(String(repeatElement("•", count: braceCounter[currentBrace] ))  + "[ " + String(describing: param) + " ]")
@@ -530,8 +542,6 @@ extension ViewController {
                 if String(describing: param) == "{" {
                     
                     cstIndent += 1
-                    //print(cstIndent)
-                    //print(currentBrace)
                     braceCounter.insert(cstIndent, at: currentBrace)
                     cst.append(String(repeatElement("•", count: braceCounter[currentBrace] ))  + "[ " + String(describing: param) + " ]")
                     currentBrace += 1
