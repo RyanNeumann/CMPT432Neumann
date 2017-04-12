@@ -7,6 +7,8 @@
 //
 import Cocoa
 
+var exampleTokens = ["Example 1: Minimal", "Example 2: Declaration", "Example 3: Assignment 1", "Example 4: Assignment 2", "Example 5: Print 1", "Example 6: Print 2", "Example 7: String 1", "Example 8: String 2", "Example 9: If Statement", "Example 10: Boolean", "Example 11: While"]
+
 class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate, NSComboBoxDataSource, NSTextViewDelegate {
     
     @IBOutlet weak var warningLabel: NSTextField!
@@ -19,32 +21,44 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
     
     @IBOutlet var tokenList: NSTextView!
     
+    @IBOutlet var symbolList: NSTextView!
+    
     @IBOutlet var examplePicker: NSComboBox!
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        
-        parsedList.font = NSFont(name: "Arial", size: 18)
-        enteredCode.font = NSFont(name: "Arial", size: 18)
-        tokenList.font = NSFont(name: "Arial", size: 18)
-        astFinal.font = NSFont(name: "Arial", size: 18)
-        
+        symbolList.font = NSFont(name: "Avenir Next Condensed", size: 16)
+        //symbolList.textContainer?.textView?.alignment = NSTextAlignment.center
+        parsedList.font = NSFont(name: "Avenir Next Condensed", size: 16)
+        enteredCode.font = NSFont(name: "Avenir Next Condensed", size: 24)
+        tokenList.font = NSFont(name: "Avenir Next Condensed", size: 16)
+        astFinal.font = NSFont(name: "Avenir Next Condensed", size: 16)
         examplePicker.dataSource = self
         examplePicker.delegate = self
         
-        
-        // Do any additional setup after loading the view.
     }
     
     @IBAction func compileClicked(_ sender: Any) {
 
+        symbolList.string = ""
+        symbolTable = []
+        symbolScope = []
+        symbolType = []
+        test = []
+        errorArray = []
+        symbolName = []
+        lineNums = []
+        scopeTracker = 0
+        errorCounter = 0
         cst = []
         astList = []
         astFinal.string = ""
         astIndent = 0
         parseCount = 0
         programNum = 0
-        currentLine = 0
+        currentLine = 1
+        braceCounter = []
         currentBrace = 0
         
         //Compile button pressed and function activated.
@@ -84,15 +98,12 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
                 inputText.append((self.enteredCode.string?.characters.first!)!)
                 self.enteredCode.string?.characters.removeFirst()
                 
-                
             } else if self.enteredCode.string?.characters.first == " " {
                 
                 self.enteredCode.string?.characters.removeFirst()
                 
             } else if self.enteredCode.string?.characters.first == nil {
-            
                 //Do nothing
-            
             } else {
                 
                 inputText.append((self.enteredCode.string?.characters.first!)!)
@@ -126,6 +137,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
             finalList = [""]
             
         }
+        
     }
     
     func comboBoxSelectionDidChange(_ notification: Notification) {
@@ -210,12 +222,8 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         
     }
     
-    var exampleTokens = ["Example 1: Minimal", "Example 2: Declaration", "Example 3: Assignment 1", "Example 4: Assignment 2", "Example 5: Print 1", "Example 6: Print 2", "Example 7: String 1", "Example 8: String 2", "Example 9: If Statement", "Example 10: Boolean", "Example 11: While"]
-    
-    
-    
-    
     func comboBox(_ comboBox: NSComboBox, objectValueForItemAt index: Int) -> Any? {
+      
         return exampleTokens[index]
     }
     
@@ -229,7 +237,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         didSet {
             // Update the view, if already loaded.
         }
-    }
     
+    }
     
 }

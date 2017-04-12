@@ -18,6 +18,9 @@ var cstIndent = 0
 var braceCounter = [Int]()
 var parseCount = 0
 var statementEnding = 0
+var astList: NSArray = []
+var astIndent = 0
+var quoteText = ""
 
 extension ViewController {
     
@@ -38,16 +41,16 @@ extension ViewController {
         if parseList.isEmpty == false {
             //Skip check if list is empty
             cstIndent -= 1
-            cst.append("•[$]\n ")
+            cst.append("•[$] ")
+            cst.append("**Program \(programNum) completed successfully.**\n")
             currentTerm = "EOP"
             finalList.append("Expecting EOP")
             match(param: "$")
+            print(astList)
             
             if finalList.contains("Parsing completed successfully.\n") == false {
             
                 finalList.insert("Parsing completed successfully.\n", at: 0)
-                
-                print(astList)
                 
             }
             
@@ -64,7 +67,6 @@ extension ViewController {
         tokenList.string?.append("\n")
         
         for element in parseFinal {
-            
             //Print final string in Parser box.
             tokenList.string?.append(String(describing: element) + "\n")
             
@@ -97,12 +99,12 @@ extension ViewController {
         
         if parseList.isEmpty == false && parseList.first! != "$" {
             
-            
             finalList.append("Expecting a right brace")
             currentTerm = "right brace"
             match(param: "}")
             cstIndent -= 2
             astIndent -= 1
+            
         }
         
     }
@@ -114,13 +116,13 @@ extension ViewController {
         if parseList.isEmpty == false {
             
             if parseList.first! == "}" || parseList.first! == "" || parseList.first! == "$" || parseList.first! == "'"{
-                
                 //Do nothing
                 if parseList.first! == "}" {
                 
                     cstIndent = statementEnding
                 
                 }
+                
             } else if (parseList.first! == "\"") {
                 
                 ParseCharList()
@@ -128,15 +130,11 @@ extension ViewController {
             } else {
             
                 cstIndent += 1
-                
-                //print(statementEnding)
                 cst.append(String(repeatElement("•", count: cstIndent))  + "< Statement >")
                 ParseStatement()
                 
                 if currentTerm != "right brace" && cst.isEmpty == false {
-                    
-                    //print ("Here" + String(describing: statementEnding) + " currentTerm: " + currentTerm)
-                    //cst.append(String(repeatElement("•", count: statementEnding))  + "< Statement List >")
+                
                     cstIndent = statementEnding
                     
                 }
@@ -150,6 +148,7 @@ extension ViewController {
     }
 
     func ParseStatement() {
+        
         statementEnding = cstIndent
         
         if parseList.isEmpty == false {
@@ -212,7 +211,6 @@ extension ViewController {
     func ParseIf() {
         
         astList = astList.adding(String(repeatElement("-", count: astIndent)) + "< If Statement >") as NSArray
-        
         currentTerm = "if"
         match(param: "if")
         ParseBoolean()
@@ -257,7 +255,6 @@ extension ViewController {
             astList = astList.adding(String(repeatElement("-", count: astIndent)) + "[ true ]") as NSArray
             finalList.append("Expecting boolVal")
             currentTerm = "boolVal"
-            
             match(param: "true")
             
         } else if parseList.first! == "false" {
@@ -278,8 +275,6 @@ extension ViewController {
     func ParseWhile() {
         
         astList = astList.adding(String(repeatElement("-", count: astIndent)) + "< While Statement >") as NSArray
-        
-        
         finalList.append("- Got while statement!")
         parseList.removeFirst()
         ParseBoolean()
@@ -291,25 +286,27 @@ extension ViewController {
     
         astList = astList.adding(String(repeatElement("-", count: astIndent)) + "< Variable Declaration >") as NSArray
         astIndent += 1
-        
         finalList.append("- Got type: \(String(describing: parseList.first!))!")
         
         if String(describing: parseList.first!) == "int" {
         
             cstIndent += 1
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ int ]")
+            symbolType = symbolType.adding("int") as NSArray
             astList = astList.adding(String(repeatElement("-", count: astIndent))  + "[ int ]") as NSArray
             
         } else if String(describing: parseList.first!) == "string" {
             
             cstIndent += 1
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ string ]")
+            symbolType = symbolType.adding("string") as NSArray
             astList = astList.adding(String(repeatElement("-", count: astIndent))  + "[ string ]") as NSArray
             
         } else if String(describing: parseList.first!) == "boolean" {
             
             cstIndent += 1
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ boolean ]")
+            symbolType = symbolType.adding("bool") as NSArray
             astList = astList.adding(String(repeatElement("-", count: astIndent))  + "[ boolean ]") as NSArray
             
         }
@@ -345,7 +342,6 @@ extension ViewController {
         astList = astList.adding(String(repeatElement("-", count: astIndent)) + "< Assignment Statement >") as NSArray
         astIndent += 1
         astList = astList.adding(String(repeatElement("-", count: astIndent)) + "[ \(String(describing: parseList.first!)) ]") as NSArray
-        
         finalList.append("- Got Id: \(String(describing: parseList.first!))!")
         cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
         parseList.removeFirst()
@@ -354,17 +350,18 @@ extension ViewController {
         match(param: "=")
         
         if parseList.isEmpty == false {
+            
             ParseExpr()
             astIndent -= 1
+            
         }
+        
     }
     
     func ParsePrint() {
     
         astList = astList.adding(String(repeatElement("-", count: astIndent)) + "< Print Statement >") as NSArray
         astIndent += 1
-        
-        
         finalList.append("Expecting Print Statement")
         currentTerm = "print"
         match(param: "print")
@@ -373,8 +370,8 @@ extension ViewController {
         parenMatch = cstIndent
         match(param: "(")
         ParseExpr()
-        
         astIndent -= 1
+        
         if parseList.isEmpty == false {
             
             currentTerm = "right paren"
@@ -387,7 +384,6 @@ extension ViewController {
     }
     
     func ParseExpr() {
-        
         
         cst.append(String(repeatElement("•", count: cstIndent))  + "< Expression >")
         cstIndent += 1
@@ -402,7 +398,7 @@ extension ViewController {
                 
                 ParseId()
                 
-            }  else if parseList.first! == "false" || parseList.first! == "true" || parseList.first! == "(" {
+            } else if parseList.first! == "false" || parseList.first! == "true" || parseList.first! == "(" {
                 
                 ParseBoolean()
                 
@@ -475,7 +471,6 @@ extension ViewController {
         cst.append(String(repeatElement("•", count: cstIndent))  + "< Char List >")
         cstIndent += 1
         
-        
         if parseList.first! != "\"" {
             
             quoteText.append(parseList.first!)
@@ -504,9 +499,7 @@ extension ViewController {
             ParseCharList()
             
         } else {
-        
             //Do nothing
-            
         }
         
     }
@@ -514,66 +507,68 @@ extension ViewController {
     func match(param: Any) {
         
         if parseList.isEmpty == false {
-        if String(describing: param) == parseList.first! {
-        
-            if String(describing: param) == "}" {
-               
-                currentBrace -= 1
-                cstIndent = braceCounter[currentBrace]
-                cst.append(String(repeatElement("•", count: braceCounter[currentBrace] ))  + "[ " + String(describing: param) + " ]")
+            
+            if String(describing: param) == parseList.first! {
                 
-            }
-            
-            if String(describing: param) == "\"" {
-            
-                    cst.append(String(repeatElement("•", count: quoteMatch))  + "[ " + String(describing: param) + " ]")
-            
-            }
-            
-             if String(describing: param) == "$" {
-            
-                    cstIndent -= 1
-            
-            }
-
-            
-            if String(describing: param) != "$" && String(describing: param) != "Statement List" && String(describing: param) != "}" && String(describing: param) != "\""{
-                
-                if String(describing: param) == "{" {
+                if String(describing: param) == "}" {
                     
-                    cstIndent += 1
-                    braceCounter.insert(cstIndent, at: currentBrace)
+                    currentBrace -= 1
+                    cstIndent = braceCounter[currentBrace]
                     cst.append(String(repeatElement("•", count: braceCounter[currentBrace] ))  + "[ " + String(describing: param) + " ]")
-                    currentBrace += 1
-                
-                } else {
-                    
-                    cst.append(String(repeatElement("•", count: cstIndent))  + "[ " + String(describing: param) + " ]")
                     
                 }
+                
+                if String(describing: param) == "\"" {
+                    
+                    cst.append(String(repeatElement("•", count: quoteMatch))  + "[ " + String(describing: param) + " ]")
+                    
+                }
+                
+                if String(describing: param) == "$" {
+                    
+                    cstIndent -= 1
+                    
+                }
+                
+                
+                if String(describing: param) != "$" && String(describing: param) != "Statement List" && String(describing: param) != "}" && String(describing: param) != "\""{
+                    
+                    if String(describing: param) == "{" {
+                        
+                        cstIndent += 1
+                        braceCounter.insert(cstIndent, at: currentBrace)
+                        cst.append(String(repeatElement("•", count: braceCounter[currentBrace] ))  + "[ " + String(describing: param) + " ]")
+                        currentBrace += 1
+                        
+                    } else {
+                        
+                        cst.append(String(repeatElement("•", count: cstIndent))  + "[ " + String(describing: param) + " ]")
+                        
+                    }
+            
+                }
+                
+                finalList.append("- Got \(currentTerm)!")
+                parseList.removeFirst()
+                
+                if currentTerm == "EOP" {
+                    
+                    finalList.append("Program \(parseCount) completed successfully.\n")
+                    parseCount += 1
+                    
+                }
+                
+            } else {
+                
+                finalList.append("\nError - Expecting \(currentTerm).  Instead got \(String(describing: parseList.first!))\n")
+                parsedList.string = ""
+                parseList.removeAll()
+                cst.removeAll()
+                
             }
             
-            finalList.append("- Got \(currentTerm)!")
-            parseList.removeFirst()
-            
-            if currentTerm == "EOP" {
-                
-                finalList.append("Program \(parseCount) completed successfully.\n")
-                parseCount += 1
-                
-            }
-            
-        } else {
-            
-            
-            finalList.append("\nError - Expecting \(currentTerm).  Instead got \(String(describing: parseList.first!))\n")
-            parsedList.string = ""
-            parseList.removeAll()
-            cst.removeAll()
-            
-        }
         }
     
-
-}
+    }
+    
 }
