@@ -26,7 +26,6 @@ extension ViewController {
     func checkNext() {
         
         let y = inputText.first
-        print(y)
         if y == nil {
             //If y is empty, print the final list of tokens
             printFinal()
@@ -558,6 +557,7 @@ extension ViewController {
                     symbolTable = []
                     errorArray = []
                     symbolName = []
+                    scopeErrors = 0
                     lineNums = []
                     symbolList.string?.append("\n")
                     
