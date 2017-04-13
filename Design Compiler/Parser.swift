@@ -50,9 +50,9 @@ extension ViewController {
             match(param: "$")
             //print(astList)
             
-            if finalList.contains("Parsing completed successfully.\n") == false {
+            if finalList.contains("Parsing completed successfully!") == false {
             
-                finalList.insert("Parsing completed successfully.\n", at: 0)
+                finalList.insert("Parsing completed successfully!", at: 0)
                 
             }
             
@@ -114,7 +114,7 @@ extension ViewController {
     func ParseStatementList() {
         
         if cstIndent != 0 && parseList.isEmpty == false{
-         
+            print("NOW")
             cst.append(String(repeatElement("•", count: cstIndent))  + "< Statement List >")
             
         }
@@ -333,7 +333,6 @@ extension ViewController {
         if acceptedChars.contains(String(describing: parseList.first!)) {
             
             if typeBool == false {
-                
                 beforeBool = false
                 typeChecker(String(describing: parseList.first!))
             
@@ -342,6 +341,7 @@ extension ViewController {
                 typeBool = false
             
             }
+            finalList.append("Expecting Id")
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
             astList = astList.adding(String(repeatElement("-", count: astIndent))  + "[ \(String(describing: parseList.first!)) ]") as NSArray
             finalList.append("- Got Id: \(String(describing: parseList.first!))!")
@@ -595,7 +595,7 @@ extension ViewController {
                 
                 if currentTerm == "EOP" {
                     
-                    finalList.append("Program \(parseCount) completed successfully.\n")
+                    finalList.append("Program \(parseCount) completed successfully!\n")
                     parseCount += 1
                     
                 }

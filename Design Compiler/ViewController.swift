@@ -29,11 +29,11 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         
         super.viewDidLoad()
         
-        symbolList.font = NSFont(name: "Adobe Ming Std L", size: 12)
-        parsedList.font = NSFont(name: "Adobe Ming Std L", size: 12)
-        enteredCode.font = NSFont(name: "Adobe Ming Std L", size: 20)
-        tokenList.font = NSFont(name: "Adobe Ming Std L", size: 12)
-        astFinal.font = NSFont(name: "Adobe Ming Std L", size: 12)
+        symbolList.font = NSFont(name: "Tahoma", size: 14)
+        parsedList.font = NSFont(name: "Tahoma", size: 14)
+        enteredCode.font = NSFont(name: "Tahoma", size: 20)
+        tokenList.font = NSFont(name: "Tahoma", size: 14)
+        astFinal.font = NSFont(name: "Tahoma", size: 14)
         examplePicker.dataSource = self
         examplePicker.delegate = self
         enteredCode.delegate = self

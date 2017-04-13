@@ -547,10 +547,13 @@ extension ViewController {
                 astList = []
                 currentBrace = 0
                 braceCounter = []
+                statementEnding = 0
+                cstIndent = 0
                 ParseProgram()
                 if parseError == 0 {
                     astFinal.string?.append("**Program \(programNum) completed successfully.**\n")
                     astFinal.string?.append("\n")
+                    finalList.append("Program \(programNum) Semantic Analysis...")
                     produceSymbolTable()
                     symbolScope = []
                     symbolType = []
@@ -587,6 +590,7 @@ extension ViewController {
                     astFinal.string?.append("**Program \(programNum) completed successfully.**\n")
                     astFinal.string?.append("\n")
                     finalList.insert("Lex completed successfully!", at: 0)
+                    finalList.append("Program \(programNum) Semantic Analysis...")
                     produceSymbolTable()
                     symbolScope = []
                     symbolType = []
