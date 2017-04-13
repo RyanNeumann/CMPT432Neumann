@@ -264,7 +264,11 @@ extension ViewController {
                 
                 if finalList.contains("Semantic Analysis completed successfully!\n") == false {
                     
-                    finalList.insert("Semantic Analysis completed successfully!\n", at: 2)
+                    if let index = finalList.index(of: "Parsing completed successfully!") {
+                    
+                        finalList.insert("Semantic Analysis completed successfully!\n", at: index + 1)
+                        
+                    }
                     
                 }
                 

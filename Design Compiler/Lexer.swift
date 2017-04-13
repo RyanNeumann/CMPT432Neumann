@@ -50,7 +50,7 @@ extension ViewController {
                     
                 } else if unacceptedList.contains(String(describing: y!)){
                     //CHECK FOR ERRORS
-                    finalList.append("\(currentLine). ERROR: Unrecognized Token: \(y!) on line \(currentLine)")
+                    finalList.append("\(currentLine). ERROR: Unrecognized Token: \(y!)")
                     inputText.removeFirst()
                     errorCount += 1
                     checkNext()
@@ -336,7 +336,7 @@ extension ViewController {
                         
                     } else {
                         
-                        finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
+                        finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!)")
                         inputText.removeFirst()
                         errorCount += 1
                         checkNext()
@@ -456,7 +456,7 @@ extension ViewController {
             
             if acceptedNums.contains(String(describing:y)) {
                 
-                finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
+                finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!)")
                 inputText.removeFirst()
                 errorCount += 1
                 startCharList()
@@ -478,7 +478,7 @@ extension ViewController {
                 
             } else if y == "$" || y == "\n" || y == "\t" {
                 
-                finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
+                finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!)")
                 inputText.removeFirst()
                 errorCount += 1
                 startCharList()
@@ -530,7 +530,7 @@ extension ViewController {
             
         } else {
             
-            finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
+            finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!)")
             inputText.removeFirst()
             errorCount += 1
             checkNext()
