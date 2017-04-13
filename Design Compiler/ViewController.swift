@@ -28,6 +28,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
         symbolList.font = NSFont(name: "Avenir Next Condensed", size: 16)
         //symbolList.textContainer?.textView?.alignment = NSTextAlignment.center
         parsedList.font = NSFont(name: "Avenir Next Condensed", size: 16)
@@ -36,16 +37,18 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         astFinal.font = NSFont(name: "Avenir Next Condensed", size: 16)
         examplePicker.dataSource = self
         examplePicker.delegate = self
+        enteredCode.delegate = self
         
     }
     
     @IBAction func compileClicked(_ sender: Any) {
 
+        parseError = 0
         symbolList.string = ""
         symbolTable = []
         symbolScope = []
         symbolType = []
-        test = []
+        test = [:]
         errorArray = []
         symbolName = []
         lineNums = []
@@ -118,7 +121,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
             
         } else {
             //CHECK IF EOP($) IS MISSING
-            if inputText.last != "$" {
+            if inputText.last != "$"  && inputText.last != "\n" {
                 
                 self.warningLabel.stringValue = "Please use '$' to end the program!"
                 self.enteredCode.string = textEntered
@@ -132,7 +135,6 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
             
             textEntered = ""
             errorCount = 0
-            lineNumber = 0
             self.checkNext()
             finalList = [""]
             
@@ -231,8 +233,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         
         return 11
     }
-    
-    
+
     override var representedObject: Any? {
         didSet {
             // Update the view, if already loaded.

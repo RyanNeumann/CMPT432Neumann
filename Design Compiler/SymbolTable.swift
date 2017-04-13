@@ -8,16 +8,19 @@
 
 import Foundation
 
-var symbolName: NSArray = []
+var symbolName = [String]()
 var symbolType: NSArray = []
 var lineNums: NSArray = []
 var symbolScope: NSArray = []
-var symbolTable: NSArray = []
+var symbolTable = [String]()
 var scopeTracker = 0
 var scopeBool = true
-var errorCounter = 0
-var test: NSMutableArray = []
+var scopeErrors = 0
+var test = [Int:Bool]()
 var errorArray: NSArray = []
+var errorCounter = 0
+var beforeBool = false
+var typeErrors = [String]()
 
 extension ViewController {
 
@@ -42,26 +45,108 @@ extension ViewController {
                         break
                         
                      } else {
-                    
+        
                         scopeBool = true
                         numCounter -= 1
                         
                     }
                 
-            }
-    
-        if scopeBool == true {
+        }
+        
+            if scopeBool == true {
+                
+                errorArray = errorArray.adding("Error: the id \(a) on line \(currentLine) was used before being declared.") as NSArray
+                scopeErrors += 1
+                test.updateValue(true, forKey: programNum)
             
-            test.insert("true", at: programNum)
-            errorArray = errorArray.adding("Error: the id \(a) on line \(currentLine) was used before being declared.") as NSArray
-            errorCounter += 1
+            } else {
+            
+                if test[programNum] != true {
+                
+                    test.updateValue(false, forKey: programNum)
+                    
+                }
+                
+            }
+
+    }
+    
+    func typeChecker(_ t: String) {
+        
+        if beforeBool == true {
+        
+            if acceptedNums.contains(parseList[2]) {
+                let idIntScope = symbolName.index(of: t)
+                if String(describing: symbolType[idIntScope!]) != "int" {
+                    
+                    symbolList.string?.append("Error: Type mismatch with \(t) \(parseList[1]) \(parseList[2])\n")
+                    errorCounter += 1
+                
+                } else {
+                
+                    
+                
+                }
+                
+                
+            } else {
+                
+                if acceptedChars.contains(parseList[2]) {
+                    
+                    if symbolName.contains(parseList[2]) {
+                       
+                        let index = symbolName.index(of: parseList[2])
+                        let indexCheck = symbolName.index(of: t)
+                        
+                        if String(describing: symbolType[indexCheck!]) == String(describing: symbolType[index!]) {
+                        
+                            if (symbolScope[indexCheck!] as! Int >= symbolScope[index!] as! Int) == false {
+                                
+                                symbolList.string?.append("Error: Scope out of bounds for \(t)\n")
+                            
+                            }
+                        
+                        } else {
+                        
+                            print("Here")
+                            errorCounter += 1
+                            symbolList.string?.append("Error: Type mismatch with \(t) \(parseList[1]) \(parseList[2])\n")
+                            
+                        }
+                    
+                    } else {
+                        
+                        symbolList.string?.append("Error: id: \(parseList[2]) not in scope\n")
+                        errorCounter += 1
+                        
+                        
+                    }
+                
+                } else {
+                
+                    
+                    if parseList[2] == "\"" {
+                    
+                        let indexCheck = symbolName.index(of: t)
+                        if String(describing: symbolType[indexCheck!]) != "string" {
+                            
+                            errorCounter += 1
+                            symbolList.string?.append("Error: Type mismatch with id: \(t)\n")
+                        
+                        }
+                    
+                    }
+                    
+                }
+                
+            }
             
         } else {
-            
-            test.insert("false", at: programNum)
-            
+        
+            print(t)
+        
         }
-      
+    
     }
     
     func produceSymbolTable () {
@@ -69,40 +154,62 @@ extension ViewController {
         finalList.append("Program \(programNum) Semantic Analysis")
         symbolList.string?.append("Program \(programNum) Symbol Table\n")
         
-        if test.count > 0 {
+        if test[programNum] == nil {
+        
+            test.updateValue(false, forKey: programNum)
             
-            if String(describing: test[programNum]) == "false" {
+        }
+        
+        if errorCounter != 0 {
+        
+            
+            if test[programNum] == false {
                 
                 var current = 0
                 
                 if symbolType.count > 0 {
                     
-                    symbolTable = symbolTable.adding("-------------------------------------------") as NSArray
-                    symbolTable = symbolTable.adding(" Name | Type | Scope | Line") as NSArray
-                    symbolTable = symbolTable.adding("-------------------------------------------") as NSArray
+                    symbolTable.append("-------------------------------------------")
+                    symbolTable.append(" Name | Type | Scope | Line")
+                    symbolTable.append("-------------------------------------------")
                     
                 }
                 
                 for i in symbolType {
                     
+                    var count = 3
+                    for cont in symbolTable {
+                        
+                        if String(describing: cont).replacingOccurrences(of: " ", with: "").contains("\(symbolName[current])\(i)\(symbolScope[current])") {
+                            
+                            symbolTable.remove(at: count - 3)
+                            
+                        } else {
+                            
+                            count += 1
+                            
+                        }
+                        
+                    }
+                    
                     if  String(describing: i) == "string" {
                         
-                        symbolTable = symbolTable.adding("    \(symbolName[current])          \(i)      \(symbolScope[current])          \(lineNums[current])") as NSArray
+                        symbolTable.append("    \(symbolName[current])          \(i)      \(symbolScope[current])          \(lineNums[current])")
                         
                     } else if  String(describing: i) == "bool" {
                         
-                        symbolTable = symbolTable.adding("    \(symbolName[current])          \(i)         \(symbolScope[current])         \(lineNums[current])") as NSArray
+                        symbolTable.append("    \(symbolName[current])          \(i)         \(symbolScope[current])         \(lineNums[current])")
                         
                     } else if  String(describing: i) == "int" {
                         
-                        symbolTable = symbolTable.adding("    \(symbolName[current])          \(i)           \(symbolScope[current])          \(lineNums[current])") as NSArray
+                        symbolTable.append("    \(symbolName[current])          \(i)           \(symbolScope[current])          \(lineNums[current])")
                         
                     } else if String(describing: i) == "\n" {
                         
-                        symbolTable = symbolTable.adding("\n") as NSArray
-                        symbolTable = symbolTable.adding("-------------------------------------------") as NSArray
-                        symbolTable = symbolTable.adding(" Name | Type | Scope | Line") as NSArray
-                        symbolTable = symbolTable.adding("-------------------------------------------") as NSArray
+                        symbolTable.append("\n")
+                        symbolTable.append("-------------------------------------------")
+                        symbolTable.append(" Name | Type | Scope | Line")
+                        symbolTable.append("-------------------------------------------")
                         
                     } else {
                         
@@ -129,15 +236,19 @@ extension ViewController {
                 for i in errorArray {
                     
                     finalList.append(String(describing: i))
-                
+                    
                 }
                 
-                finalList.append("Program \(String(describing: programNum)) Semantic Analysis Produced (\(errorCounter)) errors and (0) warnings\n")
+                finalList.append("Program \(String(describing: programNum)) Semantic Analysis Produced (\(scopeErrors)) errors and (0) warnings\n")
                 
             }
         
+        } else {
+        
+            //type mismatch
+        
         }
         
-    }
+        }
     
 }

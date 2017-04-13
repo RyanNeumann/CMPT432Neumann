@@ -8,7 +8,6 @@
 import Foundation
 
 var errorCount = 0
-var lineNumber = 0
 var currentLine = 1
 var programNum = 0
 var inputText = [Character]()
@@ -27,7 +26,7 @@ extension ViewController {
     func checkNext() {
         
         let y = inputText.first
-        
+        print(y)
         if y == nil {
             //If y is empty, print the final list of tokens
             printFinal()
@@ -43,47 +42,42 @@ extension ViewController {
                 
                 if unacceptedList.contains(String(describing: y!)){
                     //CHECK FOR ERRORS
-                    finalList.append("\(lineNumber). ERROR: Unrecognized Token: \(y!) on line \(currentLine)")
+                    finalList.append("\(currentLine). ERROR: Unrecognized Token: \(y!) on line \(currentLine)")
                     inputText.removeFirst()
                     errorCount += 1
-                    lineNumber += 1
                     checkNext()
                     
                 } else if y == "i" {
                     //NO ERRORS... CHECKING NEXT CHARACTER
                     if inputText[1] == "n" && inputText[2] == "t" {
                         //CHECKING FOR INT
-                        finalList.append("\(lineNumber).  int  --> [INT]")
+                        finalList.append("\(currentLine).  int  --> [INT]")
                         cleanList.append("int")
                         lineNums = lineNums.adding(currentLine) as NSArray
                         symbolScope = symbolScope.adding(scopeTracker) as NSArray
                         inputText.removeFirst(3)
-                        lineNumber += 1
                         checkId()
                         
                     } else if inputText[1] == "f" {
                         //CHECKING FOR IF
-                        finalList.append("\(lineNumber).  if  --> [TYPE]")
+                        finalList.append("\(currentLine).  if  --> [TYPE]")
                         cleanList.append("if")
                         inputText.removeFirst(2)
-                        lineNumber += 1
                         checkNext()
                         
                     } else if ((inputText[1] == "=") ||  (inputText[1] == "!")) {
                         //CHECKING FOR ASSIGNMENT
-                        finalList.append("\(lineNumber).  i  --> [ID]")
+                        finalList.append("\(currentLine).  i  --> [ID]")
                         scopeChecker("i")
                         cleanList.append("i")
                         inputText.removeFirst()
-                        lineNumber += 1
                         checkNext()
                         
                     } else {
                         
-                        finalList.append("\(lineNumber).  i  --> [CHAR]")
+                        finalList.append("\(currentLine).  i  --> [CHAR]")
                         cleanList.append("i")
                         inputText.removeFirst()
-                        lineNumber += 1
                         checkNext()
                         
                     }
@@ -97,27 +91,24 @@ extension ViewController {
                     
                     if inputText[1] == "r" && inputText[2] == "u" && inputText[3] == "e" {
                         //CHECKING FOR "TRUE"
-                        finalList.append("\(lineNumber).  true  --> [TRUE]")
+                        finalList.append("\(currentLine).  true  --> [TRUE]")
                         cleanList.append("true")
                         inputText.removeFirst(4)
-                        lineNumber += 1
                         checkNext()
                         
                     } else if inputText[1] == "=" || inputText[1] == "!" {
                         //CHECKING FOR ASSIGNMENT
                         scopeChecker("t")
-                        finalList.append("\(lineNumber).  t  --> [ID]")
+                        finalList.append("\(currentLine).  t  --> [ID]")
                         cleanList.append("t")
                         inputText.removeFirst()
-                        lineNumber += 1
                         checkNext()
                         
                     } else {
                         
-                        finalList.append("\(lineNumber).  t  --> [CHAR]")
+                        finalList.append("\(currentLine).  t  --> [CHAR]")
                         cleanList.append("t")
                         inputText.removeFirst()
-                        lineNumber += 1
                         checkNext()
                         
                     }
@@ -126,26 +117,24 @@ extension ViewController {
                     
                     if inputText[1] == "a" && inputText[2] == "l" && inputText[3] == "s" && inputText[4] == "e" {
                         //CHECKING FOR FALSE
-                        finalList.append("\(lineNumber).  false  --> [FALSE]")
+                        finalList.append("\(currentLine).  false  --> [FALSE]")
                         cleanList.append("false")
                         inputText.removeFirst(5)
-                        lineNumber += 1
                         checkNext()
                         
                     } else if inputText[1] == "=" || inputText[1] == "!" {
                         //CHECKING FOR ASSIGNMENT
                         cleanList.append("f")
                         scopeChecker("f")
-                        finalList.append("\(lineNumber).  f  --> [ID]")
+                        finalList.append("\(currentLine).  f  --> [ID]")
                         inputText.removeFirst()
-                        lineNumber += 1
                         checkNext()
                         
                     } else {
+                        
                         cleanList.append("f")
-                        finalList.append("\(lineNumber).  f  --> [CHAR]")
+                        finalList.append("\(currentLine).  f  --> [CHAR]")
                         inputText.removeFirst()
-                        lineNumber += 1
                         checkNext()
                         
                     }
@@ -154,27 +143,24 @@ extension ViewController {
                     
                     if inputText[1] == "h" && inputText[2] == "i" && inputText[3] == "l" && inputText[4] == "e" {
                         //CHECKING FOR WHILE
-                        finalList.append("\(lineNumber).  while  --> [WHILE]")
+                        finalList.append("\(currentLine).  while  --> [WHILE]")
                         inputText.removeFirst(5)
-                        lineNumber += 1
                         cleanList.append("while")
                         checkNext()
                         
                     } else if inputText[1] == "=" || inputText[1] == "!" {
                         //CHECKING FOR ASSIGNMENT
                         scopeChecker("w")
-                        finalList.append("\(lineNumber).  w  --> [ID]")
+                        finalList.append("\(currentLine).  w  --> [ID]")
                         cleanList.append("w")
                         inputText.removeFirst()
-                        lineNumber += 1
                         checkNext()
                         
                     } else {
                         
-                        finalList.append("\(lineNumber).  w  --> [CHAR]")
+                        finalList.append("\(currentLine).  w  --> [CHAR]")
                         cleanList.append("w")
                         inputText.removeFirst()
-                        lineNumber += 1
                         checkNext()
                         
                     }
@@ -183,27 +169,24 @@ extension ViewController {
                     
                     if inputText[1] == "r" && inputText[2] == "i" && inputText[3] == "n" && inputText[4] == "t" {
                         //CHECKING FOR PRINT
-                        finalList.append("\(lineNumber).  print  --> [PRINT]")
+                        finalList.append("\(currentLine).  print  --> [PRINT]")
                         cleanList.append("print")
                         inputText.removeFirst(5)
-                        lineNumber += 1
                         checkNext()
                         
                     } else if inputText[1] == "=" || inputText[1] == "!" {
                         //CHECKING FOR ASSIGNMENT
-                        finalList.append("\(lineNumber).  p  --> [ID]")
+                        finalList.append("\(currentLine).  p  --> [ID]")
                         scopeChecker("p")
                         cleanList.append("p")
                         inputText.removeFirst()
-                        lineNumber += 1
                         checkNext()
                         
                     } else {
                         
-                        finalList.append("\(lineNumber).  p  --> [CHAR]")
+                        finalList.append("\(currentLine).  p  --> [CHAR]")
                         cleanList.append("p")
                         inputText.removeFirst()
-                        lineNumber += 1
                         checkNext()
                         
                     }
@@ -212,29 +195,26 @@ extension ViewController {
                     
                     if inputText[1] == "o" && inputText[2] == "o" && inputText[3] == "l" && inputText[4] == "e" && inputText[5] == "a" && inputText[6] == "n" {
                         //CHECKING FOR BOOLEAN
-                        finalList.append("\(lineNumber).  boolean  --> [BOOLEAN]")
+                        finalList.append("\(currentLine).  boolean  --> [BOOLEAN]")
                         cleanList.append("boolean")
                         symbolScope = symbolScope.adding(scopeTracker) as NSArray
                         lineNums = lineNums.adding(currentLine) as NSArray
                         inputText.removeFirst(7)
-                        lineNumber += 1
                         checkId()
                         
                     } else if inputText[1] == "=" || inputText[1] == "!" {
                         //CHECKING FOR ASSIGNMENT
-                        finalList.append("\(lineNumber).  b  --> [ID]")
+                        finalList.append("\(currentLine).  b  --> [ID]")
                         scopeChecker("b")
                         cleanList.append("b")
                         inputText.removeFirst()
-                        lineNumber += 1
                         checkNext()
                         
                     } else {
                         
-                        finalList.append("\(lineNumber).  b  --> [CHAR]")
+                        finalList.append("\(currentLine).  b  --> [CHAR]")
                         cleanList.append("b")
                         inputText.removeFirst()
-                        lineNumber += 1
                         checkNext()
                         
                     }
@@ -246,26 +226,23 @@ extension ViewController {
                         cleanList.append("string")
                         lineNums = lineNums.adding(currentLine) as NSArray
                         symbolScope = symbolScope.adding(scopeTracker) as NSArray
-                        finalList.append("\(lineNumber).  string  --> [STRING]")
+                        finalList.append("\(currentLine).  string  --> [STRING]")
                         inputText.removeFirst(6)
-                        lineNumber += 1
                         checkId()
                         
                     } else if inputText[1] == "=" || inputText[1] == "!" {
                         //CHECKING FOR ASSIGNMENT
                         cleanList.append("s")
-                        finalList.append("\(lineNumber).  s  --> [ID]")
+                        finalList.append("\(currentLine).  s  --> [ID]")
                         scopeChecker("s")
                         inputText.removeFirst()
-                        lineNumber += 1
                         checkNext()
                         
                     } else {
                         
                         cleanList.append("s")
-                        finalList.append("\(lineNumber).  s  --> [CHAR]")
+                        finalList.append("\(currentLine).  s  --> [CHAR]")
                         inputText.removeFirst()
-                        lineNumber += 1
                         checkNext()
                         
                     }
@@ -274,49 +251,42 @@ extension ViewController {
                     
                     cleanList.append("{")
                     scopeTracker += 1
-                    finalList.append("\(lineNumber).  {  --> [LBRACE]")
+                    finalList.append("\(currentLine).  {  --> [LBRACE]")
                     inputText.removeFirst()
-                    lineNumber += 1
                     checkNext()
                     
                 } else if y == "}" {
                     
                     scopeTracker -= 1
                     cleanList.append("}")
-                    finalList.append("\(lineNumber).  }  --> [RBRACE]")
+                    finalList.append("\(currentLine).  }  --> [RBRACE]")
                     inputText.removeFirst()
-                    lineNumber += 1
                     checkNext()
                     
                 } else if y == "(" {
                     
                     if acceptedChars.contains(String(describing: inputText[1])) && inputText[2] == ")" {
                         //CHECKING IF PARENTHESES CONTAIN IDENTIFIER
-                        finalList.append("\(lineNumber).  (  --> [LPAREN]")
+                        finalList.append("\(currentLine).  (  --> [LPAREN]")
                         cleanList.append("(")
-                        lineNumber += 1
                         cleanList.append(String(describing: inputText[1]))
-                        finalList.append("\(lineNumber).  \(String(describing: inputText[1])) --> [ID]")
+                        finalList.append("\(currentLine).  \(String(describing: inputText[1])) --> [ID]")
                         scopeChecker(String(describing: inputText[1]))
-                        lineNumber += 1
+                        
                         cleanList.append(")")
-                        finalList.append("\(lineNumber).  )  --> [RPAREN]")
-                        lineNumber += 1
+                        finalList.append("\(currentLine).  )  --> [RPAREN]")
                         inputText.removeFirst(3)
                         checkNext()
                         
                     } else if (acceptedChars.contains(String(describing: inputText[1])) && (inputText[2] == "=")) && inputText[3] == "=" {
                         
                         cleanList.append("(")
-                        finalList.append("\(lineNumber).  (  --> [LPAREN]")
-                        lineNumber += 1
+                        finalList.append("\(currentLine).  (  --> [LPAREN]")
                         cleanList.append(String(describing: inputText[1]))
-                        finalList.append("\(lineNumber).  \(String(describing: inputText[1])) --> [ID]")
+                        finalList.append("\(currentLine).  \(String(describing: inputText[1])) --> [ID]")
                         scopeChecker(String(describing: inputText[1]))
-                        lineNumber += 1
                         cleanList.append("==")
-                        finalList.append("\(lineNumber).  ==  --> [BOOLOP]")
-                        lineNumber += 1
+                        finalList.append("\(currentLine).  ==  --> [BOOLOP]")
                         inputText.removeFirst(4)
                         checkNext()
                         
@@ -325,22 +295,18 @@ extension ViewController {
                         cleanList.append("(")
                         cleanList.append(String(describing: inputText[1]))
                         cleanList.append("!=")
-                        finalList.append("\(lineNumber).  (  --> [LPAREN]")
-                        lineNumber += 1
-                        finalList.append("\(lineNumber).  \(String(describing: inputText[1])) --> [ID]")
+                        finalList.append("\(currentLine).  (  --> [LPAREN]")
+                        finalList.append("\(currentLine).  \(String(describing: inputText[1])) --> [ID]")
                         scopeChecker(String(describing: inputText[1]))
-                        lineNumber += 1
-                        finalList.append("\(lineNumber).  !=  --> [BOOLOP]")
-                        lineNumber += 1
+                        finalList.append("\(currentLine).  !=  --> [BOOLOP]")
                         inputText.removeFirst(4)
                         checkNext()
                         
                     } else {
                         
                         cleanList.append("(")
-                        finalList.append("\(lineNumber).  (  --> [LPAREN]")
+                        finalList.append("\(currentLine).  (  --> [LPAREN]")
                         inputText.removeFirst()
-                        lineNumber += 1
                         checkNext()
                         
                     }
@@ -348,35 +314,31 @@ extension ViewController {
                 } else if y == ")" {
                     
                     cleanList.append(")")
-                    finalList.append("\(lineNumber).  )  --> [RPAREN]")
+                    finalList.append("\(currentLine).  )  --> [RPAREN]")
                     inputText.removeFirst()
-                    lineNumber += 1
                     checkNext()
                     
                 } else if y == "$" {
                     //CHECKS FOR END-OF-PROGRAM AND CREATES NEW ONE
                     cleanList.append("$")
-                    finalList.append("\(lineNumber).  $  --> [EOP]\n")
+                    finalList.append("\(currentLine).  $  --> [EOP]\n")
                     inputText.removeFirst()
-                    lineNumber += 1
                     newProgram()
                     
                 } else if y == "!" {
                     
                     if inputText[1] == "=" {
                         //CHECKING FOR BOOLOP
-                        finalList.append("\(lineNumber).  !=  --> [BOOLOP]")
+                        finalList.append("\(currentLine).  !=  --> [BOOLOP]")
                         cleanList.append("!=")
                         inputText.removeFirst(2)
-                        lineNumber += 1
                         checkNext()
                         
                     } else {
                         
-                        finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
+                        finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
                         inputText.removeFirst()
                         errorCount += 1
-                        lineNumber += 1
                         checkNext()
                         
                     }
@@ -391,9 +353,8 @@ extension ViewController {
                     
                     if inputText[1] == "=" {
                         //CHECKING FOR BOOLOP
-                        finalList.append("\(lineNumber).  ==  --> [BOOLOP]")
+                        finalList.append("\(currentLine).  ==  --> [BOOLOP]")
                         cleanList.append("==")
-                        lineNumber += 1
                         inputText.removeFirst(2)
                         checkNext()
                         
@@ -401,19 +362,16 @@ extension ViewController {
                         
                         cleanList.append("=")
                         cleanList.append(String(describing: inputText[1]))
-                        finalList.append("\(lineNumber).  =  --> [SINGLE_EQUALS]")
-                        lineNumber += 1
-                        finalList.append("\(lineNumber).  \(inputText[1])  --> [ID]")
+                        finalList.append("\(currentLine).  =  --> [SINGLE_EQUALS]")
+                        finalList.append("\(currentLine).  \(inputText[1])  --> [ID]")
                         scopeChecker(String(describing: inputText[1]))
-                        lineNumber += 1
                         inputText.removeFirst(2)
                         checkNext()
                         
                     } else {
                         
                         cleanList.append("=")
-                        finalList.append("\(lineNumber).  =  --> [SINGLE_EQUALS]")
-                        lineNumber += 1
+                        finalList.append("\(currentLine).  =  --> [SINGLE_EQUALS]")
                         inputText.removeFirst()
                         checkNext()
                         
@@ -424,20 +382,17 @@ extension ViewController {
                     if acceptedChars.contains(String(describing: inputText[1])) {
                         
                         cleanList.append("+")
-                        finalList.append("\(lineNumber).  +  --> [INTOP]")
-                        lineNumber += 1
+                        finalList.append("\(currentLine).  +  --> [INTOP]")
                         cleanList.append(String(describing: inputText[1]))
-                        finalList.append("\(lineNumber).  \(String(describing: inputText[1]))  --> [ID]")
+                        finalList.append("\(currentLine).  \(String(describing: inputText[1]))  --> [ID]")
                         scopeChecker(String(describing: inputText[1]))
                         inputText.removeFirst(2)
-                        lineNumber += 1
                         checkNext()
                         
                     } else {
                         
                         cleanList.append("+")
-                        finalList.append("\(lineNumber).  +  --> [INTOP]")
-                        lineNumber += 1
+                        finalList.append("\(currentLine).  +  --> [INTOP]")
                         inputText.removeFirst()
                         checkNext()
                         
@@ -446,9 +401,8 @@ extension ViewController {
                 } else if acceptedNums.contains(String(describing: y!)) {
                     
                     cleanList.append(String(describing: y!))
-                    finalList.append("\(lineNumber).  \(y!)  --> [DIGIT]")
+                    finalList.append("\(currentLine).  \(y!)  --> [DIGIT]")
                     inputText.removeFirst()
-                    lineNumber += 1
                     checkNext()
                     
                 } else if acceptedChars.contains(String(describing: y!)) {
@@ -456,18 +410,16 @@ extension ViewController {
                     if inputText[1] == "=" {
                     
                         cleanList.append(String(describing: y!))
-                        finalList.append("\(lineNumber).  \(y!)  --> [ID]")
+                        finalList.append("\(currentLine).  \(y!)  --> [ID]")
                         scopeChecker(String(describing: y!))
                         inputText.removeFirst()
-                        lineNumber += 1
                         checkNext()
                         
                     } else {
                         
                         cleanList.append(String(describing: y!))
-                        finalList.append("\(lineNumber).  \(y!)  --> [CHAR]")
+                        finalList.append("\(currentLine).  \(y!)  --> [CHAR]")
                         inputText.removeFirst()
-                        lineNumber += 1
                         checkNext()
                         
                     }
@@ -475,9 +427,8 @@ extension ViewController {
                 } else if (y == "\"" || y == "“") {
                     
                     cleanList.append("\"")
-                    finalList.append("\(lineNumber).  \"  --> [OPEN_DOUBLE_QUOTE]")
+                    finalList.append("\(currentLine).  \"  --> [OPEN_DOUBLE_QUOTE]")
                     inputText.removeFirst()
-                    lineNumber += 1
                     startCharList()
                     
                 } else if y == " " {
@@ -505,42 +456,37 @@ extension ViewController {
             
             if acceptedNums.contains(String(describing:y)) {
                 
-                finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
+                finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
                 inputText.removeFirst()
                 errorCount += 1
-                lineNumber += 1
                 startCharList()
                 
             } else if acceptedChars.contains(String(describing:y)) {
                 
                 cleanList.append(String(describing: y))
-                finalList.append("\(lineNumber).  \(y)  --> [Char]")
+                finalList.append("\(currentLine).  \(y)  --> [Char]")
                 inputText.removeFirst()
-                lineNumber += 1
                 startCharList()
                 
             } else if y == " " {
                 
                 cleanList.append(String(describing: y))
-                finalList.append("\(lineNumber).  \(y)  --> [WHITE_SPACE]")
+                finalList.append("\(currentLine).  \(y)  --> [WHITE_SPACE]")
                 inputText.removeFirst()
-                lineNumber += 1
                 startCharList()
                 
                 
             } else if y == "$" || y == "\n" || y == "\t" {
                 
-                finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
+                finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
                 inputText.removeFirst()
                 errorCount += 1
-                lineNumber += 1
                 startCharList()
                 
             } else if y == "}" {
                 
                 cleanList.append("}")
-                finalList.append("\(lineNumber).  }  --> [RBRACE]")
-                lineNumber += 1
+                finalList.append("\(currentLine).  }  --> [RBRACE]")
                 inputText.removeFirst()
                 warningLabel.stringValue = "Please don't forget to close quote"
                 checkNext()
@@ -548,10 +494,8 @@ extension ViewController {
             } else if y == ")" {
             
                 cleanList.append(")")
-                finalList.append("\(lineNumber).  \"  --> [CLOSE_DOUBLE_QUOTES]")
-                lineNumber += 1
-                finalList.append("\(lineNumber).  )  --> [RPAREN]")
-                lineNumber += 1
+                finalList.append("\(currentLine).  \"  --> [CLOSE_DOUBLE_QUOTES]")
+                finalList.append("\(currentLine).  )  --> [RPAREN]")
                 inputText.removeFirst()
                 warningLabel.stringValue = "Please don't forget to close quote"
                 checkNext()
@@ -565,9 +509,8 @@ extension ViewController {
         } else {
             
             cleanList.append("\"")
-            finalList.append("\(lineNumber).  \"  --> [CLOSE_DOUBLE_QUOTES]")
+            finalList.append("\(currentLine).  \"  --> [CLOSE_DOUBLE_QUOTES]")
             inputText.removeFirst()
-            lineNumber += 1
             checkNext()
             
         }
@@ -580,18 +523,16 @@ extension ViewController {
             
             let y = inputText.first!
             cleanList.append(String(describing: y))
-            finalList.append("\(lineNumber).  \(y)  --> [ID]")
-            symbolName = symbolName.adding(String(describing: y)) as NSArray!
+            finalList.append("\(currentLine).  \(y)  --> [ID]")
+            symbolName.append(String(describing: y))
             inputText.removeFirst()
-            lineNumber += 1
             checkNext()
             
         } else {
             
-            finalList.append("\(lineNumber).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
+            finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
             inputText.removeFirst()
             errorCount += 1
-            lineNumber += 1
             checkNext()
             
         }
@@ -602,44 +543,63 @@ extension ViewController {
 
         if errorCount == 0 {
             
-            if inputText.isEmpty == false {
-                
+            if inputText.isEmpty == false{
                 finalList.append("Lex completed program \(programNum) successfully.\n")
                 astList = []
-                ParseProgram()
-                astFinal.string?.append("**Program \(programNum) completed successfully.**\n")
-                astFinal.string?.append("\n")
-                produceSymbolTable()
-                symbolScope = []
-                symbolType = []
+                currentBrace = 0
                 braceCounter = []
-                errorArray = []
-                symbolName = []
-                lineNums = []
-                symbolList.string?.append("\n")
+                ParseProgram()
+                if parseError == 0 {
+                    astFinal.string?.append("**Program \(programNum) completed successfully.**\n")
+                    astFinal.string?.append("\n")
+                    produceSymbolTable()
+                    symbolScope = []
+                    symbolType = []
+                    symbolTable = []
+                    errorArray = []
+                    symbolName = []
+                    lineNums = []
+                    symbolList.string?.append("\n")
+                    
+                } else {
+                
+                    parseError = 0
+                
+                }
                 errorCounter = 0
                 programNum += 1
-                lineNumber = 0
-                finalList.append("Lexing program \(programNum)...")
-                checkNext()
                 
+                if inputText.contains("{") {
+                
+                    finalList.append("Lexing program \(programNum)...")
+                
+                }
+                
+                checkNext()
     
             } else {
                 
                 astList = []
-                lineNumber = 0
                 finalList.append("Lex completed program \(programNum) successfully.\n")
                 ParseProgram()
-                astFinal.string?.append("**Program \(programNum) completed successfully.**\n")
-                astFinal.string?.append("\n")
-                finalList.insert("Lex completed successfully!", at: 0)
-                produceSymbolTable()
-                symbolScope = []
-                symbolType = []
-                test = []
-                errorArray = []
-                symbolName = []
-                lineNums = []
+                if parseError == 0 {
+                
+                    astFinal.string?.append("**Program \(programNum) completed successfully.**\n")
+                    astFinal.string?.append("\n")
+                    finalList.insert("Lex completed successfully!", at: 0)
+                    produceSymbolTable()
+                    symbolScope = []
+                    symbolType = []
+                    errorArray = []
+                    symbolName = []
+                    lineNums = []
+                
+                } else {
+                
+                    parseError = 0
+                    astFinal.string = ""
+                
+                }
                 printFinal()
                 
             }
@@ -650,14 +610,12 @@ extension ViewController {
                 
                 parsedList.string = ""
                 finalList.append("Lex completed with \(errorCount) error(s).")
-                lineNumber = 0
                 errorCount = 0
                 checkNext()
                 
             } else {
                 
                 parsedList.string = ""
-                lineNumber = 0
                 finalList.append("Lex completed with \(errorCount) error(s).")
                 printFinal()
                 
