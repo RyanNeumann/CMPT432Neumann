@@ -73,7 +73,6 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
                 textEntered = self.enteredCode.string!
                 
             }
-            
             //Used to clear the entered code and create an array that will be cycled through
             
             if self.enteredCode.string?.characters.first == "\""{
@@ -123,6 +122,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         } else {
             //CHECK IF EOP($) IS MISSING
             if inputText.last != "$"  && inputText.last != "\n" && inputText.last != " " && inputText.last != "\t" {
+                
                 inputText.append("$")
                 self.warningLabel.stringValue = "Please use '$' to end the program!"
                 self.enteredCode.string = textEntered

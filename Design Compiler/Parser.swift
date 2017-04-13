@@ -333,6 +333,7 @@ extension ViewController {
         if acceptedChars.contains(String(describing: parseList.first!)) {
             
             if typeBool == false {
+            
                 beforeBool = false
                 typeChecker(String(describing: parseList.first!))
             
@@ -341,6 +342,7 @@ extension ViewController {
                 typeBool = false
             
             }
+            
             finalList.append("Expecting Id")
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
             astList = astList.adding(String(repeatElement("-", count: astIndent))  + "[ \(String(describing: parseList.first!)) ]") as NSArray

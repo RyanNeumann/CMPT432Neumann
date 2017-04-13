@@ -123,7 +123,6 @@ extension ViewController {
                                     let targetLocation = symbolName.index(of: parseList[2])
                                     symbolType[test!] = symbolType[targetLocation!]
                                     
-                                    
                                 }
                             
                             } else {
@@ -158,6 +157,7 @@ extension ViewController {
                     if parseList[2] == "\"" {
                     
                         let indexCheck = symbolName.index(of: t)
+                        
                         if indexCheck != nil {
                             
                             if String(describing: symbolType[indexCheck!]) != "string" {
@@ -285,9 +285,7 @@ extension ViewController {
                 finalList.append("Program \(String(describing: programNum)) Semantic Analysis Produced (\(scopeErrors)) errors and (0) warnings\n")
                 
             }
-        
-            
-            
+         
         } else {
         
             for i in typeErrors {

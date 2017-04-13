@@ -26,6 +26,7 @@ extension ViewController {
     func checkNext() {
         
         let y = inputText.first
+        
         if y == nil {
             //If y is empty, print the final list of tokens
             printFinal()
@@ -543,6 +544,7 @@ extension ViewController {
         if errorCount == 0 {
             
             if inputText.isEmpty == false{
+                
                 finalList.append("Lex completed program \(programNum) successfully.\n")
                 astList = []
                 currentBrace = 0
@@ -550,7 +552,9 @@ extension ViewController {
                 statementEnding = 0
                 cstIndent = 0
                 ParseProgram()
+                
                 if parseError == 0 {
+                    
                     astFinal.string?.append("**Program \(programNum) completed successfully.**\n")
                     astFinal.string?.append("\n")
                     finalList.append("Program \(programNum) Semantic Analysis...")
@@ -569,6 +573,7 @@ extension ViewController {
                     parseError = 0
                 
                 }
+                
                 errorCounter = 0
                 programNum += 1
                 
@@ -585,6 +590,7 @@ extension ViewController {
                 astList = []
                 finalList.append("Lex completed program \(programNum) successfully.\n")
                 ParseProgram()
+                
                 if parseError == 0 {
                 
                     astFinal.string?.append("**Program \(programNum) completed successfully.**\n")
@@ -604,6 +610,7 @@ extension ViewController {
                     astFinal.string = ""
                 
                 }
+                
                 printFinal()
                 
             }
