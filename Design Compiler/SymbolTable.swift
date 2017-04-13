@@ -100,27 +100,44 @@ extension ViewController {
                     
                     if symbolName.contains(parseList[2]) {
                        
-                        let index = symbolName.index(of: parseList[2])
-                        let indexCheck = symbolName.index(of: t)
                         
-                        if String(describing: symbolType[indexCheck!]) == String(describing: symbolType[index!]) {
                         
-                            if (symbolScope[indexCheck!] as! Int >= symbolScope[index!] as! Int) == false {
-                                
-                                symbolList.string?.append("Error: Scope out of bounds for \(t)\n")
+                        if let index = symbolName.index(of: parseList[2]) {
+                        
+                            if let indexCheck = symbolName.index(of: t){
+                            
+                                if symbolType[indexCheck] == symbolType[index] {
+                                    
+                                    if (symbolScope[indexCheck] as! Int >= symbolScope[index] as! Int) == false {
+                                        
+                                        symbolList.string?.append("Error: Scope out of bounds for \(t)\n")
+                                        
+                                    }
+                                    
+                                } else {
+                                    
+                                    let test = symbolName.index(of: t)
+                                    let name = symbolName[test!]
+                                    let targetLocation = symbolName.index(of: parseList[2])
+                                    symbolType[test!] = symbolType[targetLocation!]
+                                    
+                                    
+                                }
+                            
+                            } else {
+                            
+                            symbolList.string?.append("Error: Scope out of bounds for \(t)\n")
+                            errorCounter += 1
                             
                             }
-                        
+                            
                         } else {
                         
-                            let test = symbolName.index(of: t)
-                            let name = symbolName[test!]
-                            let targetLocation = symbolName.index(of: parseList[2])
-                            symbolType[test!] = symbolType[targetLocation!]
-                            
-                            
+                            symbolList.string?.append("Error: Scope out of bounds for \(t)\n")
+                            errorCounter += 1
+                        
                         }
-                    
+                        
                     } else {
                         
                         symbolList.string?.append("Error: id: \(parseList[2]) not in scope\n")
@@ -131,17 +148,20 @@ extension ViewController {
                 
                 } else {
                 
-                    
                     if parseList[2] == "\"" {
                     
                         let indexCheck = symbolName.index(of: t)
-                        if String(describing: symbolType[indexCheck!]) != "string" {
+                        if indexCheck != nil {
                             
-                            errorCounter += 1
-                            symbolList.string?.append("Error: Type mismatch with id: \(t)\n")
-                        
+                            if String(describing: symbolType[indexCheck!]) != "string" {
+                                
+                                errorCounter += 1
+                                symbolList.string?.append("Error: Type mismatch with id: \(t) 3")
+                                
+                            }
+                            
                         }
-                    
+                        
                     }
                     
                 }
@@ -201,15 +221,15 @@ extension ViewController {
                     
                     if  String(describing: i) == "string" {
                         
-                        symbolTable.append("    \(symbolName[current])          \(i)      \(symbolScope[current])          \(lineNums[current])")
+                        symbolTable.append("    \(symbolName[current])         \(i)      \(symbolScope[current])          \(lineNums[current])")
                         
                     } else if  String(describing: i) == "bool" {
                         
-                        symbolTable.append("    \(symbolName[current])          \(i)         \(symbolScope[current])         \(lineNums[current])")
+                        symbolTable.append("    \(symbolName[current])         \(i)         \(symbolScope[current])         \(lineNums[current])")
                         
                     } else if  String(describing: i) == "int" {
                         
-                        symbolTable.append("    \(symbolName[current])          \(i)           \(symbolScope[current])          \(lineNums[current])")
+                        symbolTable.append("    \(symbolName[current])         \(i)           \(symbolScope[current])          \(lineNums[current])")
                         
                     } else if String(describing: i) == "\n" {
                         

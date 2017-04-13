@@ -365,10 +365,30 @@ extension ViewController {
         cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
         beforeBool = true
         typeChecker(parseList.first!)
-        parseList.removeFirst() //"HERERERERE
-        finalList.append("Expecting Equals")
-        currentTerm = "Equals"
-        match(param: "=")
+        parseList.removeFirst()
+        
+        if parseList.first == "=" {
+         
+            finalList.append("Expecting Equals")
+            currentTerm = "Equals"
+            match(param: "=")
+            
+        } else if parseList.first == "==" || parseList.first == "!=" {
+        
+            finalList.append("Expecting BoolOp")
+            currentTerm = "BoolOp"
+            
+            if parseList.first == "==" {
+                
+                match(param: "==")
+                
+            } else {
+            
+                match(param: "!=")
+                
+            }
+        
+        }
         
         if parseList.isEmpty == false {
             
