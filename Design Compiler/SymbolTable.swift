@@ -22,7 +22,6 @@ var errorCounter = 0
 var beforeBool = false
 var typeErrors = [String]()
 
-
 extension ViewController {
 
     func scopeChecker (_ a: String) {
