@@ -50,7 +50,7 @@ extension ViewController {
                     
                 } else if unacceptedList.contains(String(describing: y!)){
                     //CHECK FOR ERRORS
-                    finalList.append("\(currentLine). ERROR: Unrecognized Token: \(y!)")
+                    finalList.append("\(currentLine). ERROR: Unrecognized Token: \(y!) on line \(currentLine)")
                     inputText.removeFirst()
                     errorCount += 1
                     checkNext()
@@ -336,7 +336,7 @@ extension ViewController {
                         
                     } else {
                         
-                        finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!)")
+                        finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
                         inputText.removeFirst()
                         errorCount += 1
                         checkNext()
@@ -456,7 +456,7 @@ extension ViewController {
             
             if acceptedNums.contains(String(describing:y)) {
                 
-                finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!)")
+                finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
                 inputText.removeFirst()
                 errorCount += 1
                 startCharList()
@@ -478,7 +478,7 @@ extension ViewController {
                 
             } else if y == "$" || y == "\n" || y == "\t" {
                 
-                finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!)")
+                finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
                 inputText.removeFirst()
                 errorCount += 1
                 startCharList()
@@ -530,7 +530,7 @@ extension ViewController {
             
         } else {
             
-            finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!)")
+            finalList.append("\(currentLine).  ERROR: Unrecognized Token: \(inputText.first!) on line \(currentLine)")
             inputText.removeFirst()
             errorCount += 1
             checkNext()
@@ -558,7 +558,10 @@ extension ViewController {
                     astFinal.string?.append("**Program \(programNum) completed successfully.**\n")
                     astFinal.string?.append("\n")
                     finalList.append("Program \(programNum) Semantic Analysis...")
+                    symbolList.string?.append("Program \(programNum) Symbol Table\n")
                     produceSymbolTable()
+                    typeErrors = []
+                    errorArray = []
                     symbolScope = []
                     symbolType = []
                     symbolTable = []
@@ -570,6 +573,7 @@ extension ViewController {
                     
                 } else {
                 
+                    
                     parseError = 0
                 
                 }
@@ -590,27 +594,26 @@ extension ViewController {
                 astList = []
                 finalList.append("Lex completed program \(programNum) successfully.\n")
                 ParseProgram()
-                
                 if parseError == 0 {
                 
                     astFinal.string?.append("**Program \(programNum) completed successfully.**\n")
                     astFinal.string?.append("\n")
                     finalList.insert("Lex completed successfully!", at: 0)
                     finalList.append("Program \(programNum) Semantic Analysis...")
+                    symbolList.string?.append("Program \(programNum) Symbol Table\n")
                     produceSymbolTable()
                     symbolScope = []
                     symbolType = []
                     errorArray = []
                     symbolName = []
                     lineNums = []
-                
+                    typeErrors = []
+                    
                 } else {
                 
                     parseError = 0
-                    astFinal.string = ""
                 
                 }
-                
                 printFinal()
                 
             }
@@ -619,14 +622,12 @@ extension ViewController {
             
             if inputText.isEmpty == false {
                 
-                parsedList.string = ""
                 finalList.append("Lex completed with \(errorCount) error(s).")
                 errorCount = 0
                 checkNext()
                 
             } else {
                 
-                parsedList.string = ""
                 finalList.append("Lex completed with \(errorCount) error(s).")
                 printFinal()
                 

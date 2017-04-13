@@ -30,14 +30,14 @@ extension ViewController {
         //Clears any settings from previous run
         parseList = cleanList
         cleanList.removeAll()
-        parsedList.string?.removeAll()
-        parsedList.string = ""
+        //parsedList.string?.removeAll()
+        //parsedList.string = ""
         parseFinal.removeAll()
         braceCounter = []
         //Initializing Block
         cstIndent = 0
         cst.append("< Program >")
-        finalList.append("Parsing program \(parseCount)...")
+        finalList.append("Parsing program \(programNum)...")
         ParseBlock()
         
         if parseList.isEmpty == false {
@@ -58,8 +58,6 @@ extension ViewController {
             
         }
         
-        parsedList.string = ""
-        
         for element in cst {
             
             parsedList.string?.append(String(describing: element) + "\n")
@@ -74,10 +72,14 @@ extension ViewController {
             
         }
         
-        for element in astList {
+        if cst.isEmpty == false {
+        
+            for element in astList {
         
             astFinal.string?.append(String(describing: element) + "\n")
         
+            }
+            
         }
     
     }
@@ -88,19 +90,22 @@ extension ViewController {
         cst.append(String(repeatElement("•", count: cstIndent))  + "< Block >")
         astList = astList.adding(String(repeatElement("-", count: astIndent)) + "< Block >") as NSArray
         astIndent += 1
+        
         finalList.append("Expecting a left brace")
         currentTerm = "left brace"
         match(param: "{")
         ParseStatementList()
         
         if parseList.isEmpty == false {
+            
             finalList.append("Expecting a right brace")
             currentTerm = "right brace"
             match(param: "}")
             cstIndent -= 2
             astIndent -= 1
+            
         }
-        
+    
     }
     
     func ParseStatementList() {
@@ -609,7 +614,6 @@ extension ViewController {
                 
                 parseError += 1
                 finalList.append("\nError - Expecting \(currentTerm).  Instead got \(String(describing: parseList.first!))\n")
-                parsedList.string = ""
                 parseList.removeAll()
                 cst.removeAll()
                 

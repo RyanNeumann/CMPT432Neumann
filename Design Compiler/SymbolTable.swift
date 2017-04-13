@@ -84,8 +84,6 @@ extension ViewController {
                     
                 if String(describing: symbolType[idIntScope!]) != "int" {
                     
-                    symbolList.string?.append("Program \(programNum) Symbol Table\n")
-                    symbolList.string?.append("not produced due to error(s) detected by semantic analysis\n")
                     typeErrors.append("Error: Type mismatch with \(t) \(parseList[1]) \(parseList[2])\n")
                     errorCounter += 1
                 
@@ -110,9 +108,8 @@ extension ViewController {
                                     
                                     if (symbolScope[indexCheck] as! Int >= symbolScope[index] as! Int) == false {
                                         
-                                        symbolList.string?.append("Program \(programNum) Symbol Table\n")
-                                        symbolList.string?.append("not produced due to error(s) detected by semantic analysis\n")
                                         typeErrors.append("Error: Scope out of bounds for \(t)\n")
+                                        errorCounter += 1
                                         
                                     }
                                     
@@ -125,27 +122,21 @@ extension ViewController {
                                 }
                             
                             } else {
-                            
-                                symbolList.string?.append("Program \(programNum) Symbol Table\n")
-                                symbolList.string?.append("not produced due to error(s) detected by semantic analysis\n")
+                                
                                 typeErrors.append("Error: Scope out of bounds for \(t)\n")
                                 errorCounter += 1
-                            
+                                
                             }
                             
                         } else {
-                        
-                            symbolList.string?.append("Program \(programNum) Symbol Table\n")
-                            symbolList.string?.append("not produced due to error(s) detected by semantic analysis\n")
+                            
                             typeErrors.append("Error: Scope out of bounds for \(t)\n")
                             errorCounter += 1
-                        
+                            
                         }
                         
                     } else {
                         
-                        symbolList.string?.append("Program \(programNum) Symbol Table\n")
-                        symbolList.string?.append("not produced due to error(s) detected by semantic analysis\n\n")
                         typeErrors.append("Error: id: \(parseList[2]) not in scope\n")
                         errorCounter += 1
                         
@@ -162,8 +153,6 @@ extension ViewController {
                             if String(describing: symbolType[indexCheck!]) != "string" {
                                 
                                 errorCounter += 1
-                                symbolList.string?.append("Program \(programNum) Symbol Table\n")
-                                symbolList.string?.append("not produced due to error(s) detected by semantic analysis\n\n")
                                 typeErrors.append("Error: Type mismatch with id: \(t)")
                                 
                             }
@@ -176,10 +165,6 @@ extension ViewController {
                 
             }
             
-        } else {
-        
-            print(parseList)
-        
         }
     
     }
@@ -196,7 +181,6 @@ extension ViewController {
             
             if test[programNum] == false {
                 
-                symbolList.string?.append("Program \(programNum) Symbol Table\n")
                 var current = 0
                 
                 if symbolType.count > 0 {
@@ -254,12 +238,15 @@ extension ViewController {
                     
                 }
                 
-                for element in symbolTable {
-                    
-                    symbolList.string?.append(String(describing: element) + "\n")
-                    
-                }
+                if parseError == 0 {
                 
+                    for element in symbolTable {
+                    
+                        symbolList.string?.append(String(describing: element) + "\n")
+                    
+                    }
+                
+                }
                 symbolList.string?.append("**Program \(programNum) completed successfully.**\n")
                 
                 if finalList.contains("Semantic Analysis completed successfully!\n") == false {
@@ -276,7 +263,6 @@ extension ViewController {
                 
             } else {
                 
-                symbolList.string?.append("Program \(programNum) Symbol Table\n")
                 symbolList.string?.append("not produced due to error(s) detected by semantic analysis\n")
                 
                 for i in errorArray {
@@ -296,10 +282,12 @@ extension ViewController {
                 finalList.append(i)
             
             }
-        
+    
+            symbolList.string?.append("not produced due to error(s) detected by semantic analysis\n")
             finalList.append("Program \(String(describing: programNum)) Semantic Analysis Produced (\(typeErrors.count)) errors and (0) warnings\n")
+            
         }
         
-        }
+    }
     
 }
