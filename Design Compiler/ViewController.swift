@@ -43,6 +43,8 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
     
     @IBAction func compileClicked(_ sender: Any) {
 
+        errorArray = []
+        scopeErrors = 0
         parseError = 0
         symbolList.string = ""
         symbolTable = []
@@ -121,8 +123,8 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
             
         } else {
             //CHECK IF EOP($) IS MISSING
-            if inputText.last != "$"  && inputText.last != "\n" {
-                
+            if inputText.last != "$"  && inputText.last != "\n" && inputText.last != " " && inputText.last != "\t" {
+                inputText.append("$")
                 self.warningLabel.stringValue = "Please use '$' to end the program!"
                 self.enteredCode.string = textEntered
                 

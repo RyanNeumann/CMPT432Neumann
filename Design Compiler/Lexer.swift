@@ -40,7 +40,15 @@ extension ViewController {
                 
             } else {
                 
-                if unacceptedList.contains(String(describing: y!)){
+                if y == "{" {
+                    
+                    cleanList.append("{")
+                    scopeTracker += 1
+                    finalList.append("\(currentLine).  {  --> [LBRACE]")
+                    inputText.removeFirst()
+                    checkNext()
+                    
+                } else if unacceptedList.contains(String(describing: y!)){
                     //CHECK FOR ERRORS
                     finalList.append("\(currentLine). ERROR: Unrecognized Token: \(y!) on line \(currentLine)")
                     inputText.removeFirst()
@@ -246,14 +254,6 @@ extension ViewController {
                         checkNext()
                         
                     }
-                    
-                } else if y == "{" {
-                    
-                    cleanList.append("{")
-                    scopeTracker += 1
-                    finalList.append("\(currentLine).  {  --> [LBRACE]")
-                    inputText.removeFirst()
-                    checkNext()
                     
                 } else if y == "}" {
                     

@@ -48,7 +48,7 @@ extension ViewController {
             currentTerm = "EOP"
             finalList.append("Expecting EOP")
             match(param: "$")
-            print(astList)
+            //print(astList)
             
             if finalList.contains("Parsing completed successfully.\n") == false {
             
@@ -113,7 +113,7 @@ extension ViewController {
     
     func ParseStatementList() {
         
-        if cstIndent != 0 {
+        if cstIndent != 0 && parseList.isEmpty == false{
          
             cst.append(String(repeatElement("•", count: cstIndent))  + "< Statement List >")
             
@@ -140,7 +140,7 @@ extension ViewController {
                 ParseStatement()
                 
                 if currentTerm != "right brace" && cst.isEmpty == false {
-                
+                    
                     cstIndent = statementEnding
                     
                 }
@@ -300,7 +300,7 @@ extension ViewController {
         
             cstIndent += 1
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ int ]")
-            symbolType = symbolType.adding("int") as NSArray
+            symbolType.append("int")
             astList = astList.adding(String(repeatElement("-", count: astIndent))  + "[ int ]") as NSArray
             typeBool = true
             
@@ -308,7 +308,7 @@ extension ViewController {
             
             cstIndent += 1
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ string ]")
-            symbolType = symbolType.adding("string") as NSArray
+            symbolType.append("string")
             astList = astList.adding(String(repeatElement("-", count: astIndent))  + "[ string ]") as NSArray
             typeBool = true
             
@@ -316,7 +316,7 @@ extension ViewController {
             
             cstIndent += 1
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ boolean ]")
-            symbolType = symbolType.adding("bool") as NSArray
+            symbolType.append("bool")
             astList = astList.adding(String(repeatElement("-", count: astIndent))  + "[ boolean ]") as NSArray
             typeBool = true
             
@@ -365,7 +365,7 @@ extension ViewController {
         cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
         beforeBool = true
         typeChecker(parseList.first!)
-        parseList.removeFirst()
+        parseList.removeFirst() //"HERERERERE
         finalList.append("Expecting Equals")
         currentTerm = "Equals"
         match(param: "=")
@@ -451,11 +451,11 @@ extension ViewController {
         
         if parseList[1] == "+" {
             
+            astList = astList.adding(String(repeatElement("-", count: astIndent))  + "[ \(String(describing: parseList.first!)) ]") as NSArray
             astList = astList.adding(String(repeatElement("-", count: astIndent)) + "[ + ]") as NSArray
             finalList.append("Expecting digit")
             finalList.append("- Got digit: \(String(describing: parseList.first!))!")
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
-            astList = astList.adding(String(repeatElement("-", count: astIndent))  + "[ \(String(describing: parseList.first!)) ]") as NSArray
             parseList.removeFirst()
             finalList.append("Expecting IntOp")
             currentTerm = "IntOp"

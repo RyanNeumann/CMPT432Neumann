@@ -60,12 +60,12 @@
 			children = (
 				BC42E5F71E55EE6800DCF504 /* Images.xcassets */,
 				BC42E5F51E55EE2F00DCF504 /* AppDelegate.swift */,
-				BC42E5EF1E55EE1A00DCF504 /* Info.plist */,
+				BC42E5F11E55EE1A00DCF504 /* ViewController.swift */,
 				BC42E5F01E55EE1A00DCF504 /* Lexer.swift */,
 				BCF421301E6DD92600EBBF6C /* Parser.swift */,
 				BC11F6871E9AE59100CF3E37 /* SymbolTable.swift */,
-				BC42E5F11E55EE1A00DCF504 /* ViewController.swift */,
 				BC6B02BA1E5101E7004DF86B /* Main.storyboard */,
+				BC42E5EF1E55EE1A00DCF504 /* Info.plist */,
 			);
 			name = MacCompiler;
 			path = "Design Compiler";

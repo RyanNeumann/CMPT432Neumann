@@ -9,7 +9,7 @@
 import Foundation
 
 var symbolName = [String]()
-var symbolType: NSArray = []
+var symbolType = [String]()
 var lineNums: NSArray = []
 var symbolScope: NSArray = []
 var symbolTable = [String]()
@@ -77,6 +77,9 @@ extension ViewController {
         
             if acceptedNums.contains(parseList[2]) {
                 let idIntScope = symbolName.index(of: t)
+                
+                if idIntScope != nil {
+                    
                 if String(describing: symbolType[idIntScope!]) != "int" {
                     
                     symbolList.string?.append("Error: Type mismatch with \(t) \(parseList[1]) \(parseList[2])\n")
@@ -87,7 +90,9 @@ extension ViewController {
                     
                 
                 }
-                
+                    
+        }
+        
                 
             } else {
                 
@@ -108,9 +113,11 @@ extension ViewController {
                         
                         } else {
                         
-                            print("Here")
-                            errorCounter += 1
-                            symbolList.string?.append("Error: Type mismatch with \(t) \(parseList[1]) \(parseList[2])\n")
+                            let test = symbolName.index(of: t)
+                            let name = symbolName[test!]
+                            let targetLocation = symbolName.index(of: parseList[2])
+                            symbolType[test!] = symbolType[targetLocation!]
+                            
                             
                         }
                     
@@ -143,7 +150,7 @@ extension ViewController {
             
         } else {
         
-            print(t)
+            print(parseList)
         
         }
     
@@ -160,7 +167,7 @@ extension ViewController {
             
         }
         
-        if errorCounter != 0 {
+        if errorCounter == 0 {
         
             
             if test[programNum] == false {
