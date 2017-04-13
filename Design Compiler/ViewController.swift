@@ -15,7 +15,11 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
     
     @IBOutlet var parsedList: NSTextView!
     
-    @IBOutlet var enteredCode: NSTextView!
+    @IBOutlet var codeBox: NSTextField!
+    
+    @IBOutlet var enteredCode: NSTextFieldCell!
+    
+    //@IBOutlet var enteredCode: NSTextView!
     
     @IBOutlet var astFinal: NSTextView!
     
@@ -36,7 +40,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         astFinal.font = NSFont(name: "Tahoma", size: 14)
         examplePicker.dataSource = self
         examplePicker.delegate = self
-        enteredCode.delegate = self
+        
         
     }
     
@@ -66,51 +70,52 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         currentBrace = 0
         
         //Compile button pressed and function activated.
-        if self.enteredCode.string?.isEmpty == false {
+        
+        if self.enteredCode.stringValue.isEmpty == false {
             
             if textEntered == "" {
                 
-                textEntered = self.enteredCode.string!
+                textEntered = self.enteredCode.stringValue
                 
             }
             //Used to clear the entered code and create an array that will be cycled through
             
-            if self.enteredCode.string?.characters.first == "\""{
+            if self.enteredCode.stringValue.characters.first == "\""{
                 
-                inputText.append((self.enteredCode.string?.characters.first!)!)
-                self.enteredCode.string?.characters.removeFirst()
+                inputText.append((self.enteredCode.stringValue.characters.first!))
+                self.enteredCode.stringValue.characters.removeFirst()
                 
                 
-                while (self.enteredCode.string?.characters.first != "\"") == true {
+                while (self.enteredCode.stringValue.characters.first != "\"") == true {
                     
-                    if self.enteredCode.string?.characters.first == nil {
+                    if self.enteredCode.stringValue.characters.first == nil {
                     
                         break
                         
                     }
                     
-                    inputText.append(self.enteredCode.string!.characters.first!)
-                    self.enteredCode.string?.characters.removeFirst()
+                    inputText.append(self.enteredCode.stringValue.characters.first!)
+                    self.enteredCode.stringValue.characters.removeFirst()
                     
                 }
                 
             }
             
-            if self.enteredCode.string?.characters.first == "\""{
+            if self.enteredCode.stringValue.characters.first == "\""{
                 
-                inputText.append((self.enteredCode.string?.characters.first!)!)
-                self.enteredCode.string?.characters.removeFirst()
+                inputText.append((self.enteredCode.stringValue.characters.first!))
+                self.enteredCode.stringValue.characters.removeFirst()
                 
-            } else if self.enteredCode.string?.characters.first == " " {
+            } else if self.enteredCode.stringValue.characters.first == " " {
                 
-                self.enteredCode.string?.characters.removeFirst()
+                self.enteredCode.stringValue.characters.removeFirst()
                 
-            } else if self.enteredCode.string?.characters.first == nil {
+            } else if self.enteredCode.stringValue.characters.first == nil {
                 //Do nothing
             } else {
                 
-                inputText.append((self.enteredCode.string?.characters.first!)!)
-                self.enteredCode.string?.characters.removeFirst()
+                inputText.append((self.enteredCode.stringValue.characters.first!))
+                self.enteredCode.stringValue.characters.removeFirst()
                 
             }
             
@@ -125,12 +130,12 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
                 
                 inputText.append("$")
                 self.warningLabel.stringValue = "Please use '$' to end the program!"
-                self.enteredCode.string = textEntered
+                self.enteredCode.stringValue = textEntered
                 
             } else {
                 
                 self.warningLabel.stringValue = ""
-                self.enteredCode.string = textEntered
+                self.enteredCode.stringValue = textEntered
                 
             }
             
@@ -147,56 +152,56 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         
         if examplePicker.indexOfSelectedItem == 0 {
             
-            enteredCode.string = "{ }$"
+            enteredCode.stringValue = "{ }$"
             compileClicked(self)
             
         }
         
         if examplePicker.indexOfSelectedItem == 1 {
             
-            enteredCode.string = "{\n\tint x\n\tstring s\n\tboolean b\n}$"
+            enteredCode.stringValue = "{\n\tint x\n\tstring s\n\tboolean b\n}$"
             compileClicked(self)
             
         }
         
         if examplePicker.indexOfSelectedItem == 2 {
             
-            enteredCode.string = "{\n\tint a\n\ta = 1\n}$"
+            enteredCode.stringValue = "{\n\tint a\n\ta = 1\n}$"
             compileClicked(self)
             
         }
         
         if examplePicker.indexOfSelectedItem == 3 {
             
-            enteredCode.string = "{\n\tint a\n\ta = 1\n\n\tint b\n\tb = 2\n\n\ta = b\n\tb = a\n}$"
+            enteredCode.stringValue = "{\n\tint a\n\ta = 1\n\n\tint b\n\tb = 2\n\n\ta = b\n\tb = a\n}$"
             compileClicked(self)
             
         }
         
         if examplePicker.indexOfSelectedItem == 4 {
             
-            enteredCode.string = "{\n\tprint(1)\n}$"
+            enteredCode.stringValue = "{\n\tprint(1)\n}$"
             compileClicked(self)
             
         }
         
         if examplePicker.indexOfSelectedItem == 5 {
             
-            enteredCode.string = "{\n\tprint(\"hello world\")\n}$"
+            enteredCode.stringValue = "{\n\tprint(\"hello world\")\n}$"
             compileClicked(self)
             
         }
         
         if examplePicker.indexOfSelectedItem == 6 {
             
-            enteredCode.string = "{\n\tstring s\n\ts = \"\"\n}$"
+            enteredCode.stringValue = "{\n\tstring s\n\ts = \"\"\n}$"
             compileClicked(self)
             
         }
         
         if examplePicker.indexOfSelectedItem == 7 {
             
-            enteredCode.string = "{\n\tstring s\n\ts = \"abcde\"\n}$"
+            enteredCode.stringValue = "{\n\tstring s\n\ts = \"abcde\"\n}$"
             compileClicked(self)
             
         }
@@ -204,21 +209,21 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         
         if examplePicker.indexOfSelectedItem == 8 {
             
-            enteredCode.string = "{\n\tif true {\n\t\tint a\n\t\ta = 1\n\t}\n}$"
+            enteredCode.stringValue = "{\n\tif true {\n\t\tint a\n\t\ta = 1\n\t}\n}$"
             compileClicked(self)
             
         }
         
         if examplePicker.indexOfSelectedItem == 9 {
             
-            enteredCode.string = "{\n\tboolean b\n\tb = true\n\tb = false\n}$"
+            enteredCode.stringValue = "{\n\tboolean b\n\tb = true\n\tb = false\n}$"
             compileClicked(self)
             
         }
         
         if examplePicker.indexOfSelectedItem == 10 {
             
-            enteredCode.string = "{\n\tint x\n\tx = 0\n\n\twhile(x != 5)\n\t{\n\t\tprint(x)\n\t\tx = 1 + x\n\t}\n}$"
+            enteredCode.stringValue = "{\n\tint x\n\tx = 0\n\n\twhile(x != 5)\n\t{\n\t\tprint(x)\n\t\tx = 1 + x\n\t}\n}$"
             compileClicked(self)
             
         }
@@ -234,6 +239,7 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         
         return 11
     }
+
 
     override var representedObject: Any? {
         didSet {

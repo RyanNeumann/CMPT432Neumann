@@ -88,25 +88,17 @@ extension ViewController {
         cst.append(String(repeatElement("•", count: cstIndent))  + "< Block >")
         astList = astList.adding(String(repeatElement("-", count: astIndent)) + "< Block >") as NSArray
         astIndent += 1
-        
-        if parseList.first! == "{" {
-            
-            finalList.append("Expecting a left brace")
-            currentTerm = "left brace"
-            match(param: "{")
-            
-        }
-        
+        finalList.append("Expecting a left brace")
+        currentTerm = "left brace"
+        match(param: "{")
         ParseStatementList()
         
-        if parseList.isEmpty == false && parseList.first! != "$" {
-            
+        if parseList.isEmpty == false {
             finalList.append("Expecting a right brace")
             currentTerm = "right brace"
             match(param: "}")
             cstIndent -= 2
             astIndent -= 1
-            
         }
         
     }
@@ -114,7 +106,7 @@ extension ViewController {
     func ParseStatementList() {
         
         if cstIndent != 0 && parseList.isEmpty == false{
-            print("NOW")
+            
             cst.append(String(repeatElement("•", count: cstIndent))  + "< Statement List >")
             
         }
@@ -252,11 +244,22 @@ extension ViewController {
                 match(param: "!=")
                 ParseExpr()
                 
-            } else if parseList.first! == "{" {
+            }  else if parseList.first! == ")"{
             
+                finalList.append("Expecting right paren")
+                currentTerm = "right paren"
+                match(param: ")")
+            
+            } else if parseList.first! == "{" {
+                
                 ParseBlock()
             
             }
+         
+            
+            finalList.append("Expecting right paren")
+            currentTerm = "right paren"
+            match(param: ")")
             
         } else if parseList.first! == "true" {
             
