@@ -61,7 +61,7 @@ extension ViewController {
                         //CHECKING FOR INT
                         finalList.append("\(currentLine).  int  --> [INT]")
                         cleanList.append("int")
-                        lineNums = lineNums.adding(currentLine) as NSArray
+                        lineNums.append(currentLine)
                         symbolScope = symbolScope.adding(scopeTracker) as NSArray
                         inputText.removeFirst(3)
                         checkId()
@@ -206,7 +206,7 @@ extension ViewController {
                         finalList.append("\(currentLine).  boolean  --> [BOOLEAN]")
                         cleanList.append("boolean")
                         symbolScope = symbolScope.adding(scopeTracker) as NSArray
-                        lineNums = lineNums.adding(currentLine) as NSArray
+                        lineNums.append(currentLine)
                         inputText.removeFirst(7)
                         checkId()
                         
@@ -232,7 +232,7 @@ extension ViewController {
                     if inputText[1] == "t" && inputText[2] == "r" && inputText[3] == "i" && inputText[4] == "n" && inputText[5] == "g" {
                         //CHECKING FOR STRING
                         cleanList.append("string")
-                        lineNums = lineNums.adding(currentLine) as NSArray
+                        lineNums.append(currentLine)
                         symbolScope = symbolScope.adding(scopeTracker) as NSArray
                         finalList.append("\(currentLine).  string  --> [STRING]")
                         inputText.removeFirst(6)

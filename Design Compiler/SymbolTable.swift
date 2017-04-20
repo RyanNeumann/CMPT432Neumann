@@ -10,7 +10,7 @@ import Foundation
 
 var symbolName = [String]()
 var symbolType = [String]()
-var lineNums: NSArray = []
+var lineNums = [Int]()
 var symbolScope: NSArray = []
 var symbolTable = [String]()
 var scopeTracker = 0
@@ -86,8 +86,7 @@ extension ViewController {
                     
                     typeErrors.append("Error: Type mismatch with \(t) \(parseList[1]) \(parseList[2])\n")
                     errorCounter += 1
-                
-                
+            
                 } else {
                 
                 }
@@ -145,12 +144,11 @@ extension ViewController {
                 } else {
                 
                     if parseList[2] == "\"" {
-                    
-                        let indexCheck = symbolName.index(of: t)
-                        
-                        if indexCheck != nil {
+
+                        let indexCheck = lineNums[lineNums.count - 1]
+                        if indexCheck == nil {
                             
-                            if String(describing: symbolType[indexCheck!]) != "string" {
+                            if String(describing: symbolType[indexCheck]) != "string" {
                                 
                                 errorCounter += 1
                                 typeErrors.append("Error: Type mismatch with id: \(t)")
