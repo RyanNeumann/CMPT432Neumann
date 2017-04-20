@@ -39,25 +39,6 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         
         
     }
-    
-    override func keyUp(with event: NSEvent) {
-        
-        
-        if event.keyCode == 36 {
-            
-                enteredCode.string?.append("\n")
-            
-        }
-        
-        if event.keyCode == 48 {
-        
-            enteredCode.string?.append("\t")
-            
-        }
-        
-    }
-    
-    
 
     @IBAction func compileClicked(_ sender: Any) {
 

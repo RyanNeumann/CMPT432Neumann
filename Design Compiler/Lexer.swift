@@ -20,6 +20,7 @@ let boolOp = ["==", "!="]
 let boolVal = ["true", "false"]
 let intOp = "+"
 var cleanList = [String]()
+var bracketCounter = 0
 
 extension ViewController {
     
@@ -42,6 +43,7 @@ extension ViewController {
                 
                 if y == "{" {
                     
+                    bracketCounter += 1
                     cleanList.append("{")
                     scopeTracker += 1
                     finalList.append("\(currentLine).  {  --> [LBRACE]")
@@ -257,9 +259,16 @@ extension ViewController {
                     
                 } else if y == "}" {
                     
+                    bracketCounter -= 1
                     scopeTracker -= 1
                     cleanList.append("}")
                     finalList.append("\(currentLine).  }  --> [RBRACE]")
+                    if bracketCounter == 0 && inputText[1] != "$"{
+                        
+                        cleanList.append("$")
+                        finalList.append("\(currentLine). $ --> [EOF]")
+                        
+                    }
                     inputText.removeFirst()
                     checkNext()
                     

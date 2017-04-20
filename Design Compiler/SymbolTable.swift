@@ -99,7 +99,7 @@ extension ViewController {
                     
                     if symbolName.contains(parseList[2]) {
                        
-                        if let index = symbolName.index(of: parseList[2]) {
+                        if let index = symbolName.index(of: parseList[2]){
                         
                             if let indexCheck = symbolName.index(of: t){
                             
@@ -146,15 +146,13 @@ extension ViewController {
                     if parseList[2] == "\"" {
 
                         let indexCheck = lineNums[lineNums.count - 1]
-                        if indexCheck == nil {
-                            
-                            if String(describing: symbolType[indexCheck]) != "string" {
+                        
+                        
+                        if String(describing: symbolType[indexCheck - 1]) != "string" {
                                 
-                                errorCounter += 1
-                                typeErrors.append("Error: Type mismatch with id: \(t)")
+                            errorCounter += 1
+                            typeErrors.append("Error: Type mismatch with id: \(t)")
                                 
-                            }
-                            
                         }
                         
                     }
