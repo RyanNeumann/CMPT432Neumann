@@ -165,6 +165,7 @@ extension ViewController {
             } else if parseList.first! == "int" || parseList.first! == "string" || parseList.first! == "boolean" {
                 
                 cstIndent += 1
+                //symbolType.append(parseList.first!)
                 cst.append(String(repeatElement("•", count: cstIndent))  + "< Variable Declaration >")
                 finalList.append("Expecting type")
                 ParseVarDec()

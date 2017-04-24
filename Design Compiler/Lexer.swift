@@ -569,6 +569,7 @@ extension ViewController {
                     finalList.append("Program \(programNum) Semantic Analysis...")
                     symbolList.string?.append("Program \(programNum) Symbol Table\n")
                     produceSymbolTable()
+                    
                     typeErrors = []
                     errorArray = []
                     symbolScope = []
@@ -611,6 +612,7 @@ extension ViewController {
                     finalList.append("Program \(programNum) Semantic Analysis...")
                     symbolList.string?.append("Program \(programNum) Symbol Table\n")
                     produceSymbolTable()
+                    
                     symbolScope = []
                     symbolType = []
                     errorArray = []

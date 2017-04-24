@@ -78,20 +78,46 @@ extension ViewController {
         
             if acceptedNums.contains(parseList[2]) {
                 
-                let idIntScope = symbolName.index(of: t)
+                var indexCheck = symbolName.index(of: parseList[0])
                 
-                if idIntScope != nil {
+                if symbolType[indexCheck!] != "int" {
                     
-                if String(describing: symbolType[idIntScope!]) != "int" {
+                    while symbolType.count > indexCheck! || symbolType[indexCheck! - 1] != "int" {
+                        
+                        indexCheck! += 1
+                        
+                    }
                     
-                    typeErrors.append("Error: Type mismatch with \(t) \(parseList[1]) \(parseList[2])\n")
-                    errorCounter += 1
-            
+                    if (symbolType[indexCheck! - 1] == "int" && symbolName[indexCheck! - 1] == parseList[0]  && symbolScope[indexCheck! - 1] as! Int >= scopeTracker) {
+                        
+                        //Do Nothing
+                        if parseList[3] == "+" && parseList[4] == "\"" {
+                            
+                            typeErrors.append("Error: Type mismatch with \(t) \(parseList[1]) \(parseList[2]) \(parseList[3]) \(parseList[4])\n")
+                            errorCounter += 1
+                            
+                        }
+
+                        
+                    } else {
+                        
+                        
+                        typeErrors.append("Error: Type mismatch with \(t) \(parseList[1]) \(parseList[2])\n")
+                        errorCounter += 1
+                        
+                    }
+                    
+                    
                 } else {
                 
+                    if parseList[3] == "+" && parseList[4] == "\"" {
+                        
+                        typeErrors.append("Error: Type mismatch with \(t).  It is an int, not a string!")
+                        errorCounter += 1
+                        
+                    }
+                
                 }
-                    
-        }
                 
             } else {
                 
@@ -99,9 +125,9 @@ extension ViewController {
                     
                     if symbolName.contains(parseList[2]) {
                        
-                        if let index = symbolName.index(of: parseList[2]){
+                        if var index = symbolName.index(of: parseList[2]){
                         
-                            if let indexCheck = symbolName.index(of: t){
+                            if var indexCheck = symbolName.index(of: t){
                             
                                 if symbolType[indexCheck] == symbolType[index] {
                                     
@@ -110,13 +136,86 @@ extension ViewController {
                                         typeErrors.append("Error: Scope out of bounds for \(t)\n")
                                         errorCounter += 1
                                         
+                                    } else {
+                                        
+                                        while symbolScope[index] as! Int != currentBrace || symbolName[index] != parseList[2] {
+                                        
+                                            if symbolScope[index] as! Int > currentBrace {
+                                            
+                                                index -= 1
+                                            
+                                            } else {
+                                            
+                                                index += 1
+                                            
+                                            }
+                                           
+                                            symbolType[indexCheck] = symbolType[index]
+                                            
+                                        }
+                                        
+                                    
                                     }
                                     
                                 } else {
                                     
-                                    let test = symbolName.index(of: t)
-                                    let targetLocation = symbolName.index(of: parseList[2])
-                                    symbolType[test!] = symbolType[targetLocation!]
+                                    //testing parseList[0] to see if it exists
+                                    
+                                    if symbolName.contains(parseList[0]) {
+                                        //symbol exists
+                                        var index = symbolName.index(of:  parseList[0])
+                                        var index2 = symbolName.index(of:  parseList[2])
+                                        if symbolName.contains(parseList[2]) {
+                                            
+                                                while symbolScope[index2!] as! Int != currentBrace {
+                                                    
+                                                    if symbolScope[index2!] as! Int > currentBrace {
+                                                    
+                                                        index2! -= 1
+                                                    
+                                                    } else {
+                                                    
+                                                        index2! += 1
+                                                    
+                                                    }
+                                            
+                                                }
+                                            
+                                                if symbolName[symbolName.index(of: parseList[2])!] == symbolName[index2!] {
+                                                    
+                                                    symbolType[index!] = symbolType[index2!]
+                                                    print("working")
+                                                    
+                                                } else {
+                                                    
+                                                    typeErrors.append("Error: Scope out of bounds for \(t)\n")
+                                                    errorCounter += 1
+                                                
+                                                }
+                                                    
+                                                    
+                                                
+                                                
+                                            
+                                            
+                                        } else {
+                                        
+                                            typeErrors.append("Error: Scope out of bounds for \(t)\n")
+                                            errorCounter += 1
+                                        
+                                        }
+                                    
+                                    
+                                    
+                                    } else {
+                                        //scope out of bounds
+                                        typeErrors.append("Error: Scope out of bounds for \(t)\n")
+                                        errorCounter += 1
+                                        
+                                    
+                                    }
+                                    
+                                    
                                     
                                 }
                             
@@ -149,7 +248,16 @@ extension ViewController {
                         
                         if symbolType[indexCheck!] != "string" {
                         
-                            while symbolType.count > indexCheck! || symbolType[indexCheck! - 1] != "string" {
+                            if indexCheck == 0 {
+                            
+                            
+                            } else {
+                            
+                                indexCheck! -= 1
+                            
+                            }
+                            
+                            while symbolType.count > indexCheck! && symbolType[indexCheck!] != "string" {
                             
                                 indexCheck! += 1
                             
@@ -161,6 +269,7 @@ extension ViewController {
                             //Do Nothing
                             
                             } else {
+                                
                                 
                                 typeErrors.append("Error: Type mismatch with \(t) \(parseList[1]) \(parseList[2])\n")
                                 errorCounter += 1
