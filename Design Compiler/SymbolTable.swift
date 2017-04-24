@@ -144,15 +144,29 @@ extension ViewController {
                 } else {
                 
                     if parseList[2] == "\"" {
-
-                        let indexCheck = lineNums[lineNums.count - 1]
+                    
+                        var indexCheck = symbolName.index(of: parseList[0])
                         
+                        if symbolType[indexCheck!] != "string" {
                         
-                        if String(describing: symbolType[indexCheck - 1]) != "string" {
+                            while symbolType.count > indexCheck! || symbolType[indexCheck! - 1] != "string" {
+                            
+                                indexCheck! += 1
+                            
+                            }
+                        
+                            if (symbolType[indexCheck! - 1] == "string" && symbolName[indexCheck! - 1] == parseList[0]  && symbolScope[indexCheck! - 1] as! Int >= scopeTracker) {
+                            
+                            
+                            //Do Nothing
+                            
+                            } else {
                                 
-                            errorCounter += 1
-                            typeErrors.append("Error: Type mismatch with id: \(t)")
+                                typeErrors.append("Error: Type mismatch with \(t) \(parseList[1]) \(parseList[2])\n")
+                                errorCounter += 1
                                 
+                            }
+                        
                         }
                         
                     }
