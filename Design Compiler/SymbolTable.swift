@@ -82,13 +82,25 @@ extension ViewController {
                 
                 if symbolType[indexCheck!] != "int" {
                     
-                    while symbolType.count > indexCheck! || symbolType[indexCheck! - 1] != "int" {
+                    
+                    while symbolType[indexCheck!] != "int" {
                         
-                        indexCheck! += 1
+                        
+                        if symbolType.count > (indexCheck! + 1) {
+                            
+                            indexCheck! += 1
+                            
+                        } else {
+                            
+                            indexCheck! -= 1
+                            break
+                            
+                        }
                         
                     }
                     
-                    if (symbolType[indexCheck! - 1] == "int" && symbolName[indexCheck! - 1] == parseList[0]  && symbolScope[indexCheck! - 1] as! Int >= scopeTracker) {
+                
+                    if (symbolType[indexCheck!] == "int" && symbolName[indexCheck!] == parseList[0]  && symbolScope[indexCheck!] as! Int >= scopeTracker) {
                         
                         //Do Nothing
                         if parseList[3] == "+" && parseList[4] == "\"" {
@@ -184,7 +196,7 @@ extension ViewController {
                                                 if symbolName[symbolName.index(of: parseList[2])!] == symbolName[index2!] {
                                                     
                                                     symbolType[index!] = symbolType[index2!]
-                                                    print("working")
+                                                    //print("working")
                                                     
                                                 } else {
                                                     
