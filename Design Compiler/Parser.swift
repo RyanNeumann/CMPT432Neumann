@@ -342,12 +342,14 @@ extension ViewController {
         if acceptedChars.contains(String(describing: parseList.first!)) {
             
             if typeBool == false {
-            
-                beforeBool = false
+      
+                scopeChecker(parseList.first!)
                 typeChecker(String(describing: parseList.first!))
             
             } else {
-            
+        
+                symbolName.append(parseList.first!)
+                scopeChecker(parseList.first!)
                 typeBool = false
             
             }

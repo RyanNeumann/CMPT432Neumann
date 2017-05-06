@@ -78,7 +78,6 @@ extension ViewController {
                     } else if ((inputText[1] == "=") ||  (inputText[1] == "!")) {
                         //CHECKING FOR ASSIGNMENT
                         finalList.append("\(currentLine).  i  --> [ID]")
-                        scopeChecker("i")
                         cleanList.append("i")
                         inputText.removeFirst()
                         checkNext()
@@ -108,7 +107,6 @@ extension ViewController {
                         
                     } else if inputText[1] == "=" || inputText[1] == "!" {
                         //CHECKING FOR ASSIGNMENT
-                        scopeChecker("t")
                         finalList.append("\(currentLine).  t  --> [ID]")
                         cleanList.append("t")
                         inputText.removeFirst()
@@ -135,7 +133,6 @@ extension ViewController {
                     } else if inputText[1] == "=" || inputText[1] == "!" {
                         //CHECKING FOR ASSIGNMENT
                         cleanList.append("f")
-                        scopeChecker("f")
                         finalList.append("\(currentLine).  f  --> [ID]")
                         inputText.removeFirst()
                         checkNext()
@@ -160,7 +157,6 @@ extension ViewController {
                         
                     } else if inputText[1] == "=" || inputText[1] == "!" {
                         //CHECKING FOR ASSIGNMENT
-                        scopeChecker("w")
                         finalList.append("\(currentLine).  w  --> [ID]")
                         cleanList.append("w")
                         inputText.removeFirst()
@@ -187,7 +183,6 @@ extension ViewController {
                     } else if inputText[1] == "=" || inputText[1] == "!" {
                         //CHECKING FOR ASSIGNMENT
                         finalList.append("\(currentLine).  p  --> [ID]")
-                        scopeChecker("p")
                         cleanList.append("p")
                         inputText.removeFirst()
                         checkNext()
@@ -215,7 +210,6 @@ extension ViewController {
                     } else if inputText[1] == "=" || inputText[1] == "!" {
                         //CHECKING FOR ASSIGNMENT
                         finalList.append("\(currentLine).  b  --> [ID]")
-                        scopeChecker("b")
                         cleanList.append("b")
                         inputText.removeFirst()
                         checkNext()
@@ -244,7 +238,6 @@ extension ViewController {
                         //CHECKING FOR ASSIGNMENT
                         cleanList.append("s")
                         finalList.append("\(currentLine).  s  --> [ID]")
-                        scopeChecker("s")
                         inputText.removeFirst()
                         checkNext()
                         
@@ -280,8 +273,6 @@ extension ViewController {
                         cleanList.append("(")
                         cleanList.append(String(describing: inputText[1]))
                         finalList.append("\(currentLine).  \(String(describing: inputText[1])) --> [ID]")
-                        scopeChecker(String(describing: inputText[1]))
-                        
                         cleanList.append(")")
                         finalList.append("\(currentLine).  )  --> [RPAREN]")
                         inputText.removeFirst(3)
@@ -293,7 +284,6 @@ extension ViewController {
                         finalList.append("\(currentLine).  (  --> [LPAREN]")
                         cleanList.append(String(describing: inputText[1]))
                         finalList.append("\(currentLine).  \(String(describing: inputText[1])) --> [ID]")
-                        scopeChecker(String(describing: inputText[1]))
                         cleanList.append("==")
                         finalList.append("\(currentLine).  ==  --> [BOOLOP]")
                         inputText.removeFirst(4)
@@ -306,7 +296,7 @@ extension ViewController {
                         cleanList.append("!=")
                         finalList.append("\(currentLine).  (  --> [LPAREN]")
                         finalList.append("\(currentLine).  \(String(describing: inputText[1])) --> [ID]")
-                        scopeChecker(String(describing: inputText[1]))
+                        
                         finalList.append("\(currentLine).  !=  --> [BOOLOP]")
                         inputText.removeFirst(4)
                         checkNext()
@@ -373,7 +363,6 @@ extension ViewController {
                         cleanList.append(String(describing: inputText[1]))
                         finalList.append("\(currentLine).  =  --> [SINGLE_EQUALS]")
                         finalList.append("\(currentLine).  \(inputText[1])  --> [ID]")
-                        scopeChecker(String(describing: inputText[1]))
                         inputText.removeFirst(2)
                         checkNext()
                         
@@ -394,7 +383,6 @@ extension ViewController {
                         finalList.append("\(currentLine).  +  --> [INTOP]")
                         cleanList.append(String(describing: inputText[1]))
                         finalList.append("\(currentLine).  \(String(describing: inputText[1]))  --> [ID]")
-                        scopeChecker(String(describing: inputText[1]))
                         inputText.removeFirst(2)
                         checkNext()
                         
@@ -420,7 +408,6 @@ extension ViewController {
                     
                         cleanList.append(String(describing: y!))
                         finalList.append("\(currentLine).  \(y!)  --> [ID]")
-                        scopeChecker(String(describing: y!))
                         inputText.removeFirst()
                         checkNext()
                         
@@ -533,7 +520,6 @@ extension ViewController {
             let y = inputText.first!
             cleanList.append(String(describing: y))
             finalList.append("\(currentLine).  \(y)  --> [ID]")
-            symbolName.append(String(describing: y))
             inputText.removeFirst()
             checkNext()
             
@@ -577,7 +563,6 @@ extension ViewController {
                     symbolTable = []
                     errorArray = []
                     symbolName = []
-                    scopeErrors = 0
                     lineNums = []
                     symbolList.string?.append("\n")
                     
@@ -588,7 +573,6 @@ extension ViewController {
                 
                 }
                 
-                errorCounter = 0
                 programNum += 1
                 
                 if inputText.contains("{") {
