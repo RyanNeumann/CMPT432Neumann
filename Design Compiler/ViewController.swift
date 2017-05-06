@@ -44,15 +44,18 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
 
         typeErrors = []
         errorArray = []
+        scopeErrors = 0
         parseError = 0
         symbolList.string = ""
         symbolTable = []
         symbolScope = []
         symbolType = []
+        test = [:]
         errorArray = []
         symbolName = []
         lineNums = []
-        scopeTracker = -1
+        scopeTracker = 0
+        errorCounter = 0
         cst = []
         astList = []
         astFinal.string = ""
