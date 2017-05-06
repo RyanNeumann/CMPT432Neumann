@@ -13,12 +13,9 @@ var symbolType = [String]()
 var lineNums = [Int]()
 var symbolScope: NSArray = []
 var symbolTable = [String]()
-var scopeTracker = 0
+var scopeTracker = -1
 var scopeBool = true
-var scopeErrors = 0
-var test = [Int:Bool]()
 var errorArray: NSArray = []
-var errorCounter = 0
 var beforeBool = false
 var typeErrors = [String]()
 
@@ -30,55 +27,58 @@ extension ViewController {
         var x = 0
         
         for g in symbolName {
-        
-            testArray = testArray.adding(String(describing: g) + "," + String(describing: symbolScope[x])) as NSArray
-            x += 1
-        
-        }
-        
-        var numCounter = scopeTracker
-        
-            while numCounter > 0 {
+            
+            if testArray.contains(String(describing: g) + "," + String(describing: symbolScope[x])) {
+            
+                print("Here")
                 
-                     if (testArray.contains(a + "," + String(describing: numCounter))) {
-                        
-                        scopeBool = false
-                        break
-                        
-                     } else {
-        
-                        scopeBool = true
-                        numCounter -= 1
-                        
-                    }
-                
-        }
-        
-            if scopeBool == true {
-                
-                errorArray = errorArray.adding("Error: the id \(a) on line \(currentLine) was used before being declared.") as NSArray
-                scopeErrors += 1
-                test.updateValue(true, forKey: programNum)
+                if errorArray.contains("Scope Error: Id \(g) is already defined.") == false {
+                  
+                    errorArray = errorArray.adding("Scope Error: Id \(g) is already defined.") as NSArray
+                    
+                }
+
             
             } else {
             
-                if test[programNum] != true {
+                testArray = testArray.adding(String(describing: g) + "," + String(describing: symbolScope[x])) as NSArray
+                x += 1
+            }
+        }
+    
+        
+            var scope = currentBrace - 1
+            
+            while scope > -1 {
+            
+                if testArray.contains("\(a),\(scope)") {
                 
-                    test.updateValue(false, forKey: programNum)
+                    scopeBool = false
+                    break
+                
+                } else {
+                  
+                    scopeBool = true
+                    scope -= 1
                     
                 }
-                
             }
-
+        
+        
+            if scopeBool == true {
+                
+                errorArray = errorArray.adding("Scope Error: the id \(a) on line \(currentLine) was used before being declared.") as NSArray
+            
+            } 
+        
+        
     }
     
     func typeChecker(_ t: String) {
         
-        if beforeBool == true {
-        
             if acceptedNums.contains(parseList[2]) {
                 
-                var indexCheck = symbolName.index(of: parseList[0])
+                var indexCheck = symbolName.index(of: t)
                 
                 if symbolType[indexCheck!] != "int" {
                     
@@ -100,13 +100,12 @@ extension ViewController {
                     }
                     
                 
-                    if (symbolType[indexCheck!] == "int" && symbolName[indexCheck!] == parseList[0]  && symbolScope[indexCheck!] as! Int >= scopeTracker) {
+                    if (symbolType[indexCheck!] == "int" && symbolName[indexCheck!] == t && symbolScope[indexCheck!] as! Int >= scopeTracker) {
                         
                         //Do Nothing
                         if parseList[3] == "+" && parseList[4] == "\"" {
                             
                             typeErrors.append("Error: Type mismatch with \(t) \(parseList[1]) \(parseList[2]) \(parseList[3]) \(parseList[4])\n")
-                            errorCounter += 1
                             
                         }
 
@@ -115,7 +114,6 @@ extension ViewController {
                         
                         
                         typeErrors.append("Error: Type mismatch with \(t) \(parseList[1]) \(parseList[2])\n")
-                        errorCounter += 1
                         
                     }
                     
@@ -125,7 +123,6 @@ extension ViewController {
                     if parseList[3] == "+" && parseList[4] == "\"" {
                         
                         typeErrors.append("Error: Type mismatch with \(t).  It is an int, not a string!")
-                        errorCounter += 1
                         
                     }
                 
@@ -136,23 +133,44 @@ extension ViewController {
                 if acceptedChars.contains(parseList[2]) {
                     
                     if symbolName.contains(parseList[2]) {
+                        
+                        var test1 = [String]()
+                        var x = 0
+                        for g in symbolName{
+                            
+                            test1.append(g + "," + String(describing: symbolScope[x]))
+                            x += 1
+                            
+                        }
+                        
+                        if test1.contains(parseList[2] + "," + String(describing: (currentBrace - 1))) {
+                        
+                            let index = test1.index(of: (parseList[2] + "," + String(describing: (currentBrace - 1))))
+                            let index2 = symbolName.index(of: parseList[0])
+                            if symbolType[index!] != symbolType[index2!] {
+                            
+                                if errorArray.count == 0 {
+                                typeErrors.append("Error: Type mismatch.  id: \(parseList[0]) is a(n) \(symbolType[index2!]), while id: \(parseList[2]) is a(n) \(symbolType[index!])")
+                                }
+                            }
+                        }
                        
                         if var index = symbolName.index(of: parseList[2]){
                         
-                            if var indexCheck = symbolName.index(of: t){
+                            if let indexCheck = symbolName.index(of: t){
                             
                                 if symbolType[indexCheck] == symbolType[index] {
-                                    
                                     if (symbolScope[indexCheck] as! Int >= symbolScope[index] as! Int) == false {
                                         
-                                        typeErrors.append("Error: Scope out of bounds for \(t)\n")
-                                        errorCounter += 1
+                                        
+                                        print(parseList[0])
+                                        //typeErrors.append("Error: \(parseList[2]) is out of scope in \(t, parseList[1], parseList[2]).")
                                         
                                     } else {
                                         
-                                        while symbolScope[index] as! Int != currentBrace || symbolName[index] != parseList[2] {
-                                        
-                                            if symbolScope[index] as! Int > currentBrace {
+                                        while symbolScope[index] as! Int != currentBrace && symbolName[index] != parseList[2] {
+                               
+                                            if symbolScope[index] as! Int > (currentBrace) {
                                             
                                                 index -= 1
                                             
@@ -161,7 +179,7 @@ extension ViewController {
                                                 index += 1
                                             
                                             }
-                                           
+                                            
                                             symbolType[indexCheck] = symbolType[index]
                                             
                                         }
@@ -173,15 +191,15 @@ extension ViewController {
                                     
                                     //testing parseList[0] to see if it exists
                                     
-                                    if symbolName.contains(parseList[0]) {
+                                    if symbolName.contains(t) {
                                         //symbol exists
-                                        var index = symbolName.index(of:  parseList[0])
+                                        let index = symbolName.index(of:  t)
                                         var index2 = symbolName.index(of:  parseList[2])
                                         if symbolName.contains(parseList[2]) {
                                             
-                                                while symbolScope[index2!] as! Int != currentBrace {
+                                                while symbolScope[index2!] as! Int != (currentBrace - 1) {
                                                     
-                                                    if symbolScope[index2!] as! Int > currentBrace {
+                                                    if symbolScope[index2!] as! Int > (currentBrace - 1) {
                                                     
                                                         index2! -= 1
                                                     
@@ -195,13 +213,19 @@ extension ViewController {
                                             
                                                 if symbolName[symbolName.index(of: parseList[2])!] == symbolName[index2!] {
                                                     
-                                                    symbolType[index!] = symbolType[index2!]
-                                                    //print("working")
+                                                    if symbolType[index!] != symbolType[index2!]  {
+                                                        if errorArray.count == 0 {
+                                                        typeErrors.append("Error: Type mismatch.  id: \(t) is a(n) \(symbolType[index!]), while id: \(parseList[2]) is a(n) \(symbolType[index2!])")
+                                                        }
+                                                    } else {
+                                                
                                                     
+                                                    }
                                                 } else {
                                                     
+                                                    
                                                     typeErrors.append("Error: Scope out of bounds for \(t)\n")
-                                                    errorCounter += 1
+                                                    
                                                 
                                                 }
                                                     
@@ -212,8 +236,8 @@ extension ViewController {
                                             
                                         } else {
                                         
-                                            typeErrors.append("Error: Scope out of bounds for \(t)\n")
-                                            errorCounter += 1
+                                            typeErrors.append("Error: Scope out of bounds for \(parseList[2])\n")
+
                                         
                                         }
                                     
@@ -221,8 +245,9 @@ extension ViewController {
                                     
                                     } else {
                                         //scope out of bounds
+                                        
                                         typeErrors.append("Error: Scope out of bounds for \(t)\n")
-                                        errorCounter += 1
+                                        
                                         
                                     
                                     }
@@ -234,21 +259,20 @@ extension ViewController {
                             } else {
                                 
                                 typeErrors.append("Error: Scope out of bounds for \(t)\n")
-                                errorCounter += 1
                                 
                             }
                             
                         } else {
                             
-                            typeErrors.append("Error: Scope out of bounds for \(t)\n")
-                            errorCounter += 1
+                            
+                            typeErrors.append("Error: Scope out of bounds for \(parseList[2])\n")
                             
                         }
                         
                     } else {
                         
+                        print(parseList)
                         typeErrors.append("Error: id: \(parseList[2]) not in scope\n")
-                        errorCounter += 1
                         
                     }
                 
@@ -277,14 +301,13 @@ extension ViewController {
                         
                             if (symbolType[indexCheck! - 1] == "string" && symbolName[indexCheck! - 1] == parseList[0]  && symbolScope[indexCheck! - 1] as! Int >= scopeTracker) {
                             
-                            
+                        
                             //Do Nothing
                             
                             } else {
                                 
                                 
                                 typeErrors.append("Error: Type mismatch with \(t) \(parseList[1]) \(parseList[2])\n")
-                                errorCounter += 1
                                 
                             }
                         
@@ -295,81 +318,77 @@ extension ViewController {
                 }
                 
             }
-            
-        }
     
     }
     
     func produceSymbolTable () {
+        var current = 0
         
-        if test[programNum] == nil {
-            
-            test.updateValue(false, forKey: programNum)
-            
+        if symbolType.count > 0 {
+                    
+            symbolTable.append("-----------------------------------")
+            symbolTable.append(" Name | Type | Scope | Line")
+            symbolTable.append("-----------------------------------")
+                    
         }
         
-        if errorCounter == 0  {
+        
+        for i in symbolType {
             
-            if test[programNum] == false {
+            if  String(describing: i) == "string" {
                 
-                var current = 0
+                symbolTable.append("    \(symbolName[current])        \(i)      \(symbolScope[current])          \(lineNums[current])")
                 
-                if symbolType.count > 0 {
-                    
-                    symbolTable.append("-----------------------------------")
-                    symbolTable.append(" Name | Type | Scope | Line")
-                    symbolTable.append("-----------------------------------")
-                    
-                }
+            } else if  String(describing: i) == "bool" {
                 
-                for i in symbolType {
-                    
-                    var count = 3
-                    for cont in symbolTable {
-                        
-                        if String(describing: cont).replacingOccurrences(of: " ", with: "").contains("\(symbolName[current])\(i)\(symbolScope[current])") {
-                            
-                            symbolTable.remove(at: count - 3)
-                            
-                        } else {
-                            
-                            count += 1
-                            
-                        }
-                        
-                    }
-                    
-                    if  String(describing: i) == "string" {
-                        
-                        symbolTable.append("    \(symbolName[current])        \(i)      \(symbolScope[current])          \(lineNums[current])")
-                        
-                    } else if  String(describing: i) == "bool" {
-                        
-                        symbolTable.append("    \(symbolName[current])        \(i)        \(symbolScope[current])          \(lineNums[current])")
-                        
-                    } else if  String(describing: i) == "int" {
-                        
-                        symbolTable.append("    \(symbolName[current])        \(i)          \(symbolScope[current])          \(lineNums[current])")
-                        
-                    } else if String(describing: i) == "\n" {
-                        
-                        symbolTable.append("\n")
-                        symbolTable.append("-----------------------------------")
-                        symbolTable.append(" Name | Type | Scope | Line")
-                        symbolTable.append("-----------------------------------")
-                        
-                        
-                    } else {
-                        
-                        print(String(describing: i))
-                        
-                    }
-                    
-                    current += 1
-                    
-                }
+                symbolTable.append("    \(symbolName[current])        \(i)        \(symbolScope[current])          \(lineNums[current])")
                 
-                if parseError == 0 {
+            } else if  String(describing: i) == "int" {
+                
+                symbolTable.append("    \(symbolName[current])        \(i)          \(symbolScope[current])          \(lineNums[current])")
+                
+            } else if String(describing: i) == "\n" {
+                
+                symbolTable.append("\n")
+                symbolTable.append("-----------------------------------")
+                symbolTable.append(" Name | Type | Scope | Line")
+                symbolTable.append("-----------------------------------")
+                
+                
+            } else {
+                
+                
+                
+            }
+            
+            current += 1
+        }
+        
+        
+        if errorArray.count > 0 || typeErrors.count > 0 {
+        
+            for i in errorArray {
+                    
+                finalList.append(String(describing: i))
+                    
+            }
+                
+            
+            
+                for i in typeErrors {
+                    
+                    finalList.append(i)
+                    
+               }
+                
+            
+              symbolList.string?.append("not produced due to error(s) detected by semantic analysis\n")
+            
+              finalList.append("Program \(String(describing: programNum)) Semantic Analysis Produced (\(errorArray.count + typeErrors.count)) errors and (0) warnings\n")
+            
+            } else {
+            
+            if parseError == 0 {
                 
                     for element in symbolTable {
                     
@@ -391,32 +410,8 @@ extension ViewController {
                 }
                 
                 finalList.append("Program \(String(describing: programNum)) Semantic Analysis Produced (0) errors and (0) warnings\n")
-                
-            } else {
-                
-                symbolList.string?.append("not produced due to error(s) detected by semantic analysis\n")
-                
-                for i in errorArray {
-                    
-                    finalList.append(String(describing: i))
-                    
-                }
-                
-                finalList.append("Program \(String(describing: programNum)) Semantic Analysis Produced (\(scopeErrors)) errors and (0) warnings\n")
-                
-            }
-         
-        } else {
-        
-            for i in typeErrors {
             
-                finalList.append(i)
-            
-            }
-    
-            symbolList.string?.append("not produced due to error(s) detected by semantic analysis\n")
-            finalList.append("Program \(String(describing: programNum)) Semantic Analysis Produced (\(typeErrors.count)) errors and (0) warnings\n")
-            
+
         }
         
     }
