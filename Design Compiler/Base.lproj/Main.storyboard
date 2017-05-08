@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12100" systemVersion="16F54b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F71b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12100"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -704,7 +704,7 @@
                                     <action selector="compileClicked:" target="XfG-lQ-9wD" id="3l0-e0-ooM"/>
                                 </connections>
                             </button>
-                            <comboBox verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TWm-Vu-ODw">
+                            <comboBox verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TWm-Vu-ODw">
                                 <rect key="frame" x="401" y="943" width="201" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="198" id="qzO-Li-GJh"/>
@@ -871,12 +871,12 @@
                                     <rect key="frame" x="1" y="1" width="971" height="270"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView importsGraphics="NO" fieldEditor="YES" usesFontPanel="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" textCompletion="NO" spellingCorrection="YES" id="Hv7-a8-gLa">
+                                        <textView importsGraphics="NO" richText="NO" fieldEditor="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" textCompletion="NO" spellingCorrection="YES" id="Hv7-a8-gLa">
                                             <rect key="frame" x="0.0" y="-1" width="971" height="270"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <size key="minSize" width="971" height="270"/>
-                                            <size key="maxSize" width="971" height="10000000"/>
+                                            <size key="maxSize" width="973" height="10000000"/>
                                             <attributedString key="textStorage">
                                                 <fragment content="Enter code here....">
                                                     <attributes>

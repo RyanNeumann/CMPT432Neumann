@@ -23,6 +23,9 @@ var astIndent = 0
 var quoteText = ""
 var parseError = 0
 var typeBool = false
+var additionCounter = 0
+var currentVar = ""
+
 
 extension ViewController {
     
@@ -272,6 +275,23 @@ extension ViewController {
             astList.append(String(repeatElement("-", count: astIndent)) + "[ true ]")
             finalList.append("Expecting boolVal")
             currentTerm = "boolVal"
+            if parseList[1] == ")" {
+              
+                stack[pointer] = "A0"
+                pointer += 1
+                stack[pointer] = "01"
+                pointer += 1
+                stack[pointer] = "A2"
+                pointer += 1
+                stack[pointer] = "01"
+                pointer += 1
+                
+            } else {
+                stack[pointer] = "A9"
+                pointer += 1
+                stack[pointer] = "01"
+                pointer += 1
+            }
             match(param: "true")
             
         } else if parseList.first! == "false" {
@@ -279,8 +299,28 @@ extension ViewController {
             astList.append(String(repeatElement("-", count: astIndent)) + "[ false ]")
             finalList.append("Expecting boolVal")
             currentTerm = "boolVal"
+            if parseList[1] == ")" {
+                
+                stack[pointer] = "A0"
+                pointer += 1
+                stack[pointer] = "00"
+                pointer += 1
+                stack[pointer] = "A2"
+                pointer += 1
+                stack[pointer] = "01"
+                pointer += 1
+                
+            } else {
+            
+                stack[pointer] = "A9"
+                pointer += 1
+                stack[pointer] = "00"
+                pointer += 1
+            
+                
+            }
             match(param: "false")
-        
+            
         } else {
         
             match(param: "Boolean Expression")
@@ -310,9 +350,9 @@ extension ViewController {
             cstIndent += 1
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ int ]")
             symbolType.append("int")
-            accumulator[pointer] = "A9"
+            stack[pointer] = "A9"
             pointer += 1
-            accumulator[pointer] = "00"
+            stack[pointer] = "00"
             pointer += 1
             astList.append(String(repeatElement("-", count: astIndent))  + "[ int ]")
             typeBool = true
@@ -322,9 +362,9 @@ extension ViewController {
             cstIndent += 1
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ string ]")
             symbolType.append("string")
-            accumulator[pointer] = "A9"
+            stack[pointer] = "A9"
             pointer += 1
-            accumulator[pointer] = "00"
+            stack[pointer] = "00"
             pointer += 1
             astList.append(String(repeatElement("-", count: astIndent))  + "[ string ]")
             typeBool = true
@@ -334,9 +374,9 @@ extension ViewController {
             cstIndent += 1
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ boolean ]")
             symbolType.append("bool")
-            accumulator[pointer] = "A9"
+            stack[pointer] = "A9"
             pointer += 1
-            accumulator[pointer] = "00"
+            stack[pointer] = "00"
             pointer += 1
             astList.append(String(repeatElement("-", count: astIndent))  + "[ boolean ]")
             typeBool = true
@@ -355,16 +395,18 @@ extension ViewController {
             
             if typeBool == false {
       
+                print(parseList[0])
+                print("Testing^")
                 scopeChecker(parseList.first!)
                 typeChecker(String(describing: parseList.first!))
             
             } else {
         
-                accumulator[pointer] = "8D"
+                stack[pointer] = "8D"
                 pointer += 1
-                accumulator[pointer] = "T" + String(describing: tempTableCounter)
+                stack[pointer] = "T" + String(describing: tempTableCounter)
                 pointer += 1
-                accumulator[pointer] = "00"
+                stack[pointer] = "00"
                 pointer += 1
                 tempTable[parseList.first!] = [currentBrace-1:["Name": ("T" + String(describing: tempTableCounter)), "Type": symbolType.last!]]
                 tempTableCounter += 1
@@ -395,13 +437,103 @@ extension ViewController {
         astIndent += 1
         astList.append(String(repeatElement("-", count: astIndent)) + "[ \(String(describing: parseList.first!)) ]")
         finalList.append("- Got Id: \(String(describing: parseList.first!))!")
+        
+        if acceptedNums.contains(parseList[2]) {
+        
+            stack[pointer] = "A9"
+            pointer += 1
+            additionCounter += 1
+            currentVar = parseList[0]
+            stack[pointer] = "0" + parseList[2]
+            pointer += 1
+            stack[pointer] = "8D"
+            pointer += 1
+            stack[pointer] = "T" + String(describing: tempTableCounter)
+            pointer += 1
+            tempTableCounter += 1
+            stack[pointer] = "00"
+            pointer += 1
+            
+        }
+        
+        if parseList[2] == "true"{
+        
+
+            stack[pointer] = "8D"
+            pointer += 1
+            if let test = tempTable[parseList[0]] as? NSDictionary {
+                if let test2 = test[currentBrace-1] as? NSDictionary {
+                    if let gotName = test2["Name"] {
+                        
+                        stack[pointer] = gotName as! String
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                    }
+                } else if let test2 = test[currentBrace-2] as? NSDictionary {
+                    if let gotName = test2["Name"] {
+                        
+                        stack[pointer] = gotName as! String
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                    }
+                } else if let test2 = test[currentBrace-3] as? NSDictionary {
+                    if let gotName = test2["Name"] {
+                        
+                        stack[pointer] = gotName as! String
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                        
+                    }
+                }
+            }
+        
+        
+        } else if parseList[2] == "false"{
+
+            stack[pointer] = "8D"
+            pointer += 1
+            if let test = tempTable[parseList[0]] as? NSDictionary {
+                if let test2 = test[currentBrace-1] as? NSDictionary {
+                    if let gotName = test2["Name"] {
+                        
+                        stack[pointer] = gotName as! String
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                    }
+                } else if let test2 = test[currentBrace-2] as? NSDictionary {
+                    if let gotName = test2["Name"] {
+                        
+                        stack[pointer] = gotName as! String
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                    }
+                } else if let test2 = test[currentBrace-3] as? NSDictionary {
+                    if let gotName = test2["Name"] {
+                        
+                        stack[pointer] = gotName as! String
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                        
+                    }
+                }
+            }
+            
+        
+        
+        }
         cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
         beforeBool = true
         typeChecker(parseList.first!)
         parseList.removeFirst()
         
         if parseList.first == "=" {
-         
+            
             finalList.append("Expecting Equals")
             currentTerm = "Equals"
             match(param: "=")
@@ -443,11 +575,25 @@ extension ViewController {
         currentTerm = "left paren"
         parenMatch = cstIndent
         match(param: "(")
+        
+        if parseList[0] == "true" {
+        
+            //A0 00 A2 01 FF
+            
+        
+        } else if parseList[0] == "false" {
+        
+            //A0 00 A2 01 FF
+        
+        }
+        
         if parseList[1] != ")" {
-            print(parseList[2])
+            //print(parseList[2])
             printBool = true
         }
         ParseExpr()
+        stack[pointer] = "FF"
+        pointer += 1
         astIndent -= 1
         
         if parseList.isEmpty == false {
@@ -470,6 +616,103 @@ extension ViewController {
         
             if acceptedNums.contains(String(describing: parseList.first!)) {
                 
+                if parseList[1] == ")"{
+                    
+                    stack[pointer] = "A0"
+                    pointer += 1
+                    stack[pointer] = "0" + parseList[0]
+                    pointer += 1
+                    stack[pointer] = "A2"
+                    pointer += 1
+                    stack[pointer] = "01"
+                    pointer += 1
+                    
+                } else if acceptedNums.contains(parseList[2]) {
+                
+                    stack[pointer] = "A9"
+                    pointer += 1
+                    stack[pointer] = "0" + parseList[2]
+                    pointer += 1
+                    stack[pointer] = "8D"
+                    additionCounter += 1
+                    pointer += 1
+                    stack[pointer] = "T" + String(describing: tempTableCounter)
+                    
+                    pointer += 1
+                    stack[pointer] = "00"
+                    pointer += 1
+                    if acceptedNums.contains(parseList[4]) == false {
+                        stack[pointer] = "A9"
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                        var i = 0
+                        while i != additionCounter {
+                            
+                            stack[pointer] = "6D"
+                            pointer += 1
+                            stack[pointer] = "T" + String(describing: tempTableCounter - i)
+                            pointer += 1
+                            stack[pointer] = "00"
+                            pointer += 1
+                            i += 1
+                            
+                        }
+                        
+                        tempTableCounter += 1
+                        stack[pointer] = "8D"
+                        pointer += 1
+                        
+                        stack[pointer] = "T" + String(describing: tempTableCounter)
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                        stack[pointer] = "AD"
+                        pointer += 1
+                        stack[pointer] = "T" + String(describing: tempTableCounter)
+                        tempTableCounter += 1
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                        stack[pointer] = "8D"
+                        pointer += 1
+                        if let test = tempTable[currentVar] as? NSDictionary {
+                            if let test2 = test[currentBrace-1] as? NSDictionary {
+                                if let gotName = test2["Name"] {
+                                    
+                                    stack[pointer] = gotName as! String
+                                    pointer += 1
+                                    stack[pointer] = "00"
+                                    pointer += 1
+                                }
+                            } else if let test2 = test[currentBrace-2] as? NSDictionary {
+                                if let gotName = test2["Name"] {
+                                    
+                                    stack[pointer] = gotName as! String
+                                    pointer += 1
+                                    stack[pointer] = "00"
+                                    pointer += 1
+                                }
+                            } else if let test2 = test[currentBrace-3] as? NSDictionary {
+                                if let gotName = test2["Name"] {
+                                    
+                                    stack[pointer] = gotName as! String
+                                    pointer += 1
+                                    stack[pointer] = "00"
+                                    pointer += 1
+                                    
+                                }
+                            }
+                        }
+                        
+                    } else {
+                    
+                    tempTableCounter += 1
+                    
+                    }
+                    
+                
+                }
                 ParseIntExpr()
                 
                 
@@ -477,42 +720,58 @@ extension ViewController {
                 
                 if parseList[1] == ")"{
                     
-                    accumulator[pointer] = "AC"
+                    stack[pointer] = "AC"
                     pointer += 1
+                    var currentType = "'"
                     if let test = tempTable[parseList.first!] as? NSDictionary {
                         if let test2 = test[currentBrace-1] as? NSDictionary {
                             if let gotName = test2["Name"] {
                                 
-                                accumulator[pointer] = gotName as! String
+                                currentType = test2["Type"] as! String
+                                stack[pointer] = gotName as! String
                                 pointer += 1
-                                accumulator[pointer] = "00"
+                                stack[pointer] = "00"
                                 pointer += 1
                             }
                         } else if let test2 = test[currentBrace-2] as? NSDictionary {
                             if let gotName = test2["Name"] {
                                 
-                                accumulator[pointer] = gotName as! String
+                                currentType = test2["Type"] as! String
+                                stack[pointer] = gotName as! String
                                 pointer += 1
-                                accumulator[pointer] = "00"
+                                stack[pointer] = "00"
                                 pointer += 1
                             }
                         } else if let test2 = test[currentBrace-3] as? NSDictionary {
                             if let gotName = test2["Name"] {
                                 
-                                accumulator[pointer] = gotName as! String
+                                currentType = test2["Type"] as! String
+                                stack[pointer] = gotName as! String
                                 pointer += 1
-                                accumulator[pointer] = "00"
+                                stack[pointer] = "00"
                                 pointer += 1
                             }
                         }
                     }
                     
-                    accumulator[pointer] = "A2"
+                    stack[pointer] = "A2"
                     pointer += 1
-                    accumulator[pointer] = "02"
+                    
+                    if currentType == "string" {
+                    
+                        stack[pointer] = "02"
+                        
+                    } else if currentType == "int" {
+                    
+                        stack[pointer] = "01"
+                        
+                    } else if currentType == "bool" {
+                    
+                        stack[pointer] = "01"
+                    
+                    }
                     pointer += 1
-                    accumulator[pointer] = "FF"
-                    pointer += 1
+                    
                     
                 }
                 ParseId()
@@ -597,8 +856,7 @@ extension ViewController {
             
         } else {
         
-            print(printBool)
-            print(quoteText)
+            
             if printBool == true {
                 
                 
@@ -611,19 +869,18 @@ extension ViewController {
                     x = x.adding(NSString(format:"%02X", i)) as NSArray
                     
                 }
-                accumulator[pointer] = "A0"
+                print(quoteText)
+                stack[pointer] = "A0"
                 pointer += 1
-                accumulator[pointer] = NSString(format:"%02X", 256 - x.count) as String
+                stack[pointer] = NSString(format:"%02X", 256 - x.count) as String
                 pointer += 1
-                accumulator[pointer] = "A2"
+                stack[pointer] = "A2"
                 pointer += 1
-                accumulator[pointer] = "02"
-                pointer += 1
-                accumulator[pointer] = "FF"
+                stack[pointer] = "02"
                 pointer += 1
         
             }
-        
+            
             printBool = false
             astList.append(String(repeatElement("-", count: astIndent))  + "[ \(quoteText) ]")
             quoteText = ""

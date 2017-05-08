@@ -100,6 +100,7 @@ extension ViewController {
                 
                     if (symbolType[indexCheck!] == "int" && symbolName[indexCheck!] == t && symbolScope[indexCheck!] as! Int >= scopeTracker) {
                         
+                        
                         //Do Nothing
                         if parseList[3] == "+" && parseList[4] == "\"" {
                             
@@ -125,51 +126,152 @@ extension ViewController {
                         
                     } else {
                     
-                        //ASSIGNING VARIABLE TO INTEGER
-                        accumulator[pointer] = "A9"
-                        pointer += 1
-                        accumulator[pointer] = "0" + parseList[2]
-                        pointer += 1
+                        if parseList[3] == "+" && acceptedChars.contains(parseList[4]){
+                                
+                                print(parseList[4])
+                                stack[pointer] = "A9"
+                                pointer += 1
+                                stack[pointer] = "0" + parseList[2]
+                                pointer += 1
+                                stack[pointer] = "8D"
+                                pointer += 1
+                                stack[pointer] = "T" + (String(describing: tempTableCounter))
+                                pointer += 1
+                                tempTableCounter += 1
+                                stack[pointer] = "00"
+                                pointer += 1
+                                stack[pointer] = "A9"
+                                pointer += 1
+                                stack[pointer] = "00"
+                                pointer += 1
+                                stack[pointer] = "6D"
+                                pointer += 1
+                                if let test = tempTable[parseList[4]] as? NSDictionary {
+                                    if let test2 = test[currentBrace-1] as? NSDictionary {
+                                        if let gotName = test2["Name"] {
+                                            
+                                            stack[pointer] = gotName as! String
+                                            pointer += 1
+                                            stack[pointer] = "00"
+                                            pointer += 1
+                                        }
+                                    } else if let test2 = test[currentBrace-2] as? NSDictionary {
+                                        if let gotName = test2["Name"] {
+                                            
+                                            stack[pointer] = gotName as! String
+                                            pointer += 1
+                                            stack[pointer] = "00"
+                                            pointer += 1
+                                        }
+                                    } else if let test2 = test[currentBrace-3] as? NSDictionary {
+                                        if let gotName = test2["Name"] {
+                                            
+                                            stack[pointer] = gotName as! String
+                                            pointer += 1
+                                            stack[pointer] = "00"
+                                            pointer += 1
+                                        }
+                                    }
+                                }
+                                stack[pointer] = "6D"
+                                pointer += 1
+                                stack[pointer] = "T" + (String(describing: tempTableCounter-1))
+                                pointer += 1
+                                stack[pointer] = "00"
+                                pointer += 1
+                                stack[pointer] = "8D"
+                                pointer += 1
+                                stack[pointer] = "T" + (String(describing: tempTableCounter))
+                                pointer += 1
+                                stack[pointer] = "00"
+                                pointer += 1
+                                stack[pointer] = "AD"
+                                pointer += 1
+                                stack[pointer] = "T" + (String(describing: tempTableCounter))
+                                pointer += 1
+                                stack[pointer] = "00"
+                                pointer += 1
+                                stack[pointer] = "8D"
+                                pointer += 1
+                                
+                                if let test = tempTable[parseList[0]] as? NSDictionary {
+                                    if let test2 = test[currentBrace-1] as? NSDictionary {
+                                        if let gotName = test2["Name"] {
+                                            
+                                            stack[pointer] = gotName as! String
+                                            pointer += 1
+                                            stack[pointer] = "00"
+                                            pointer += 1
+                                        }
+                                    } else if let test2 = test[currentBrace-2] as? NSDictionary {
+                                        if let gotName = test2["Name"] {
+                                            
+                                            stack[pointer] = gotName as! String
+                                            pointer += 1
+                                            stack[pointer] = "00"
+                                            pointer += 1
+                                        }
+                                    } else if let test2 = test[currentBrace-3] as? NSDictionary {
+                                        if let gotName = test2["Name"] {
+                                            
+                                            stack[pointer] = gotName as! String
+                                            pointer += 1
+                                            stack[pointer] = "00"
+                                            pointer += 1
+                                            
+                                        }
+                                    }
+                                }
+                                
+                                
+                                tempTableCounter += 1
+                    
+
+                        } else if parseList[3] == "+" && acceptedNums.contains(parseList[4]){
                         
-                        accumulator[pointer] = "8D"
+                        
+                        
+                        } else {
+                        
+                        //ASSIGNING VARIABLE TO INTEGER
+                        stack[pointer] = "A9"
+                        pointer += 1
+                        stack[pointer] = "0" + parseList[2]
+                        pointer += 1
+                         print(parseList[2])
+                        stack[pointer] = "8D"
                         pointer += 1
                         
                         if let test = tempTable[parseList.first!] as? NSDictionary {
                             if let test2 = test[currentBrace-1] as? NSDictionary {
                                 if let gotName = test2["Name"] {
                         
-                                    accumulator[pointer] = gotName as! String
+                                    stack[pointer] = gotName as! String
                                     pointer += 1
-                                    accumulator[pointer] = "00"
+                                    stack[pointer] = "00"
                                     pointer += 1
                                 }
                             } else if let test2 = test[currentBrace-2] as? NSDictionary {
                                 if let gotName = test2["Name"] {
                                     
-                                    accumulator[pointer] = gotName as! String
+                                    stack[pointer] = gotName as! String
                                     pointer += 1
-                                    accumulator[pointer] = "00"
+                                    stack[pointer] = "00"
                                     pointer += 1
                                 }
                             } else if let test2 = test[currentBrace-3] as? NSDictionary {
                                 if let gotName = test2["Name"] {
                                     
-                                    accumulator[pointer] = gotName as! String
+                                    stack[pointer] = gotName as! String
                                     pointer += 1
-                                    accumulator[pointer] = "00"
+                                    stack[pointer] = "00"
                                     pointer += 1
                                 }
                             }
                         }
-                        
-                        
-                        //print(currentBrace)
-                        //let test2 = test.value(forKey: String(describing: currentBrace - 1)) as! NSDictionary
                             
-                        //print(test2.value(forKey: "Name"))
-    
-                        
-                        
+                            
+                    }
                     }
                     
                 }
@@ -383,35 +485,35 @@ extension ViewController {
                                 }
                                 
 
-                                accumulator[pointer] = "A9"
+                                stack[pointer] = "A9"
                                 pointer += 1
-                                accumulator[pointer] = NSString(format:"%02X", 256 - x.count) as String
+                                stack[pointer] = NSString(format:"%02X", 256 - x.count) as String
                                 pointer += 1
-                                accumulator[pointer] = "8D"
+                                stack[pointer] = "8D"
                                 pointer += 1
                                 if let test = tempTable[parseList.first!] as? NSDictionary {
                                     if let test2 = test[currentBrace-1] as? NSDictionary {
                                         if let gotName = test2["Name"] {
                                             
-                                            accumulator[pointer] = gotName as! String
+                                            stack[pointer] = gotName as! String
                                             pointer += 1
-                                            accumulator[pointer] = "00"
+                                            stack[pointer] = "00"
                                             pointer += 1
                                         }
                                     } else if let test2 = test[currentBrace-2] as? NSDictionary {
                                         if let gotName = test2["Name"] {
                                             
-                                            accumulator[pointer] = gotName as! String
+                                            stack[pointer] = gotName as! String
                                             pointer += 1
-                                            accumulator[pointer] = "00"
+                                            stack[pointer] = "00"
                                             pointer += 1
                                         }
                                     } else if let test2 = test[currentBrace-3] as? NSDictionary {
                                         if let gotName = test2["Name"] {
                                             
-                                            accumulator[pointer] = gotName as! String
+                                            stack[pointer] = gotName as! String
                                             pointer += 1
-                                            accumulator[pointer] = "00"
+                                            stack[pointer] = "00"
                                             pointer += 1
                                         }
                                     }
