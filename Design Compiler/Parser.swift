@@ -310,6 +310,10 @@ extension ViewController {
             cstIndent += 1
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ int ]")
             symbolType.append("int")
+            accumulator[pointer] = "A9"
+            pointer += 1
+            accumulator[pointer] = "00"
+            pointer += 1
             astList.append(String(repeatElement("-", count: astIndent))  + "[ int ]")
             typeBool = true
             
@@ -318,6 +322,10 @@ extension ViewController {
             cstIndent += 1
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ string ]")
             symbolType.append("string")
+            accumulator[pointer] = "A9"
+            pointer += 1
+            accumulator[pointer] = "00"
+            pointer += 1
             astList.append(String(repeatElement("-", count: astIndent))  + "[ string ]")
             typeBool = true
             
@@ -326,6 +334,10 @@ extension ViewController {
             cstIndent += 1
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ boolean ]")
             symbolType.append("bool")
+            accumulator[pointer] = "A9"
+            pointer += 1
+            accumulator[pointer] = "00"
+            pointer += 1
             astList.append(String(repeatElement("-", count: astIndent))  + "[ boolean ]")
             typeBool = true
             
@@ -348,6 +360,14 @@ extension ViewController {
             
             } else {
         
+                accumulator[pointer] = "8D"
+                pointer += 1
+                accumulator[pointer] = "T" + String(describing: tempTableCounter)
+                pointer += 1
+                accumulator[pointer] = "00"
+                pointer += 1
+                tempTable[parseList.first!] = [currentBrace-1:["Name": ("T" + String(describing: tempTableCounter)), "Type": symbolType.last!]]
+                tempTableCounter += 1
                 symbolName.append(parseList.first!)
                 scopeChecker(parseList.first!)
                 typeBool = false
@@ -423,6 +443,10 @@ extension ViewController {
         currentTerm = "left paren"
         parenMatch = cstIndent
         match(param: "(")
+        if parseList[1] != ")" {
+            print(parseList[2])
+            printBool = true
+        }
         ParseExpr()
         astIndent -= 1
         
@@ -448,8 +472,49 @@ extension ViewController {
                 
                 ParseIntExpr()
                 
+                
             } else if acceptedChars.contains(String(describing: parseList.first!)) {
                 
+                if parseList[1] == ")"{
+                    
+                    accumulator[pointer] = "AC"
+                    pointer += 1
+                    if let test = tempTable[parseList.first!] as? NSDictionary {
+                        if let test2 = test[currentBrace-1] as? NSDictionary {
+                            if let gotName = test2["Name"] {
+                                
+                                accumulator[pointer] = gotName as! String
+                                pointer += 1
+                                accumulator[pointer] = "00"
+                                pointer += 1
+                            }
+                        } else if let test2 = test[currentBrace-2] as? NSDictionary {
+                            if let gotName = test2["Name"] {
+                                
+                                accumulator[pointer] = gotName as! String
+                                pointer += 1
+                                accumulator[pointer] = "00"
+                                pointer += 1
+                            }
+                        } else if let test2 = test[currentBrace-3] as? NSDictionary {
+                            if let gotName = test2["Name"] {
+                                
+                                accumulator[pointer] = gotName as! String
+                                pointer += 1
+                                accumulator[pointer] = "00"
+                                pointer += 1
+                            }
+                        }
+                    }
+                    
+                    accumulator[pointer] = "A2"
+                    pointer += 1
+                    accumulator[pointer] = "02"
+                    pointer += 1
+                    accumulator[pointer] = "FF"
+                    pointer += 1
+                    
+                }
                 ParseId()
                 
             } else if parseList.first! == "false" || parseList.first! == "true" || parseList.first! == "(" {
@@ -496,7 +561,7 @@ extension ViewController {
             ParseExpr()
             
         } else {
-        
+   
             finalList.append("Expecting digit")
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
             astList.append(String(repeatElement("-", count: astIndent))  + "[ \(String(describing: parseList.first!)) ]")
@@ -532,8 +597,37 @@ extension ViewController {
             
         } else {
         
+            print(printBool)
+            print(quoteText)
+            if printBool == true {
+                
+                
+                let asciiString = quoteText.asciiArray
+                
+                x = x.adding("00") as NSArray
+                
+                for i in asciiString.reversed() {
+                    
+                    x = x.adding(NSString(format:"%02X", i)) as NSArray
+                    
+                }
+                accumulator[pointer] = "A0"
+                pointer += 1
+                accumulator[pointer] = NSString(format:"%02X", 256 - x.count) as String
+                pointer += 1
+                accumulator[pointer] = "A2"
+                pointer += 1
+                accumulator[pointer] = "02"
+                pointer += 1
+                accumulator[pointer] = "FF"
+                pointer += 1
+        
+            }
+        
+            printBool = false
             astList.append(String(repeatElement("-", count: astIndent))  + "[ \(quoteText) ]")
             quoteText = ""
+            
             
         }
         

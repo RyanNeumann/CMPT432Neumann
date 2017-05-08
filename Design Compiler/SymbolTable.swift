@@ -30,8 +30,6 @@ extension ViewController {
             
             if testArray.contains(String(describing: g) + "," + String(describing: symbolScope[x])) {
             
-                print("Here")
-                
                 if errorArray.contains("Scope Error: Id \(g) is already defined.") == false {
                   
                     errorArray = errorArray.adding("Scope Error: Id \(g) is already defined.") as NSArray
@@ -109,6 +107,7 @@ extension ViewController {
                             
                         }
 
+                        print(parseList)
                         
                     } else {
                         
@@ -124,8 +123,55 @@ extension ViewController {
                         
                         typeErrors.append("Error: Type mismatch with \(t).  It is an int, not a string!")
                         
+                    } else {
+                    
+                        //ASSIGNING VARIABLE TO INTEGER
+                        accumulator[pointer] = "A9"
+                        pointer += 1
+                        accumulator[pointer] = "0" + parseList[2]
+                        pointer += 1
+                        
+                        accumulator[pointer] = "8D"
+                        pointer += 1
+                        
+                        if let test = tempTable[parseList.first!] as? NSDictionary {
+                            if let test2 = test[currentBrace-1] as? NSDictionary {
+                                if let gotName = test2["Name"] {
+                        
+                                    accumulator[pointer] = gotName as! String
+                                    pointer += 1
+                                    accumulator[pointer] = "00"
+                                    pointer += 1
+                                }
+                            } else if let test2 = test[currentBrace-2] as? NSDictionary {
+                                if let gotName = test2["Name"] {
+                                    
+                                    accumulator[pointer] = gotName as! String
+                                    pointer += 1
+                                    accumulator[pointer] = "00"
+                                    pointer += 1
+                                }
+                            } else if let test2 = test[currentBrace-3] as? NSDictionary {
+                                if let gotName = test2["Name"] {
+                                    
+                                    accumulator[pointer] = gotName as! String
+                                    pointer += 1
+                                    accumulator[pointer] = "00"
+                                    pointer += 1
+                                }
+                            }
+                        }
+                        
+                        
+                        //print(currentBrace)
+                        //let test2 = test.value(forKey: String(describing: currentBrace - 1)) as! NSDictionary
+                            
+                        //print(test2.value(forKey: "Name"))
+    
+                        
+                        
                     }
-                
+                    
                 }
                 
             } else {
@@ -279,7 +325,7 @@ extension ViewController {
                 } else {
                 
                     if parseList[2] == "\"" {
-                    
+    
                         var indexCheck = symbolName.index(of: parseList[0])
                         
                         if symbolType[indexCheck!] != "string" {
@@ -300,8 +346,8 @@ extension ViewController {
                             }
                         
                             if (symbolType[indexCheck! - 1] == "string" && symbolName[indexCheck! - 1] == parseList[0]  && symbolScope[indexCheck! - 1] as! Int >= scopeTracker) {
-                            
-                        
+
+                                print(parseList[0]+"Here")
                             //Do Nothing
                             
                             } else {
@@ -310,6 +356,70 @@ extension ViewController {
                                 typeErrors.append("Error: Type mismatch with \(t) \(parseList[1]) \(parseList[2])\n")
                                 
                             }
+                        
+                        } else {
+                            //It is a string
+                            
+                            if parseList[2] == "\"" {
+                                var completeString = ""
+                                var indexOf = 3
+                                
+                                while parseList[indexOf] != "\"" {
+                                
+                                    completeString.append(parseList[indexOf])
+                                    indexOf += 1
+                                
+                                }
+                                
+                                
+                                x = x.adding("00") as NSArray
+                                let asciiString = completeString.asciiArray
+                                print(completeString + "HERE")
+                                for i in asciiString.reversed() {
+                                
+                                    
+                                   x = x.adding(NSString(format:"%02X", i)) as NSArray
+                                
+                                }
+                                
+
+                                accumulator[pointer] = "A9"
+                                pointer += 1
+                                accumulator[pointer] = NSString(format:"%02X", 256 - x.count) as String
+                                pointer += 1
+                                accumulator[pointer] = "8D"
+                                pointer += 1
+                                if let test = tempTable[parseList.first!] as? NSDictionary {
+                                    if let test2 = test[currentBrace-1] as? NSDictionary {
+                                        if let gotName = test2["Name"] {
+                                            
+                                            accumulator[pointer] = gotName as! String
+                                            pointer += 1
+                                            accumulator[pointer] = "00"
+                                            pointer += 1
+                                        }
+                                    } else if let test2 = test[currentBrace-2] as? NSDictionary {
+                                        if let gotName = test2["Name"] {
+                                            
+                                            accumulator[pointer] = gotName as! String
+                                            pointer += 1
+                                            accumulator[pointer] = "00"
+                                            pointer += 1
+                                        }
+                                    } else if let test2 = test[currentBrace-3] as? NSDictionary {
+                                        if let gotName = test2["Name"] {
+                                            
+                                            accumulator[pointer] = gotName as! String
+                                            pointer += 1
+                                            accumulator[pointer] = "00"
+                                            pointer += 1
+                                        }
+                                    }
+                                }
+ 
+                            
+                            }
+                            
                         
                         }
                         
@@ -404,6 +514,7 @@ extension ViewController {
                     if let index = finalList.index(of: "Parsing completed successfully!") {
                     
                         finalList.insert("Semantic Analysis completed successfully!\n", at: index + 1)
+                        printAcc()
                         
                     }
                     
