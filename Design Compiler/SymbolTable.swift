@@ -225,6 +225,7 @@ extension ViewController {
                                 
                                 
                                 tempTableCounter += 1
+
                     
 
                         } else if parseList[3] == "+" && acceptedNums.contains(parseList[4]){
