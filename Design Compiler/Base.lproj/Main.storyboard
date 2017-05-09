@@ -686,16 +686,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="thJ-oQ-VYf">
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="thJ-oQ-VYf">
                                 <rect key="frame" x="0.0" y="0.0" width="1280" height="1000"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="bottomRight" imageScaling="axesIndependently" image="background" id="jEo-cO-4Lx"/>
                             </imageView>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OqG-3E-4qe">
-                                <rect key="frame" x="428" y="56" width="145" height="48"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="141" id="1Au-o1-GEk"/>
-                                    <constraint firstAttribute="height" constant="43" id="iC6-a1-m6Y"/>
-                                </constraints>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OqG-3E-4qe">
+                                <rect key="frame" x="428" y="17" width="145" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="bevel" title="Compile" bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ATp-zf-Uq9">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -704,11 +702,9 @@
                                     <action selector="compileClicked:" target="XfG-lQ-9wD" id="3l0-e0-ooM"/>
                                 </connections>
                             </button>
-                            <comboBox verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TWm-Vu-ODw">
+                            <comboBox verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TWm-Vu-ODw">
                                 <rect key="frame" x="401" y="943" width="201" height="29"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="198" id="qzO-Li-GJh"/>
-                                </constraints>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" borderStyle="border" alignment="center" title="Examples" drawsBackground="YES" usesSingleLineMode="YES" usesDataSource="YES" numberOfVisibleItems="3" id="OES-0R-pVS">
                                     <font key="font" size="14" name="Tahoma"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -718,23 +714,24 @@
                                     <outlet property="delegate" destination="XfG-lQ-9wD" id="VxY-bm-bwg"/>
                                 </connections>
                             </comboBox>
-                            <scrollView wantsLayer="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H7s-Be-1O6">
-                                <rect key="frame" x="12" y="386" width="485" height="272"/>
-                                <clipView key="contentView" id="SdQ-bz-bw3">
-                                    <rect key="frame" x="1" y="1" width="483" height="270"/>
+                            <scrollView wantsLayer="YES" fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H7s-Be-1O6">
+                                <rect key="frame" x="11" y="587" width="974" height="71"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <clipView key="contentView" ambiguous="YES" id="SdQ-bz-bw3">
+                                    <rect key="frame" x="1" y="1" width="972" height="69"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView editable="NO" selectable="NO" importsGraphics="NO" richText="NO" fieldEditor="YES" usesFontPanel="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" textCompletion="NO" id="e4U-kE-prD">
-                                            <rect key="frame" x="0.0" y="-1" width="483" height="270"/>
+                                        <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" richText="NO" fieldEditor="YES" usesFontPanel="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" textCompletion="NO" id="e4U-kE-prD">
+                                            <rect key="frame" x="0.0" y="-1" width="972" height="69"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="483" height="270"/>
-                                            <size key="maxSize" width="970" height="10000000"/>
+                                            <size key="minSize" width="972" height="69"/>
+                                            <size key="maxSize" width="1065" height="10000000"/>
                                             <attributedString key="textStorage">
                                                 <fragment content="Verbose output will appear here">
                                                     <attributes>
                                                         <font key="NSFont" size="16" name="Tahoma"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                     </attributes>
                                                 </fragment>
                                             </attributedString>
@@ -748,21 +745,22 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="ujT-vG-Z1T">
-                                    <rect key="frame" x="468" y="1" width="16" height="270"/>
+                                    <rect key="frame" x="957" y="1" width="16" height="69"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <scrollView wantsLayer="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l7Q-rO-s1M">
-                                <rect key="frame" x="501" y="110" width="484" height="271"/>
-                                <clipView key="contentView" id="iPD-bm-fZQ">
-                                    <rect key="frame" x="1" y="1" width="482" height="269"/>
+                            <scrollView wantsLayer="YES" fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l7Q-rO-s1M">
+                                <rect key="frame" x="501" y="71" width="484" height="250"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <clipView key="contentView" ambiguous="YES" id="iPD-bm-fZQ">
+                                    <rect key="frame" x="1" y="1" width="482" height="248"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView editable="NO" selectable="NO" importsGraphics="NO" richText="NO" fieldEditor="YES" usesFontPanel="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" textCompletion="NO" spellingCorrection="YES" id="bYi-rg-SJc">
-                                            <rect key="frame" x="0.0" y="-1" width="480" height="269"/>
+                                        <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" richText="NO" fieldEditor="YES" usesFontPanel="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" textCompletion="NO" spellingCorrection="YES" id="bYi-rg-SJc">
+                                            <rect key="frame" x="0.0" y="-1" width="480" height="248"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="482" height="269"/>
+                                            <size key="minSize" width="482" height="248"/>
                                             <size key="maxSize" width="998" height="10000000"/>
                                             <attributedString key="textStorage">
                                                 <fragment content="AST will appear here....">
@@ -782,21 +780,22 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="ALM-XG-1Jw">
-                                    <rect key="frame" x="467" y="1" width="16" height="269"/>
+                                    <rect key="frame" x="467" y="1" width="16" height="248"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <scrollView wantsLayer="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CpZ-X5-Vlt">
-                                <rect key="frame" x="501" y="386" width="484" height="272"/>
-                                <clipView key="contentView" id="U3n-49-KF3">
-                                    <rect key="frame" x="1" y="1" width="482" height="270"/>
+                            <scrollView wantsLayer="YES" fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CpZ-X5-Vlt">
+                                <rect key="frame" x="12" y="329" width="484" height="250"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <clipView key="contentView" ambiguous="YES" id="U3n-49-KF3">
+                                    <rect key="frame" x="1" y="1" width="482" height="248"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView editable="NO" selectable="NO" importsGraphics="NO" richText="NO" fieldEditor="YES" usesFontPanel="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" textCompletion="NO" spellingCorrection="YES" id="K6l-UR-Fb5">
-                                            <rect key="frame" x="0.0" y="-1" width="482" height="270"/>
+                                        <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" richText="NO" fieldEditor="YES" usesFontPanel="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" textCompletion="NO" spellingCorrection="YES" id="K6l-UR-Fb5">
+                                            <rect key="frame" x="0.0" y="-1" width="482" height="248"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="482" height="270"/>
+                                            <size key="minSize" width="482" height="248"/>
                                             <size key="maxSize" width="998" height="10000000"/>
                                             <attributedString key="textStorage">
                                                 <fragment content="Symbol table will appear here....">
@@ -816,32 +815,22 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="cC5-Xc-qkh">
-                                    <rect key="frame" x="467" y="1" width="16" height="270"/>
+                                    <rect key="frame" x="467" y="1" width="16" height="248"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQh-G4-z1u">
-                                <rect key="frame" x="14" y="13" width="972" height="38"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="38" id="HY8-d5-xg0"/>
-                                </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" placeholderString="Warning" drawsBackground="YES" id="j2N-Pf-Aau">
-                                    <font key="font" metaFont="system" size="20"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="backgroundColor" red="0.0039206021470000003" green="0.0039221248590000004" blue="0.0039205066859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </textFieldCell>
-                            </textField>
-                            <scrollView wantsLayer="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s3d-od-SkU">
-                                <rect key="frame" x="12" y="110" width="485" height="271"/>
-                                <clipView key="contentView" id="MVE-i7-rlp">
-                                    <rect key="frame" x="1" y="1" width="483" height="269"/>
+                            <scrollView wantsLayer="YES" fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s3d-od-SkU">
+                                <rect key="frame" x="12" y="71" width="484" height="250"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <clipView key="contentView" ambiguous="YES" id="MVE-i7-rlp">
+                                    <rect key="frame" x="1" y="1" width="482" height="248"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView editable="NO" selectable="NO" importsGraphics="NO" richText="NO" fieldEditor="YES" usesFontPanel="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" textCompletion="NO" id="UJt-UU-DSs">
-                                            <rect key="frame" x="0.0" y="-1" width="483" height="269"/>
+                                        <textView ambiguous="YES" editable="NO" selectable="NO" importsGraphics="NO" richText="NO" fieldEditor="YES" usesFontPanel="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" textCompletion="NO" id="UJt-UU-DSs">
+                                            <rect key="frame" x="0.0" y="-1" width="482" height="248"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <size key="minSize" width="483" height="269"/>
+                                            <size key="minSize" width="482" height="248"/>
                                             <size key="maxSize" width="998" height="10000000"/>
                                             <attributedString key="textStorage">
                                                 <fragment content="CST will appear here....">
@@ -861,17 +850,18 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="LUq-He-P4r">
-                                    <rect key="frame" x="468" y="1" width="16" height="269"/>
+                                    <rect key="frame" x="467" y="1" width="16" height="248"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <scrollView wantsLayer="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iNC-yQ-cjF">
+                            <scrollView wantsLayer="YES" fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iNC-yQ-cjF">
                                 <rect key="frame" x="12" y="664" width="973" height="272"/>
-                                <clipView key="contentView" id="UcH-Ts-sYu">
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <clipView key="contentView" ambiguous="YES" id="UcH-Ts-sYu">
                                     <rect key="frame" x="1" y="1" width="971" height="270"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView importsGraphics="NO" richText="NO" fieldEditor="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" textCompletion="NO" spellingCorrection="YES" id="Hv7-a8-gLa">
+                                        <textView ambiguous="YES" importsGraphics="NO" richText="NO" fieldEditor="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" textCompletion="NO" spellingCorrection="YES" id="Hv7-a8-gLa">
                                             <rect key="frame" x="0.0" y="-1" width="971" height="270"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -905,48 +895,51 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
+                            <scrollView wantsLayer="YES" fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HT6-h1-CSu">
+                                <rect key="frame" x="501" y="329" width="484" height="250"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <clipView key="contentView" ambiguous="YES" id="Don-eD-cwg">
+                                    <rect key="frame" x="1" y="1" width="482" height="248"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView ambiguous="YES" editable="NO" importsGraphics="NO" richText="NO" fieldEditor="YES" usesFontPanel="YES" findStyle="panel" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" textCompletion="NO" spellingCorrection="YES" id="Jbs-Cj-dCJ">
+                                            <rect key="frame" x="0.0" y="-1" width="482" height="248"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="minSize" width="482" height="248"/>
+                                            <size key="maxSize" width="998" height="10000000"/>
+                                            <attributedString key="textStorage">
+                                                <fragment content="Symbol table will appear here....">
+                                                    <attributes>
+                                                        <font key="NSFont" metaFont="system" size="18"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                            <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        </textView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="k7C-j7-V9u">
+                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="xDv-1W-xSD">
+                                    <rect key="frame" x="467" y="1" width="16" height="248"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
                         </subviews>
-                        <constraints>
-                            <constraint firstItem="H7s-Be-1O6" firstAttribute="top" secondItem="iNC-yQ-cjF" secondAttribute="bottom" constant="6" id="0QC-A3-xSg"/>
-                            <constraint firstItem="H7s-Be-1O6" firstAttribute="leading" secondItem="s3d-od-SkU" secondAttribute="leading" id="0he-ms-o8U"/>
-                            <constraint firstItem="s3d-od-SkU" firstAttribute="top" secondItem="l7Q-rO-s1M" secondAttribute="top" id="1YB-Bq-yKt"/>
-                            <constraint firstItem="CpZ-X5-Vlt" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="501" id="6I8-js-dF4"/>
-                            <constraint firstItem="bQh-G4-z1u" firstAttribute="top" secondItem="OqG-3E-4qe" secondAttribute="bottom" constant="8" symbolic="YES" id="7tV-HQ-vc6"/>
-                            <constraint firstItem="OqG-3E-4qe" firstAttribute="top" secondItem="s3d-od-SkU" secondAttribute="bottom" constant="8" symbolic="YES" id="9OS-iG-Ohb"/>
-                            <constraint firstItem="iNC-yQ-cjF" firstAttribute="leading" secondItem="H7s-Be-1O6" secondAttribute="leading" id="ANY-w7-BdQ"/>
-                            <constraint firstItem="H7s-Be-1O6" firstAttribute="top" secondItem="CpZ-X5-Vlt" secondAttribute="top" id="Bdi-ro-v0v"/>
-                            <constraint firstItem="CpZ-X5-Vlt" firstAttribute="trailing" secondItem="l7Q-rO-s1M" secondAttribute="trailing" id="DXJ-MR-smr"/>
-                            <constraint firstItem="iNC-yQ-cjF" firstAttribute="trailing" secondItem="CpZ-X5-Vlt" secondAttribute="trailing" id="FKj-k0-bZe"/>
-                            <constraint firstItem="s3d-od-SkU" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="619" id="GM4-3P-8dp"/>
-                            <constraint firstItem="TWm-Vu-ODw" firstAttribute="centerX" secondItem="OqG-3E-4qe" secondAttribute="centerX" id="Ggg-m0-FyH"/>
-                            <constraint firstItem="s3d-od-SkU" firstAttribute="top" secondItem="H7s-Be-1O6" secondAttribute="bottom" constant="5" id="GoC-BK-Hvg"/>
-                            <constraint firstItem="H7s-Be-1O6" firstAttribute="bottom" secondItem="CpZ-X5-Vlt" secondAttribute="bottom" id="I7D-Jy-fqU"/>
-                            <constraint firstItem="thJ-oQ-VYf" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="KTb-Vr-j2V"/>
-                            <constraint firstItem="CpZ-X5-Vlt" firstAttribute="leading" secondItem="l7Q-rO-s1M" secondAttribute="leading" id="O7v-e5-B0v"/>
-                            <constraint firstItem="TWm-Vu-ODw" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="30" id="PKT-I2-eEl"/>
-                            <constraint firstItem="OqG-3E-4qe" firstAttribute="centerX" secondItem="bQh-G4-z1u" secondAttribute="centerX" id="Rdv-p4-cM1"/>
-                            <constraint firstItem="H7s-Be-1O6" firstAttribute="trailing" secondItem="s3d-od-SkU" secondAttribute="trailing" id="SYx-83-wrT"/>
-                            <constraint firstAttribute="bottom" secondItem="thJ-oQ-VYf" secondAttribute="bottom" id="Xay-TU-Qd8"/>
-                            <constraint firstItem="thJ-oQ-VYf" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="dcH-Bk-8vq"/>
-                            <constraint firstItem="OqG-3E-4qe" firstAttribute="top" secondItem="l7Q-rO-s1M" secondAttribute="bottom" constant="8" symbolic="YES" id="egk-dw-inT"/>
-                            <constraint firstAttribute="bottom" secondItem="bQh-G4-z1u" secondAttribute="bottom" constant="13" id="hr6-M4-DB6"/>
-                            <constraint firstItem="H7s-Be-1O6" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="342" id="meb-s1-HTd"/>
-                            <constraint firstItem="iNC-yQ-cjF" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="12" id="rg4-BH-TDb"/>
-                            <constraint firstItem="TWm-Vu-ODw" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="shm-5t-O2b"/>
-                            <constraint firstItem="iNC-yQ-cjF" firstAttribute="top" secondItem="TWm-Vu-ODw" secondAttribute="bottom" constant="11" id="t99-pS-UzA"/>
-                            <constraint firstItem="bQh-G4-z1u" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="14" id="teM-iG-627"/>
-                            <constraint firstItem="CpZ-X5-Vlt" firstAttribute="leading" secondItem="H7s-Be-1O6" secondAttribute="trailing" constant="4" id="wXB-s4-aDb"/>
-                            <constraint firstAttribute="trailing" secondItem="iNC-yQ-cjF" secondAttribute="trailing" constant="15" id="y5V-a9-dKS"/>
-                        </constraints>
                     </view>
                     <connections>
                         <outlet property="astFinal" destination="bYi-rg-SJc" id="CwC-Ta-7PK"/>
+                        <outlet property="codeGen" destination="Jbs-Cj-dCJ" id="fA1-pX-ekn"/>
                         <outlet property="enteredCode" destination="Hv7-a8-gLa" id="cEx-1r-5wq"/>
                         <outlet property="examplePicker" destination="TWm-Vu-ODw" id="kfz-r1-WWa"/>
                         <outlet property="parsedList" destination="UJt-UU-DSs" id="ri4-gB-xgr"/>
                         <outlet property="symbolList" destination="K6l-UR-Fb5" id="DPQ-ey-CCC"/>
                         <outlet property="tokenList" destination="e4U-kE-prD" id="HWC-57-4r1"/>
-                        <outlet property="warningLabel" destination="bQh-G4-z1u" id="Y2R-hE-0h7"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

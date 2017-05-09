@@ -11,8 +11,6 @@ var exampleTokens = ["Example 1: Minimal", "Example 2: Declaration", "Example 3:
 
 class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate, NSComboBoxDataSource, NSTextViewDelegate {
     
-    @IBOutlet weak var warningLabel: NSTextField!
-    
     @IBOutlet var parsedList: NSTextView!
     
     @IBOutlet var enteredCode: NSTextView!
@@ -20,6 +18,8 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
     @IBOutlet var astFinal: NSTextView!
     
     @IBOutlet var tokenList: NSTextView!
+    
+    @IBOutlet var codeGen: NSTextView!
     
     @IBOutlet var symbolList: NSTextView!
     
@@ -33,7 +33,9 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         parsedList.font = NSFont(name: "Tahoma", size: 14)
         enteredCode.font = NSFont(name: "Tahoma", size: 20)
         tokenList.font = NSFont(name: "Tahoma", size: 14)
+        tokenList.alignment = NSTextAlignment.center
         astFinal.font = NSFont(name: "Tahoma", size: 14)
+        codeGen.font = NSFont(name: "Tahoma", size: 14)
         examplePicker.dataSource = self
         examplePicker.delegate = self
         
@@ -48,9 +50,11 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
         x = []
         y = []
         currentVar = ""
+        jumpTable.removeAll()
         additionCounter = 0
         stack = ["00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00", "00"]
 
+        codeGen.string = ""
         typeErrors = []
         errorArray = []
         parseError = 0
@@ -132,12 +136,10 @@ class ViewController: NSViewController, NSTextFieldDelegate, NSComboBoxDelegate,
             if inputText.last != "$"  && inputText.last != "\n" && inputText.last != " " && inputText.last != "\t" {
                 
                 inputText.append("$")
-                self.warningLabel.stringValue = "Please use '$' to end the program!"
                 self.enteredCode.string = textEntered
                 
             } else {
                 
-                self.warningLabel.stringValue = ""
                 self.enteredCode.string = textEntered
                 
             }

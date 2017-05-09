@@ -226,8 +226,6 @@ extension ViewController {
                                 
                                 tempTableCounter += 1
 
-                    
-
                         } else if parseList[3] == "+" && acceptedNums.contains(parseList[4]){
                         
                         
@@ -235,11 +233,11 @@ extension ViewController {
                         } else {
                         
                         //ASSIGNING VARIABLE TO INTEGER
+                            /*
                         stack[pointer] = "A9"
                         pointer += 1
                         stack[pointer] = "0" + parseList[2]
                         pointer += 1
-                         print(parseList[2])
                         stack[pointer] = "8D"
                         pointer += 1
                         
@@ -271,8 +269,9 @@ extension ViewController {
                             }
                         }
                             
-                            
+                        */    
                     }
+ 
                     }
                     
                 }
@@ -312,6 +311,65 @@ extension ViewController {
                                     if (symbolScope[indexCheck] as! Int >= symbolScope[index] as! Int) == false {
                                         
                                         
+                                        stack[pointer] = "AD"
+                                        pointer += 1
+                                        if let test = tempTable[parseList[2]] as? NSDictionary {
+                                            if let test2 = test[currentBrace-1] as? NSDictionary {
+                                                if let gotName = test2["Name"] {
+                                                    
+                                                    stack[pointer] = gotName as! String
+                                                    pointer += 1
+                                                    stack[pointer] = "00"
+                                                    pointer += 1
+                                                }
+                                            } else if let test2 = test[currentBrace-2] as? NSDictionary {
+                                                if let gotName = test2["Name"] {
+                                                    
+                                                    stack[pointer] = gotName as! String
+                                                    pointer += 1
+                                                    stack[pointer] = "00"
+                                                    pointer += 1
+                                                }
+                                            } else if let test2 = test[currentBrace-3] as? NSDictionary {
+                                                if let gotName = test2["Name"] {
+                                                    
+                                                    stack[pointer] = gotName as! String
+                                                    pointer += 1
+                                                    stack[pointer] = "00"
+                                                    pointer += 1
+                                                }
+                                            }
+                                        }
+                                        
+                                        stack[pointer] = "8D"
+                                        pointer += 1
+                                        if let test = tempTable[parseList[0]] as? NSDictionary {
+                                            if let test2 = test[currentBrace-1] as? NSDictionary {
+                                                if let gotName = test2["Name"] {
+                                                    
+                                                    stack[pointer] = gotName as! String
+                                                    pointer += 1
+                                                    stack[pointer] = "00"
+                                                    pointer += 1
+                                                }
+                                            } else if let test2 = test[currentBrace-2] as? NSDictionary {
+                                                if let gotName = test2["Name"] {
+                                                    
+                                                    stack[pointer] = gotName as! String
+                                                    pointer += 1
+                                                    stack[pointer] = "00"
+                                                    pointer += 1
+                                                }
+                                            } else if let test2 = test[currentBrace-3] as? NSDictionary {
+                                                if let gotName = test2["Name"] {
+                                                    
+                                                    stack[pointer] = gotName as! String
+                                                    pointer += 1
+                                                    stack[pointer] = "00"
+                                                    pointer += 1
+                                                }
+                                            }
+                                        }
                                         print(parseList[0])
                                         //typeErrors.append("Error: \(parseList[2]) is out of scope in \(t, parseList[1], parseList[2]).")
                                         
@@ -330,12 +388,9 @@ extension ViewController {
                                             }
                                             
                                             symbolType[indexCheck] = symbolType[index]
-                                            
                                         }
-                                        
-                                    
                                     }
-                                    
+
                                 } else {
                                     
                                     //testing parseList[0] to see if it exists
@@ -405,6 +460,7 @@ extension ViewController {
                                     
                                 }
                             
+                            print("Working")
                             } else {
                                 
                                 typeErrors.append("Error: Scope out of bounds for \(t)\n")
@@ -526,6 +582,11 @@ extension ViewController {
                         
                         }
                         
+                    } else if parseList[2] == "true" {
+                    
+                        print("Here")
+                    
+                    
                     }
                     
                 }

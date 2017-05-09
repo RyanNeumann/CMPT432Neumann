@@ -16,6 +16,7 @@ var tempTable: NSMutableDictionary = [:]
 var tempTableCounter = 0
 var currentTermScope = ""
 var printBool = false
+var jumpTable = [Int]()
 
 
 var pointer = 0
@@ -45,7 +46,15 @@ extension ViewController {
         
         }
         
-        
+        var k = 0
+        while k != jumpTable.count {
+            let st: String = NSString(format:"%02X", jumpTable[k]) as String
+            print (st)
+            print(jumpTable[k])
+            finalTable = finalTable.replacingOccurrences(of: ("J" + String(describing: k)), with: st)
+            k += 1
+            
+        }
         
         while (i != tempTableCounter) {
         
@@ -59,8 +68,12 @@ extension ViewController {
         }
         
         
+        for i in finalTable.characters {
         
-       print(finalTable)
+            codeGen.string?.append(i)
+        
+        }
+        
     }
 
     

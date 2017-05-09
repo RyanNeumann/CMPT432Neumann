@@ -22,6 +22,7 @@ let intOp = "+"
 var cleanList = [String]()
 var bracketCounter = 0
 
+
 extension ViewController {
     
     func checkNext() {
@@ -484,7 +485,7 @@ extension ViewController {
                 cleanList.append("}")
                 finalList.append("\(currentLine).  }  --> [RBRACE]")
                 inputText.removeFirst()
-                warningLabel.stringValue = "Please don't forget to close quote"
+                finalList.append("Warning: Please don't forget to close quote")
                 checkNext()
                 
             } else if y == ")" {
@@ -493,7 +494,7 @@ extension ViewController {
                 finalList.append("\(currentLine).  \"  --> [CLOSE_DOUBLE_QUOTES]")
                 finalList.append("\(currentLine).  )  --> [RPAREN]")
                 inputText.removeFirst()
-                warningLabel.stringValue = "Please don't forget to close quote"
+                finalList.append("Warning: Please don't forget to close quote")
                 checkNext()
             
             } else {
