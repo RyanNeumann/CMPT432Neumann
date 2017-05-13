@@ -55,7 +55,7 @@ extension ViewController {
             //print(astList)
             
             if finalList.contains("Parsing completed successfully!") == false {
-            
+                
                 finalList.insert("Parsing completed successfully!", at: 0)
                 
             }
@@ -65,7 +65,7 @@ extension ViewController {
         for element in cst {
             
             parsedList.string?.append(String(describing: element) + "\n")
-        
+            
         }
         
         tokenList.string?.append("\n")
@@ -77,15 +77,15 @@ extension ViewController {
         }
         
         if cst.isEmpty == false {
-        
+            
             for element in astList {
-        
-            astFinal.string?.append(String(describing: element) + "\n")
-        
+                
+                astFinal.string?.append(String(describing: element) + "\n")
+                
             }
             
         }
-    
+        
     }
     
     func ParseBlock() {
@@ -109,7 +109,7 @@ extension ViewController {
             astIndent -= 1
             
         }
-    
+        
     }
     
     func ParseStatementList() {
@@ -125,9 +125,9 @@ extension ViewController {
             if parseList.first! == "}" || parseList.first! == "" || parseList.first! == "$" || parseList.first! == "'"{
                 //Do nothing
                 if parseList.first! == "}" {
-                
+                    
                     cstIndent = statementEnding
-                
+                    
                 }
                 
             } else if (parseList.first! == "\"") {
@@ -135,7 +135,7 @@ extension ViewController {
                 ParseCharList()
                 
             } else {
-            
+                
                 cstIndent += 1
                 cst.append(String(repeatElement("•", count: cstIndent))  + "< Statement >")
                 ParseStatement()
@@ -153,13 +153,13 @@ extension ViewController {
         }
         
     }
-
+    
     func ParseStatement() {
         
         statementEnding = cstIndent
         
         if parseList.isEmpty == false {
-        
+            
             if parseList.first! == "print" {
                 
                 cstIndent += 1
@@ -201,18 +201,18 @@ extension ViewController {
                 ParseBlock()
                 
             } else if parseList.first! == ")" {
-            
+                
                 currentTerm = "right paren"
                 finalList.append("Expecting Right Paren")
                 match(param: ")")
-            
+                
             } else {
-            
+                
                 currentTerm = "Statement"
                 match(param: "Statement")
-            
+                
             }
-        
+            
         }
         
     }
@@ -260,17 +260,17 @@ extension ViewController {
                 ParseExpr()
                 
             }  else if parseList.first! == ")"{
-            
+                
                 finalList.append("Expecting right paren")
                 currentTerm = "right paren"
                 match(param: ")")
-            
+                
             } else if parseList.first! == "{" {
                 
                 ParseBlock()
-            
+                
             }
-         
+            
             
             finalList.append("Expecting right paren")
             currentTerm = "right paren"
@@ -282,7 +282,7 @@ extension ViewController {
             finalList.append("Expecting boolVal")
             currentTerm = "boolVal"
             if parseList[1] == ")" {
-              
+                
                 stack[pointer] = "A9"
                 pointer += 1
                 stack[pointer] = "01"
@@ -300,15 +300,15 @@ extension ViewController {
                 pointer += 1
                 
                 /* put back in
-                stack[pointer] = "A0"
-                pointer += 1
-                stack[pointer] = "01"
-                pointer += 1
-                stack[pointer] = "A2"
-                pointer += 1
-                stack[pointer] = "01"
-                pointer += 1
- */
+                 stack[pointer] = "A0"
+                 pointer += 1
+                 stack[pointer] = "01"
+                 pointer += 1
+                 stack[pointer] = "A2"
+                 pointer += 1
+                 stack[pointer] = "01"
+                 pointer += 1
+                 */
                 
             }  else {
                 
@@ -319,7 +319,7 @@ extension ViewController {
                 stack[pointer] = "8D"
                 pointer += 1
                 if tempTableCounter == 0 {
-                
+                    
                     tempTableCounter += 1
                     
                 }
@@ -339,10 +339,7 @@ extension ViewController {
                     pointer += 1
                     stack[pointer] = "00"
                     pointer += 1
-                    stack[pointer] = "D0"
-                    pointer += 1
-                    stack[pointer] = "J" + String(describing: jumpTable.count)
-                    pointer += 1
+                    
                     
                     
                     
@@ -376,18 +373,18 @@ extension ViewController {
                 stack[pointer] = "00"
                 pointer += 1
                 /*
-                stack[pointer] = "A0"
-                pointer += 1
-                stack[pointer] = "01"
-                pointer += 1
-                stack[pointer] = "A2"
-                pointer += 1
-                stack[pointer] = "01"
-                pointer += 1
-                */
+                 stack[pointer] = "A0"
+                 pointer += 1
+                 stack[pointer] = "01"
+                 pointer += 1
+                 stack[pointer] = "A2"
+                 pointer += 1
+                 stack[pointer] = "01"
+                 pointer += 1
+                 */
                 
             } else {
-            
+                
                 stack[pointer] = "A9"
                 pointer += 1
                 stack[pointer] = "00"
@@ -425,20 +422,20 @@ extension ViewController {
                     
                     
                 }
-
-
-            
+                
+                
+                
                 
             }
             tempTableCounter += 1
             match(param: "false")
             
         } else {
-        
+            
             match(param: "Boolean Expression")
-        
+            
         }
-    
+        
     }
     
     func ParseWhile() {
@@ -448,17 +445,17 @@ extension ViewController {
         parseList.removeFirst()
         ParseBoolean()
         ParseBlock()
-    
+        
     }
     
     func ParseVarDec() {
-    
+        
         astList.append(String(repeatElement("-", count: astIndent)) + "< Variable Declaration >")
         astIndent += 1
         finalList.append("- Got type: \(String(describing: parseList.first!))!")
         
         if String(describing: parseList.first!) == "int" {
-        
+            
             cstIndent += 1
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ int ]")
             symbolType.append("int")
@@ -498,27 +495,26 @@ extension ViewController {
         parseList.removeFirst()
         ParseId()
         astIndent -= 1
-    
+        
     }
     
     func ParseId() {
-    
+        
         if acceptedChars.contains(String(describing: parseList.first!)) {
             
             if typeBool == false {
-      
+                
                 //printing
                 print("Printing (" + parseList[0] + ")")
                 
                 scopeChecker(parseList.first!)
                 typeChecker(String(describing: parseList.first!))
-            
+                
             } else {
                 
-
+                
                 stack[pointer] = "8D"
                 pointer += 1
-                tempTableCounter -= 1
                 stack[pointer] = "T" + String(describing: tempTableCounter)
                 pointer += 1
                 stack[pointer] = "00"
@@ -527,8 +523,9 @@ extension ViewController {
                 symbolName.append(parseList.first!)
                 scopeChecker(parseList.first!)
                 typeBool = false
+                tempTableCounter += 1
                 
-            
+                
             }
             
             finalList.append("Expecting Id")
@@ -538,12 +535,12 @@ extension ViewController {
             parseList.removeFirst()
             
         } else {
-        
+            
             currentTerm = "Id"
             match(param: "Id")
-        
+            
         }
-    
+        
     }
     
     func ParseAssignment() {
@@ -559,23 +556,23 @@ extension ViewController {
                 if let gotName = test2["Name"] {
                     
                     currentVar = gotName as! String
-                  
+                    
                 }
             } else if let test2 = test[currentBrace-2] as? NSDictionary {
                 if let gotName = test2["Name"] {
                     
-                   currentVar = gotName as! String
+                    currentVar = gotName as! String
                     
                 }
             } else if let test2 = test[currentBrace-3] as? NSDictionary {
                 if let gotName = test2["Name"] {
                     
-                   currentVar = gotName as! String
-                
+                    currentVar = gotName as! String
+                    
                 }
             }
         }
-
+        
         
         
         
@@ -609,7 +606,7 @@ extension ViewController {
             match(param: "=")
             
         } else if parseList.first == "==" || parseList.first == "!=" {
-        
+            
             finalList.append("Expecting BoolOp")
             currentTerm = "BoolOp"
             
@@ -618,11 +615,11 @@ extension ViewController {
                 match(param: "==")
                 
             } else {
-            
+                
                 match(param: "!=")
                 
             }
-        
+            
         }
         
         if parseList.isEmpty == false {
@@ -635,7 +632,7 @@ extension ViewController {
     }
     
     func ParsePrint() {
-    
+        
         astList.append(String(repeatElement("-", count: astIndent)) + "< Print Statement >")
         astIndent += 1
         finalList.append("Expecting Print Statement")
@@ -647,14 +644,14 @@ extension ViewController {
         match(param: "(")
         
         if parseList[0] == "true" {
-        
+            
             //A0 00 A2 01 FF
             
-        
+            
         } else if parseList[0] == "false" {
-        
+            
             //A0 00 A2 01 FF
-        
+            
         }
         
         if parseList[1] != ")" {
@@ -674,7 +671,7 @@ extension ViewController {
             match(param: ")")
             
         }
-
+        
     }
     
     func ParseExpr() {
@@ -687,7 +684,7 @@ extension ViewController {
             if acceptedNums.contains(String(describing: parseList.first!)) {
                 
                 if parseList[1] == ")"{
-                    
+                    /*
                     stack[pointer] = "A0"
                     pointer += 1
                     stack[pointer] = "0" + parseList[0]
@@ -696,7 +693,7 @@ extension ViewController {
                     pointer += 1
                     stack[pointer] = "01"
                     pointer += 1
-                    
+                    */
                 } else if acceptedNums.contains(parseList[2]) {
                     
                     stack[pointer] = "A9"
@@ -724,7 +721,7 @@ extension ViewController {
                     stack[pointer] = "00"
                     pointer += 1
                     
-                    if acceptedNums.contains(parseList[4]) == false {
+                    if acceptedNums.contains(parseList[4]) == false && parseList[1]  == "+" {
                         stack[pointer] = "A9"
                         pointer += 1
                         stack[pointer] = "00"
@@ -761,10 +758,96 @@ extension ViewController {
                         pointer += 1
                         stack[pointer] = "00"
                         pointer += 1
-                    
-                    
+                        
+                        
                     }
                     
+                    if parseList[1] == "==" {
+                        
+                        stack[pointer] = "AE"
+                        pointer += 1
+                        stack[pointer] = "T" + String(describing: tempTableCounter - 2)
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                        stack[pointer] = "EC"
+                        pointer += 1
+                        stack[pointer] = "T" + String(describing: tempTableCounter - 1)
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                        stack[pointer] = "A9"
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                        stack[pointer] = "8D"
+                        pointer += 1
+                        stack[pointer] = "T" + String(describing: tempTableCounter)
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                        stack[pointer] = "D0"
+                        pointer += 1
+                        stack[pointer] = "J" + String(describing: jumpTable.count)
+                        pointer += 1
+                        stack[pointer] = "A9"
+                        pointer += 1
+                        stack[pointer] = "01"
+                        pointer += 1
+                        stack[pointer] = "8D"
+                        pointer += 1
+                        stack[pointer] = "T" + String(describing: tempTableCounter)
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                        stack[pointer] = "A2"
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                        stack[pointer] = "EC"
+                        pointer += 1
+                        stack[pointer] = "T" + String(describing: tempTableCounter)
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                        stack[pointer] = "D0"
+                        pointer += 1
+                        stack[pointer] = "J" + String(describing: jumpTable.count)
+                        pointer += 1
+                        stack[pointer] = "A9"
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                        stack[pointer] = "8D"
+                        pointer += 1
+                        stack[pointer] = "T" + String(describing: tempTableCounter)
+                        pointer += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                        stack[pointer] = "A2"
+                        pointer += 1
+                        stack[pointer] = "01"
+                        pointer += 1
+                        stack[pointer] = "EC"
+                        pointer += 1
+                        stack[pointer] = "T" + String(describing: tempTableCounter)
+                        pointer += 1
+                        tempTableCounter += 1
+                        stack[pointer] = "00"
+                        pointer += 1
+                        stack[pointer] = "D0"
+                        pointer += 1
+                        stack[pointer] = "J" + String(describing: jumpTable.count)
+                        pointer += 1
+                        
+                        
+                    }
+
+                    
+                    
+                } else {
+                
+    
                 
                 }
                 ParseIntExpr()
@@ -814,26 +897,35 @@ extension ViewController {
                     pointer += 1
                     
                     if currentType == "string" {
-                    
+                        
                         stack[pointer] = "02"
                         
                     } else if currentType == "int" {
-                    
+                        
                         stack[pointer] = "01"
                         
                     } else if currentType == "bool" {
-                    
+                        
                         stack[pointer] = "01"
-                    
+                        
                     }
                     pointer += 1
                     
                     
                 } else {
                     //parsing if statement
+                    if parseList[1] == "!=" {
                     
-                    print("if statement")
-                
+                        
+                    
+                    
+                    } else if parseList[1] == "==" {
+                    
+                    
+                    
+                    
+                    }
+                    
                 }
                 ParseId()
                 
@@ -857,7 +949,7 @@ extension ViewController {
                 match(param: "Expression")
                 
             }
-        
+            
         }
         
     }
@@ -881,13 +973,13 @@ extension ViewController {
             ParseExpr()
             
         } else {
-   
+            
             finalList.append("Expecting digit")
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
             astList.append(String(repeatElement("-", count: astIndent))  + "[ \(String(describing: parseList.first!)) ]")
             finalList.append("- Got digit: \(String(describing: parseList.first!))!")
             parseList.removeFirst()
-        
+            
         }
         
     }
@@ -903,7 +995,7 @@ extension ViewController {
         finalList.append("Expecting close_quote")
         currentTerm = "close_quote"
         match(param: "\"")
-
+        
     }
     
     func ParseCharList() {
@@ -916,7 +1008,7 @@ extension ViewController {
             quoteText.append(parseList.first!)
             
         } else {
-        
+            
             
             if printBool == true {
                 
@@ -931,6 +1023,7 @@ extension ViewController {
                     
                 }
                 print(quoteText)
+                
                 stack[pointer] = "A0"
                 pointer += 1
                 stack[pointer] = NSString(format:"%02X", 256 - x.count) as String
@@ -939,7 +1032,7 @@ extension ViewController {
                 pointer += 1
                 stack[pointer] = "02"
                 pointer += 1
-        
+                
             }
             
             printBool = false
@@ -950,15 +1043,15 @@ extension ViewController {
         }
         
         if acceptedChars.contains(String(describing: parseList.first!)) {
-        
+            
             finalList.append("Expecting char")
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
             finalList.append("- Got char: \(String(describing: parseList.first!))!")
             parseList.removeFirst()
             ParseCharList()
-        
+            
         } else if parseList.first! == " " {
-        
+            
             cst.append(String(repeatElement("•", count: cstIndent))  + "[ \(String(describing: parseList.first!)) ]")
             finalList.append("Expecting potential white space")
             finalList.append("- Got white space!")
@@ -1012,7 +1105,7 @@ extension ViewController {
                         cst.append(String(repeatElement("•", count: cstIndent))  + "[ " + String(describing: param) + " ]")
                         
                     }
-            
+                    
                 }
                 
                 finalList.append("- Got \(currentTerm)!")
@@ -1028,26 +1121,26 @@ extension ViewController {
             } else {
                 
                 if currentTerm == "EOP" {
-                
+                    
                     finalList.append("- Got EOP")
                     finalList.append("Program \(parseCount) completed successfully!\n")
                     parseCount += 1
                     
                 } else {
-                
-                
-                parseError += 1
-                finalList.append("\nError - Expecting \(currentTerm).  Instead got \(String(describing: parseList.first!))\n")
-                astList.removeAll()
-                parseFinal.removeAll()
-                parseList.removeAll()
-                cst.removeAll()
-                
+                    
+                    
+                    parseError += 1
+                    finalList.append("\nError - Expecting \(currentTerm).  Instead got \(String(describing: parseList.first!))\n")
+                    astList.removeAll()
+                    parseFinal.removeAll()
+                    parseList.removeAll()
+                    cst.removeAll()
+                    
                 }
             }
             
         }
-    
+        
     }
     
 }

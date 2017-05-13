@@ -24,7 +24,7 @@ var pointer = 0
 extension ViewController {
     
     func printAcc(){
-    
+        
         
         
         var i = 0
@@ -40,10 +40,10 @@ extension ViewController {
         }
         
         while stack.isEmpty == false {
-        
+            
             finalTable.append((stack.first! as String) + " ")
             stack.removeFirst()
-        
+            
         }
         
         var k = 0
@@ -57,25 +57,25 @@ extension ViewController {
         }
         
         while (i != tempTableCounter) {
-        
+            
             pointer += 1
             //Change pointer to hexidecimal
             let st: String = NSString(format:"%02X", pointer) as String
             finalTable = finalTable.replacingOccurrences(of: ("T" + String(describing: i)), with: st)
-
+            
             i += 1
-        
+            
         }
         
         
         for i in finalTable.characters {
-        
+            
             codeGen.string?.append(i)
-        
+            
         }
         
     }
-
+    
     
 }
 
