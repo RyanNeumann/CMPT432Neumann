@@ -229,6 +229,7 @@ extension ViewController {
         ParseBlock()
         jumpTable.append(pointer - original)
         
+        
     }
     
     func ParseBoolean() {
@@ -519,7 +520,11 @@ extension ViewController {
                 pointer += 1
                 stack[pointer] = "00"
                 pointer += 1
-                tempTable[parseList.first!] = [currentBrace-1:["Name": ("T" + String(describing: tempTableCounter )), "Type": symbolType.last!]]
+
+                tempTable[parseList.first!] = [currentBrace - 1 : ["Name": ("T" + String(describing: tempTableCounter )), "Type": symbolType.last!]]
+                //tempTable
+                
+                print(tempTable)
                 symbolName.append(parseList.first!)
                 scopeChecker(parseList.first!)
                 typeBool = false
@@ -643,21 +648,14 @@ extension ViewController {
         parenMatch = cstIndent
         match(param: "(")
         
-        if parseList[0] == "true" {
-            
-            //A0 00 A2 01 FF
-            
-            
-        } else if parseList[0] == "false" {
-            
-            //A0 00 A2 01 FF
-            
-        }
+        
         
         if parseList[1] != ")" {
             //print(parseList[2])
             printBool = true
         }
+        
+        
         ParseExpr()
         stack[pointer] = "FF"
         pointer += 1
@@ -684,7 +682,7 @@ extension ViewController {
             if acceptedNums.contains(String(describing: parseList.first!)) {
                 
                 if parseList[1] == ")"{
-                    /*
+                    
                     stack[pointer] = "A0"
                     pointer += 1
                     stack[pointer] = "0" + parseList[0]
@@ -693,7 +691,7 @@ extension ViewController {
                     pointer += 1
                     stack[pointer] = "01"
                     pointer += 1
-                    */
+                    
                 } else if acceptedNums.contains(parseList[2]) {
                     
                     stack[pointer] = "A9"
@@ -943,6 +941,7 @@ extension ViewController {
                     
                     stack[pointer] = "AC"
                     pointer += 1
+                    
                     var currentType = "'"
                     if let test = tempTable[parseList.first!] as? NSDictionary {
                         if let test2 = test[currentBrace-1] as? NSDictionary {
@@ -972,6 +971,10 @@ extension ViewController {
                                 stack[pointer] = "00"
                                 pointer += 1
                             }
+                        } else {
+                        
+                            print(test)
+                            
                         }
                     }
                     
@@ -1012,6 +1015,7 @@ extension ViewController {
                 ParseId()
                 
             } else if parseList.first! == "false" || parseList.first! == "true" || parseList.first! == "(" {
+                
                 
                 ParseBoolean()
                 
@@ -1104,7 +1108,7 @@ extension ViewController {
                     x = x.adding(NSString(format:"%02X", i)) as NSArray
                     
                 }
-                print(quoteText)
+                
                 
                 stack[pointer] = "A0"
                 pointer += 1
