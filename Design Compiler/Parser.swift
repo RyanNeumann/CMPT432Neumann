@@ -521,7 +521,7 @@ extension ViewController {
                 stack[pointer] = "00"
                 pointer += 1
 
-                tempTable[parseList.first!] = [currentBrace - 1 : ["Name": ("T" + String(describing: tempTableCounter )), "Type": symbolType.last!]]
+                tempTable[parseList.first! + String(describing: currentBrace - 1)] = ["Name": ("T" + String(describing: tempTableCounter )), "Type": symbolType.last!]
                 //tempTable
                 
                 print(tempTable)
@@ -556,27 +556,29 @@ extension ViewController {
         finalList.append("- Got Id: \(String(describing: parseList.first!))!")
         
         
-        if let test = tempTable[parseList[0]] as? NSDictionary {
-            if let test2 = test[currentBrace-1] as? NSDictionary {
-                if let gotName = test2["Name"] {
+        if let test = tempTable[parseList[0] + String(describing: currentBrace - 1)] as NSDictionary? {
+            
+            if let gotName = test["Name"] {
                     
                     currentVar = gotName as! String
-                    
-                }
-            } else if let test2 = test[currentBrace-2] as? NSDictionary {
-                if let gotName = test2["Name"] {
-                    
-                    currentVar = gotName as! String
-                    
-                }
-            } else if let test2 = test[currentBrace-3] as? NSDictionary {
-                if let gotName = test2["Name"] {
-                    
-                    currentVar = gotName as! String
-                    
-                }
             }
+        } else if let test = tempTable[parseList[0] + String(describing: currentBrace - 2)] as NSDictionary? {
+        
+            if let gotName = test["Name"] {
+                
+                currentVar = gotName as! String
+            }
+            
+        } else if let test = tempTable[parseList[0] + String(describing: currentBrace - 3)] as NSDictionary? {
+            
+            if let gotName = test["Name"] {
+                
+                currentVar = gotName as! String
+            }
+            
         }
+        
+
         
         
         
@@ -943,39 +945,41 @@ extension ViewController {
                     pointer += 1
                     
                     var currentType = "'"
-                    if let test = tempTable[parseList.first!] as? NSDictionary {
-                        if let test2 = test[currentBrace-1] as? NSDictionary {
-                            if let gotName = test2["Name"] {
-                                
-                                currentType = test2["Type"] as! String
-                                stack[pointer] = gotName as! String
-                                pointer += 1
-                                stack[pointer] = "00"
-                                pointer += 1
-                            }
-                        } else if let test2 = test[currentBrace-2] as? NSDictionary {
-                            if let gotName = test2["Name"] {
-                                
-                                currentType = test2["Type"] as! String
-                                stack[pointer] = gotName as! String
-                                pointer += 1
-                                stack[pointer] = "00"
-                                pointer += 1
-                            }
-                        } else if let test2 = test[currentBrace-3] as? NSDictionary {
-                            if let gotName = test2["Name"] {
-                                
-                                currentType = test2["Type"] as! String
-                                stack[pointer] = gotName as! String
-                                pointer += 1
-                                stack[pointer] = "00"
-                                pointer += 1
-                            }
-                        } else {
+                    
+                    if let test = tempTable[parseList[0] + String(describing: currentBrace - 1)] as NSDictionary? {
                         
-                            print(test)
+                        if let gotName = test["Name"] {
+                            
+                            currentType = test["Type"] as! String
+                            stack[pointer] = gotName as! String
+                            pointer += 1
+                            stack[pointer] = "00"
+                            pointer += 1
                             
                         }
+                    } else if let test = tempTable[parseList[0] + String(describing: currentBrace - 2)] as NSDictionary? {
+                        
+                        if let gotName = test["Name"] {
+                            
+                            currentType = test["Type"] as! String
+                            stack[pointer] = gotName as! String
+                            pointer += 1
+                            stack[pointer] = "00"
+                            pointer += 1
+                            
+                        }
+                        
+                    } else if let test = tempTable[parseList[0] + String(describing: currentBrace - 3)] as NSDictionary? {
+                        
+                        if let gotName = test["Name"] {
+                            
+                            currentType = test["Type"] as! String
+                            stack[pointer] = gotName as! String
+                            pointer += 1
+                            stack[pointer] = "00"
+                            pointer += 1
+                        }
+                        
                     }
                     
                     stack[pointer] = "A2"
