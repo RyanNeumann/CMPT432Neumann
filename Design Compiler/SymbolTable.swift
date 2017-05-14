@@ -146,32 +146,37 @@ extension ViewController {
                         pointer += 1
                         stack[pointer] = "6D"
                         pointer += 1
-                        if let test = tempTable[parseList[4]] as? NSDictionary {
-                            if let test2 = test[currentBrace-1] as? NSDictionary {
-                                if let gotName = test2["Name"] {
-                                    
-                                    stack[pointer] = gotName as! String
-                                    pointer += 1
-                                    stack[pointer] = "00"
-                                    pointer += 1
-                                }
-                            } else if let test2 = test[currentBrace-2] as? NSDictionary {
-                                if let gotName = test2["Name"] {
-                                    
-                                    stack[pointer] = gotName as! String
-                                    pointer += 1
-                                    stack[pointer] = "00"
-                                    pointer += 1
-                                }
-                            } else if let test2 = test[currentBrace-3] as? NSDictionary {
-                                if let gotName = test2["Name"] {
-                                    
-                                    stack[pointer] = gotName as! String
-                                    pointer += 1
-                                    stack[pointer] = "00"
-                                    pointer += 1
-                                }
+                        if let test = tempTable[parseList[4] + String(describing: currentBrace - 1)] as NSDictionary? {
+                            
+                            if let gotName = test["Name"] {
+                                
+                                stack[pointer] = gotName as! String
+                                pointer += 1
+                                stack[pointer] = "00"
+                                pointer += 1
+                                
                             }
+                        } else if let test = tempTable[parseList[4] + String(describing: currentBrace - 2)] as NSDictionary? {
+                            
+                            if let gotName = test["Name"] {
+                                
+                                stack[pointer] = gotName as! String
+                                pointer += 1
+                                stack[pointer] = "00"
+                                pointer += 1
+                                
+                            }
+                            
+                        } else if let test = tempTable[parseList[4] + String(describing: currentBrace - 3)] as NSDictionary? {
+                            
+                            if let gotName = test["Name"] {
+                                
+                                stack[pointer] = gotName as! String
+                                pointer += 1
+                                stack[pointer] = "00"
+                                pointer += 1
+                            }
+                            
                         }
                         stack[pointer] = "6D"
                         pointer += 1
@@ -678,14 +683,14 @@ extension ViewController {
                 if let index = finalList.index(of: "Parsing completed successfully!") {
                     
                     finalList.insert("Semantic Analysis completed successfully!\n", at: index + 1)
-                    printAcc()
+                    
                     
                 }
                 
             }
             
             finalList.append("Program \(String(describing: programNum)) Semantic Analysis Produced (0) errors and (0) warnings\n")
-            
+            printAcc()
             
         }
         

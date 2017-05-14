@@ -24,10 +24,8 @@ var pointer = 0
 extension ViewController {
     
     func printAcc(){
-        
-        
-        
-        
+      
+        finalList.append("Generating 6502a Assembly Code\n")
         var i = 0
         
         var finalTable = ""
@@ -56,13 +54,15 @@ extension ViewController {
             
         }
         
-        while (i != tempTableCounter) {
+        finalList.append("Backpatching the code and resolving addresses\n")
+        while (i < tempTableCounter) {
             
+            print(tempTableCounter)
             pointer += 1
             //Change pointer to hexidecimal
             let st: String = NSString(format:"%02X", pointer) as String
             finalTable = finalTable.replacingOccurrences(of: ("T" + String(describing: i)), with: st)
-            
+            finalList.append("Resolving entry of " + "T" + String(describing: i) + " to " + st)
             i += 1
             
         }
@@ -74,6 +74,7 @@ extension ViewController {
             
         }
         
+        finalList.append("Code Generation Completed\n")
     }
     
     
