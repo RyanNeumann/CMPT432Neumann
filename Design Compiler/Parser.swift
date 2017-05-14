@@ -229,7 +229,6 @@ extension ViewController {
         ParseBlock()
         jumpTable.append(pointer - original)
         
-        
     }
     
     func ParseBoolean() {
@@ -290,12 +289,7 @@ extension ViewController {
                 pointer += 1
                 stack[pointer] = "8D"
                 pointer += 1
-                if tempTableCounter == 0 {
-                    
-                    tempTableCounter += 1
-                    
-                }
-                stack[pointer] = "T" + String(describing: tempTableCounter - 1)
+                stack[pointer] = "T" + String(describing: tempTableCounter)
                 pointer += 1
                 stack[pointer] = "00"
                 pointer += 1
@@ -319,12 +313,7 @@ extension ViewController {
                 pointer += 1
                 stack[pointer] = "8D"
                 pointer += 1
-                if tempTableCounter == 0 {
-                    
-                    tempTableCounter += 1
-                    
-                }
-                stack[pointer] = "T" + String(describing: tempTableCounter - 1)
+                stack[pointer] = "T" + String(describing: tempTableCounter)
                 pointer += 1
                 stack[pointer] = "00"
                 pointer += 1
@@ -336,15 +325,15 @@ extension ViewController {
                     pointer += 1
                     stack[pointer] = "EC"
                     pointer += 1
-                    stack[pointer] = "T" + String(describing: tempTableCounter - 1)
+                    stack[pointer] = "T" + String(describing: tempTableCounter)
                     pointer += 1
                     stack[pointer] = "00"
                     pointer += 1
-                    
-                    
-                    
-                    
-                    
+                    stack[pointer] = "D0"
+                    pointer += 1
+                    stack[pointer] = "J" + String(describing: jumpTable.count)
+                    pointer += 1
+                    print("Here")
                 }
                 
             }
