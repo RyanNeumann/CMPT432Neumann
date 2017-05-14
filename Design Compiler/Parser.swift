@@ -918,8 +918,8 @@ extension ViewController {
                     
                 } else {
                 
-    
-                
+                    //print(parseList)
+                    
                 }
                 ParseIntExpr()
                 
@@ -1009,8 +1009,89 @@ extension ViewController {
                 
             } else if parseList.first! == "false" || parseList.first! == "true" || parseList.first! == "(" {
                 
-                
                 ParseBoolean()
+                print(parseList)
+                
+                if parseList[0] == ")" {
+                    
+                    stack[pointer] = "AE"
+                    pointer += 1
+                    stack[pointer] = "T" + String(describing: tempTableCounter - 3)
+                    pointer += 1
+                    stack[pointer] = "00"
+                    pointer += 1
+                    stack[pointer] = "EC"
+                    pointer += 1
+                    stack[pointer] = "T" + String(describing: tempTableCounter - 2)
+                    pointer += 1
+                    stack[pointer] = "00"
+                    pointer += 1
+                    stack[pointer] = "A9"
+                    pointer += 1
+                    stack[pointer] = "00"
+                    pointer += 1
+                    stack[pointer] = "8D"
+                    pointer += 1
+                    stack[pointer] = "T" + String(describing: tempTableCounter - 1)
+                    pointer += 1
+                    stack[pointer] = "00"
+                    pointer += 1
+                    stack[pointer] = "D0"
+                    pointer += 1
+                    stack[pointer] = "J" + String(describing: jumpTable.count)
+                    pointer += 1
+                    stack[pointer] = "A9"
+                    pointer += 1
+                    stack[pointer] = "01"
+                    pointer += 1
+                    stack[pointer] = "8D"
+                    pointer += 1
+                    stack[pointer] = "T" + String(describing: tempTableCounter - 1)
+                    pointer += 1
+                    stack[pointer] = "00"
+                    pointer += 1
+                    stack[pointer] = "A2"
+                    pointer += 1
+                    stack[pointer] = "01"
+                    pointer += 1
+                    stack[pointer] = "EC"
+                    pointer += 1
+                    stack[pointer] = "T" + String(describing: tempTableCounter)
+                    pointer += 1
+                    stack[pointer] = "00"
+                    pointer += 1
+                    stack[pointer] = "D0"
+                    pointer += 1
+                    stack[pointer] = "J" + String(describing: jumpTable.count)
+                    pointer += 1
+                    stack[pointer] = "A9"
+                    pointer += 1
+                    stack[pointer] = "01"
+                    pointer += 1
+                    stack[pointer] = "8D"
+                    pointer += 1
+                    stack[pointer] = "T" + String(describing: tempTableCounter)
+                    pointer += 1
+                    stack[pointer] = "00"
+                    pointer += 1
+                    stack[pointer] = "A2"
+                    pointer += 1
+                    stack[pointer] = "01"
+                    pointer += 1
+                    stack[pointer] = "EC"
+                    pointer += 1
+                    stack[pointer] = "T" + String(describing: tempTableCounter)
+                    pointer += 1
+                    tempTableCounter += 1
+                    stack[pointer] = "00"
+                    pointer += 1
+                    stack[pointer] = "D0"
+                    pointer += 1
+                    stack[pointer] = "J" + String(describing: jumpTable.count)
+                    pointer += 1
+                    
+                    
+                }
                 
             }  else if parseList.first! == "while" {
                 
