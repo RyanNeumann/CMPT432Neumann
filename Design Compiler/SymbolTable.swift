@@ -128,7 +128,7 @@ extension ViewController {
                     
                     if parseList[3] == "+" && acceptedChars.contains(parseList[4]){
                         
-                        print(parseList[4])
+                       
                         stack[pointer] = "A9"
                         pointer += 1
                         stack[pointer] = "0" + parseList[2]

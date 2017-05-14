@@ -282,14 +282,14 @@ extension ViewController {
             finalList.append("Expecting boolVal")
             currentTerm = "boolVal"
             if parseList[1] == ")" {
-                
+            
                 stack[pointer] = "A9"
                 pointer += 1
                 stack[pointer] = "01"
                 pointer += 1
                 stack[pointer] = "8D"
                 pointer += 1
-                stack[pointer] = "T" + String(describing: tempTableCounter)
+                stack[pointer] = currentVar
                 pointer += 1
                 stack[pointer] = "00"
                 pointer += 1
@@ -307,13 +307,14 @@ extension ViewController {
                 
             }  else {
                 
+                
                 stack[pointer] = "A9"
                 pointer += 1
                 stack[pointer] = "01"
                 pointer += 1
                 stack[pointer] = "8D"
                 pointer += 1
-                stack[pointer] = "T" + String(describing: tempTableCounter)
+                stack[pointer] = currentVar
                 pointer += 1
                 stack[pointer] = "00"
                 pointer += 1
@@ -333,7 +334,6 @@ extension ViewController {
                     pointer += 1
                     stack[pointer] = "J" + String(describing: jumpTable.count)
                     pointer += 1
-                    print("Here")
                 }
                 
             }
@@ -353,12 +353,7 @@ extension ViewController {
                 pointer += 1
                 stack[pointer] = "8D"
                 pointer += 1
-                if tempTableCounter == 0 {
-                    
-                    tempTableCounter += 1
-                    
-                }
-                stack[pointer] = "T" + String(describing: tempTableCounter - 1)
+                stack[pointer] = "T" + String(describing: tempTableCounter)
                 pointer += 1
                 stack[pointer] = "00"
                 pointer += 1
@@ -375,18 +370,14 @@ extension ViewController {
                 
             } else {
                 
+                
                 stack[pointer] = "A9"
                 pointer += 1
                 stack[pointer] = "00"
                 pointer += 1
                 stack[pointer] = "8D"
                 pointer += 1
-                if tempTableCounter == 0 {
-                    
-                    tempTableCounter += 1
-                    
-                }
-                stack[pointer] = "T" + String(describing: tempTableCounter - 1)
+                stack[pointer] = currentVar
                 pointer += 1
                 stack[pointer] = "00"
                 pointer += 1
