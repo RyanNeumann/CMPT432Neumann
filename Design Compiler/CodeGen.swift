@@ -57,7 +57,6 @@ extension ViewController {
         finalList.append("Backpatching the code and resolving addresses\n")
         while (i < tempTableCounter) {
             
-            print(tempTableCounter)
             pointer += 1
             //Change pointer to hexidecimal
             let st: String = NSString(format:"%02X", pointer) as String

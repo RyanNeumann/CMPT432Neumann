@@ -26,6 +26,7 @@ var typeBool = false
 var additionCounter = 0
 var currentVar = ""
 var original = 0
+var isEquals = false
 
 
 extension ViewController {
@@ -98,6 +99,7 @@ extension ViewController {
         finalList.append("Expecting a left brace")
         currentTerm = "left brace"
         match(param: "{")
+        original = pointer + 1
         ParseStatementList()
         
         if parseList.isEmpty == false {
@@ -225,7 +227,6 @@ extension ViewController {
         ParseBoolean()
         //stack[pointer] = "AE"
         //pointer += 1
-        original = pointer
         ParseBlock()
         jumpTable.append(pointer - original)
         
@@ -314,7 +315,7 @@ extension ViewController {
                 pointer += 1
                 stack[pointer] = "8D"
                 pointer += 1
-                stack[pointer] = currentVar
+                stack[pointer] = "T" + String(describing: tempTableCounter)
                 pointer += 1
                 stack[pointer] = "00"
                 pointer += 1
@@ -559,6 +560,48 @@ extension ViewController {
         }
         
 
+        if acceptedChars.contains(parseList[0]) && parseList[1] == "=" && acceptedChars.contains(parseList[2]) {
+        
+            stack[pointer] = "AD"
+            pointer += 1
+            if let test = tempTable[parseList[2] + String(describing: currentBrace - 1)] as NSDictionary? {
+                
+                if let gotName = test["Name"] {
+                    
+                    stack[pointer] = gotName as! String
+                    pointer += 1
+                    stack[pointer] = "00"
+                    pointer += 1
+                    
+                }
+            } else if let test = tempTable[parseList[2] + String(describing: currentBrace - 2)] as NSDictionary? {
+                
+                if let gotName = test["Name"] {
+                    
+                    stack[pointer] = gotName as! String
+                    pointer += 1
+                    stack[pointer] = "00"
+                    pointer += 1
+                    
+                }
+                
+            } else if let test = tempTable[parseList[2] + String(describing: currentBrace - 3)] as NSDictionary? {
+                
+                if let gotName = test["Name"] {
+                    
+                    stack[pointer] = gotName as! String
+                    pointer += 1
+                    stack[pointer] = "00"
+                    pointer += 1
+                }
+            }
+            stack[pointer] = "8D"
+            pointer += 1
+            stack[pointer] = currentVar
+            pointer += 1
+            stack[pointer] = "00"
+            pointer += 1
+        }
         
         
         
@@ -920,7 +963,9 @@ extension ViewController {
                 if parseList[1] == ")"{
                     
                     //printing a var
+                    if isEquals == false {
                     
+                        print(isEquals)
                     stack[pointer] = "AC"
                     pointer += 1
                     
@@ -937,6 +982,7 @@ extension ViewController {
                             pointer += 1
                             
                         }
+                        
                     } else if let test = tempTable[parseList[0] + String(describing: currentBrace - 2)] as NSDictionary? {
                         
                         if let gotName = test["Name"] {
@@ -980,6 +1026,11 @@ extension ViewController {
                     }
                     pointer += 1
                     
+                    } else {
+                    
+                            isEquals = false
+                    
+                    }
                     
                 } else {
                     //parsing if statement
@@ -990,12 +1041,124 @@ extension ViewController {
                     
                     } else if parseList[1] == "==" {
                     
+                        isEquals = true
+                        if acceptedChars.contains(parseList[0]) && acceptedChars.contains(parseList[2]) {
+                        
+                            stack[pointer] = "AE"
+                            pointer += 1
+                            if let test = tempTable[parseList[0] + String(describing: currentBrace - 1)] as NSDictionary? {
+                                
+                                if let gotName = test["Name"] {
+                                    
+                                    stack[pointer] = gotName as! String
+                                    pointer += 1
+                                    stack[pointer] = "00"
+                                    pointer += 1
+                                    
+                                }
+                            } else if let test = tempTable[parseList[0] + String(describing: currentBrace - 2)] as NSDictionary? {
+                                
+                                if let gotName = test["Name"] {
+                                    
+                                    stack[pointer] = gotName as! String
+                                    pointer += 1
+                                    stack[pointer] = "00"
+                                    pointer += 1
+                                    
+                                }
+                                
+                            } else if let test = tempTable[parseList[0] + String(describing: currentBrace - 3)] as NSDictionary? {
+                                
+                                if let gotName = test["Name"] {
+                                    
+                                    stack[pointer] = gotName as! String
+                                    pointer += 1
+                                    stack[pointer] = "00"
+                                    pointer += 1
+                                }
+                                
+                            }
+
+                            stack[pointer] = "EC"
+                            pointer += 1
+                            stack[pointer] = currentVar
+                            pointer += 1
+                            stack[pointer] = "00"
+                            pointer += 1
+                            stack[pointer] = "A9"
+                            pointer += 1
+                            stack[pointer] = "00"
+                            pointer += 1
+                            stack[pointer] = "8D"
+                            pointer += 1
+                            stack[pointer] = "T" + String(describing: tempTableCounter)
+                            pointer += 1
+                            stack[pointer] = "00"
+                            pointer += 1
+                            stack[pointer] = "D0"
+                            pointer += 1
+                            stack[pointer] = "J" + String(describing: jumpTable.count)
+                            pointer += 1
+                            stack[pointer] = "A9"
+                            pointer += 1
+                            stack[pointer] = "01"
+                            pointer += 1
+                            stack[pointer] = "8D"
+                            pointer += 1
+                            stack[pointer] = "T" + String(describing: tempTableCounter)
+                            pointer += 1
+                            stack[pointer] = "00"
+                            pointer += 1
+                            stack[pointer] = "A2"
+                            pointer += 1
+                            stack[pointer] = "00"
+                            pointer += 1
+                            stack[pointer] = "EC"
+                            pointer += 1
+                            stack[pointer] = "T" + String(describing: tempTableCounter)
+                            pointer += 1
+                            stack[pointer] = "00"
+                            pointer += 1
+                            stack[pointer] = "D0"
+                            pointer += 1
+                            stack[pointer] = "J" + String(describing: jumpTable.count)
+                            pointer += 1
+                            stack[pointer] = "A9"
+                            pointer += 1
+                            stack[pointer] = "00"
+                            pointer += 1
+                            //8D 4E 00 A2 01 EC 4E 00 D0 06
+                            stack[pointer] = "8D"
+                            pointer += 1
+                            stack[pointer] = "T" + String(describing: tempTableCounter)
+                            pointer += 1
+                            stack[pointer] = "00"
+                            pointer += 1
+                            stack[pointer] = "A2"
+                            pointer += 1
+                            stack[pointer] = "01"
+                            pointer += 1
+                            stack[pointer] = "EC"
+                            pointer += 1
+                            stack[pointer] = "T" + String(describing: tempTableCounter)
+                            tempTableCounter += 1
+                            pointer += 1
+                            stack[pointer] = "00"
+                            pointer += 1
+                            stack[pointer] = "D0"
+                            pointer += 1
+                            stack[pointer] = "J" + String(describing: jumpTable.count)
+                            pointer += 1
+
+
+                        }
                     
                     
                     
                     }
                     
                 }
+                
                 ParseId()
                 
             } else if parseList.first! == "false" || parseList.first! == "true" || parseList.first! == "(" {
